@@ -52,7 +52,7 @@
     }
     
     /* Auto Hide System untuk Mode Klien (CDS) */
-    /* Saat mode klien aktif, sembunyikan semua elemen UI kasir */
+    /* Menyembunyikan seluruh UI Kasir agar tidak bertumpuk */
     body.cds-mode header, body.cds-mode aside, body.cds-mode .mobile-bottom-nav, body.cds-mode main { display: none !important; }
 
     /* Desain Scrollbar Minimalis */
@@ -744,7 +744,7 @@
       <div class="flex-1 relative flex flex-col justify-between overflow-hidden order-2 lg:order-1 h-1/2 lg:h-full">
          <!-- Lapisan Gambar Animasi Transisi Halus -->
          <div id="promo-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-105"></div>
-         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-transparent"></div>
+         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/30 to-transparent"></div>
          
          <div class="relative z-10 p-6 lg:p-14 h-full flex flex-col justify-end text-white pb-10 lg:pb-24">
             <div class="mb-auto hidden lg:flex items-center gap-4 pt-4">
@@ -877,11 +877,9 @@
 
     /**
      * Mesin Utama Fetch API (Penghubung Vercel/Netlify ke Google Sheets)
-     * Kita membedakan instruksi "action" untuk menyuruh server bekerja.
      */
     async function fetchAPI(action, data = {}) {
         try {
-            // Gunakan text/plain untuk mengakali pemblokiran keamanan CORS di Browser
             const response = await fetch(GAS_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -890,9 +888,7 @@
             
             const result = await response.json();
             
-            // Evaluasi respon dari sistem belakang
             if (result.success === false && result.message) throw new Error(result.message);
-            // Tangkap failure level 2 (dari eksekusi fungsi di Code.gs)
             if (result.data && result.data.success === false) throw new Error(result.data.message);
             
             return result.data;
@@ -1000,7 +996,6 @@
       const receiptId = urlParams.get('receipt');
 
       // Jika URL memiliki tag "?receipt=TRX...", maka web ini dibuka dari HP Pelanggan
-      // Ubah tampilan menjadi selembar kertas struk digital elegan
       if (receiptId) {
         document.getElementById('auth-wrapper').classList.add('hidden');
         document.body.classList.remove('overflow-hidden'); 
@@ -1055,7 +1050,7 @@
         return; 
       }
 
-      // Jika Layar Normal (Bukan e-Receipt HP), Periksa fitur Ingat Saya
+      // Jika Layar Normal, Periksa fitur Ingat Saya
       try {
         if(localStorage.getItem('jabanaRememberUser')) {
           document.getElementById('username').value = localStorage.getItem('jabanaRememberUser');
@@ -1210,16 +1205,16 @@
     function renderViewUI(viewId) {
       // Sembunyikan Dulu Semua Ruangan
       document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('flex'); }); 
-      
+
       // Nyalakan aturan khusus jika pindah ke mode layar pelanggan
       if (viewId === 'klien-dashboard') {
-          document.body.classList.add('cds-mode'); 
-          startPromoSlider(); 
-          startCDSPolling(); // Nyalakan Radar Sinkronisasi Barang
+          document.body.classList.add('cds-mode');
+          startPromoSlider();
+          startCDSPolling(); // Otomatis menyalakan radar sinkronisasi pesanan
       } else {
-          document.body.classList.remove('cds-mode'); 
+          document.body.classList.remove('cds-mode');
           if(promoInterval) clearInterval(promoInterval);
-          if(window.cdsPoller) clearInterval(window.cdsPoller); // Matikan radar biar tidak boros kuota
+          if(window.cdsPoller) clearInterval(window.cdsPoller); // Mematikan radar jika keluar dari layar
       }
 
       // Tampilkan Ruangan yang Baru Di-klik
@@ -1586,10 +1581,12 @@
       if(promoInterval) clearInterval(promoInterval);
       
       const promoItems = products.filter(p => p.image);
+      
+      // Menggunakan gambar kuliner premium berkecepatan tinggi sebagai fallback
       const defaultImages = [
-          'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop',
-          'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop',
-          'https://images.unsplash.com/photo-1495474472201-49e52c80d859?q=80&w=1200&auto=format&fit=crop'
+          'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80'
       ];
 
       const updatePromo = () => {
@@ -1601,12 +1598,12 @@
               const item = promoItems[promoIndex % promoItems.length];
               if(slider) slider.style.backgroundImage = `url('${item.image}')`;
               if(title) { title.innerText = item.name; title.classList.remove('animate-slide-up'); void title.offsetWidth; title.classList.add('animate-slide-up'); }
-              if(desc) desc.innerText = `Promo Spesial: ${formatRp(item.price)}`;
+              if(desc) desc.innerText = `Rekomendasi Spesial: ${formatRp(item.price)}`;
           } else {
               const img = defaultImages[promoIndex % defaultImages.length];
               if(slider) slider.style.backgroundImage = `url('${img}')`;
-              if(title) title.innerText = "Selamat Datang";
-              if(desc) desc.innerText = "Pengalaman transaksi premium terbaik.";
+              if(title) { title.innerText = "Selamat Datang"; title.classList.remove('animate-slide-up'); void title.offsetWidth; title.classList.add('animate-slide-up'); }
+              if(desc) desc.innerText = "Nikmati sajian istimewa dari dapur kami.";
           }
           promoIndex++;
       };
@@ -1619,60 +1616,64 @@
       document.getElementById('cds-total').innerText = formatRp(total);
       const container = document.getElementById('cds-cart-items');
       
-      // Jika pesanan sukses, layarnya berubah menjadi ucapan hijau dan memunculkan QR Code
+      // JIKA TRANSAKSI SUKSES (MUNCULKAN QR CODE)
       if (liveCart && liveCart.length === 1 && liveCart[0].type === 'SUCCESS_QR') {
           const trxId = liveCart[0].trxId;
           document.getElementById('cds-total').innerText = "LUNAS";
           const qrUrl = window.location.href.split('?')[0].split('#')[0] + "?receipt=" + trxId;
           
+          // Desain dikompres agar sangat pas di layar, ikon diperkecil, margin dirapatkan
           container.innerHTML = `
-              <div class="absolute inset-0 bg-white/60 backdrop-blur-sm z-0"></div>
-              <div class="relative z-10 flex flex-col items-center justify-center h-full space-y-5 py-6 animate-slide-up text-center px-6">
-                  <div class="relative">
-                     <div class="absolute inset-0 bg-emerald-400 blur-xl opacity-30 rounded-full animate-pulse-slow"></div>
-                     <div class="w-28 h-28 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-[2rem] flex items-center justify-center mb-2 shadow-2xl border-4 border-white relative z-10 transform hover:scale-105 transition-transform"><i class="ph-bold ph-check text-6xl"></i></div>
+              <div class="absolute inset-0 bg-white/80 backdrop-blur-sm z-0"></div>
+              <div class="relative z-10 flex flex-col items-center justify-center h-full space-y-3 py-2 animate-slide-up text-center px-4">
+                  <div class="relative mt-2">
+                     <div class="absolute inset-0 bg-emerald-400 blur-lg opacity-40 rounded-full animate-pulse-slow"></div>
+                     <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-2xl flex items-center justify-center shadow-xl border-2 border-white relative z-10 transform hover:scale-105 transition-transform"><i class="ph-bold ph-check text-4xl"></i></div>
                   </div>
-                  <h3 class="text-3xl lg:text-4xl font-black text-slate-900 tracking-tight drop-shadow-sm mt-4">Transaksi Sukses!</h3>
-                  <p class="text-sm lg:text-base text-slate-500 font-bold leading-relaxed max-w-sm">Pindai kode QR cerdas di bawah menggunakan kamera HP Anda untuk menyimpan e-Receipt digital secara instan.</p>
+                  <h3 class="text-2xl font-black text-slate-900 tracking-tight drop-shadow-sm">Transaksi Sukses!</h3>
+                  <p class="text-xs text-slate-500 font-bold leading-relaxed max-w-[250px]">Pindai kode QR untuk menyimpan e-Receipt.</p>
                   
-                  <div class="bg-white p-5 rounded-[2.5rem] shadow-floating border-2 border-slate-100 mt-4 relative overflow-hidden group">
+                  <div class="bg-white p-3 rounded-3xl shadow-floating border border-slate-200 mt-2 relative overflow-hidden group">
                      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-brand-500"></div>
-                     <div id="cds-qrcode-display" class="relative z-10 p-2"></div>
+                     <div id="cds-qrcode-display" class="relative z-10 p-1"></div>
                   </div>
                   
-                  <div class="flex items-center gap-2 mt-4 opacity-80">
-                     <i class="ph-fill ph-receipt text-slate-400 text-lg"></i>
-                     <span class="text-xs text-slate-500 font-black font-mono tracking-[0.2em] uppercase">${trxId}</span>
+                  <div class="flex items-center gap-1.5 mt-2 opacity-80">
+                     <i class="ph-fill ph-receipt text-slate-400 text-sm"></i>
+                     <span class="text-[10px] text-slate-500 font-black font-mono tracking-[0.2em] uppercase">${trxId}</span>
                   </div>
               </div>`;
-          setTimeout(() => { document.getElementById('cds-qrcode-display').innerHTML = ''; new QRCode(document.getElementById('cds-qrcode-display'), { text: qrUrl, width: 220, height: 220, colorDark : "#0f172a", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.H }); }, 100);
+              
+          // Mengurangi dimensi QR dari 220px ke 130px agar pasti muat
+          setTimeout(() => { document.getElementById('cds-qrcode-display').innerHTML = ''; new QRCode(document.getElementById('cds-qrcode-display'), { text: qrUrl, width: 130, height: 130, colorDark : "#0f172a", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.M }); }, 100);
           return;
       }
       
-      // Jika keranjang biasa
+      // JIKA KERANJANG KOSONG
       if(!liveCart || !liveCart.length) {
         container.innerHTML = `
-           <div class="flex flex-col items-center justify-center h-full text-slate-300 opacity-70 py-20">
-              <div class="relative mb-8">
-                 <div class="absolute inset-0 bg-brand-400 blur-2xl opacity-20 rounded-full animate-pulse-slow"></div>
-                 <i class="ph-duotone ph-shopping-cart text-8xl lg:text-9xl text-slate-300 relative z-10 animate-bounce" style="animation-duration: 3s;"></i>
+           <div class="flex flex-col items-center justify-center h-full text-slate-300 opacity-70 py-10">
+              <div class="relative mb-6">
+                 <div class="absolute inset-0 bg-brand-400 blur-xl opacity-20 rounded-full animate-pulse-slow"></div>
+                 <i class="ph-duotone ph-shopping-cart text-7xl text-slate-300 relative z-10 animate-bounce" style="animation-duration: 3s;"></i>
               </div>
-              <span class="text-xs lg:text-sm font-black tracking-[0.3em] uppercase text-slate-400 bg-white px-6 py-2.5 rounded-full shadow-sm border border-slate-100">Keranjang Masih Kosong</span>
+              <span class="text-[10px] font-black tracking-[0.2em] uppercase text-slate-400 bg-white px-5 py-2 rounded-full shadow-sm border border-slate-100">Keranjang Kosong</span>
            </div>`;
       } else {
+        // JIKA ADA BARANG MASUK
         container.innerHTML = '';
         liveCart.forEach((item, index) => {
           container.innerHTML += `
-            <div class="bg-white p-5 lg:p-6 rounded-[1.5rem] border border-slate-100 flex justify-between items-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all transform hover:-translate-y-1 relative overflow-hidden group" style="animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s forwards; opacity: 0; transform: translateY(20px);">
-              <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-brand-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div class="flex-1 min-w-0 pr-6">
-                <div class="font-black text-slate-900 text-lg lg:text-xl truncate tracking-tight mb-1 group-hover:text-brand-600 transition-colors">${item.name}</div>
-                <div class="text-sm lg:text-base text-slate-500 font-bold flex items-center gap-3">
-                   <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg font-black shadow-inner border border-slate-200/60">${item.qty}x</span> 
+            <div class="bg-white p-4 rounded-2xl border border-slate-100 flex justify-between items-center shadow-sm hover:shadow-md transition-all transform hover:-translate-y-1 relative overflow-hidden group" style="animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.05}s forwards; opacity: 0; transform: translateY(15px);">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="flex-1 min-w-0 pr-4">
+                <div class="font-black text-slate-900 text-base truncate tracking-tight mb-0.5 group-hover:text-brand-600 transition-colors">${item.name}</div>
+                <div class="text-xs text-slate-500 font-bold flex items-center gap-2">
+                   <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md shadow-inner border border-slate-200/60">${item.qty}x</span> 
                    <span class="opacity-80">${formatRp(item.price)}</span>
                 </div>
               </div>
-              <div class="text-brand-600 font-black text-2xl lg:text-3xl shrink-0 drop-shadow-sm bg-brand-50 px-4 py-2 rounded-xl border border-brand-100/50">${formatRp(item.price * item.qty)}</div>
+              <div class="text-brand-600 font-black text-xl shrink-0 drop-shadow-sm">${formatRp(item.price * item.qty)}</div>
             </div>`;
         });
       }
