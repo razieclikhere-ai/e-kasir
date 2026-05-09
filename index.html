@@ -32,10 +32,12 @@
             'slide-up': 'slideUp 0.5s ease-out forwards',
             'fade-in': 'fadeIn 0.3s ease-out forwards',
             'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'marquee': 'marquee 30s linear infinite',
           },
           keyframes: {
             slideUp: { '0%': { opacity: 0, transform: 'translateY(20px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
-            fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } }
+            fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+            marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } }
           }
         }
       }
@@ -154,7 +156,6 @@
 
   <!-- ================= LAYAR LOGIN & REGISTER ================= -->
   <div id="auth-wrapper" class="flex h-screen bg-pattern">
-    
     <!-- Bagian Kiri (Branding Toko - Hanya Desktop) -->
     <div class="hidden lg:flex w-1/2 relative bg-gradient-to-br from-brand-900 via-brand-800 to-slate-900 items-center justify-center p-12 overflow-hidden">
       <!-- Lingkaran Animasi Cahaya Belakang -->
@@ -174,7 +175,6 @@
     <!-- Bagian Kanan (Formulir Pengguna) -->
     <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 relative overflow-y-auto custom-scrollbar">
       <div class="w-full max-w-[420px] my-auto bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-[2rem] shadow-glass border border-white">
-        
         <!-- Header Formulir -->
         <div class="text-center mb-10">
           <div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto lg:hidden shadow-lg"><i class="ph-fill ph-storefront"></i></div>
@@ -737,26 +737,54 @@
   </div>
 
   <!-- ================= LAYAR PELANGGAN / CUSTOMER DISPLAY SYSTEM (CDS) ================= -->
-  <!-- Hanya muncul jika pengguna login sebagai "klien" atau Admin memaksa membuka menunya -->
   <div id="view-klien-dashboard" class="view-section hidden w-full h-screen animate-fade-in flex-col lg:flex-row bg-slate-900 overflow-hidden fixed inset-0 z-50">
       
       <!-- Area Gambar Promosi Berjalan (Slider Kiri) -->
-      <div class="flex-1 relative flex flex-col justify-between overflow-hidden order-2 lg:order-1 h-1/2 lg:h-full">
+      <div class="flex-1 relative flex flex-col justify-between overflow-hidden order-2 lg:order-1 h-1/2 lg:h-full bg-slate-900">
          <!-- Lapisan Gambar Animasi Transisi Halus -->
-         <div id="promo-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-105"></div>
-         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/30 to-transparent"></div>
+         <div id="promo-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-105 opacity-80"></div>
+         <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/95 via-slate-900/60 to-transparent"></div>
          
-         <div class="relative z-10 p-6 lg:p-14 h-full flex flex-col justify-end text-white pb-10 lg:pb-24">
-            <div class="mb-auto hidden lg:flex items-center gap-4 pt-4">
-               <div class="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-3xl shadow-glass border border-white/20"><i class="ph-fill ph-storefront"></i></div>
-               <h2 class="text-3xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg" id="cds-store-name-promo">JABANA SAVORY</h2>
+         <div class="relative z-10 p-6 lg:p-12 h-full flex flex-col justify-between text-white pb-14 lg:pb-20">
+            <!-- Header Branding -->
+            <div class="hidden lg:flex items-center justify-between w-full pt-2">
+               <div class="flex items-center gap-4">
+                 <div class="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-3xl shadow-glass border border-white/20"><i class="ph-fill ph-storefront"></i></div>
+                 <h2 class="text-3xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg" id="cds-store-name-promo">JABANA SAVORY</h2>
+               </div>
+               <!-- Lencana Status -->
+               <div class="px-4 py-2 bg-emerald-500/20 text-emerald-400 backdrop-blur-md rounded-full text-xs font-black tracking-widest flex items-center gap-2 border border-emerald-500/30">
+                 <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div> MELAYANI PESANAN
+               </div>
             </div>
 
-            <!-- Teks Nama Produk yang Sedang Tampil -->
-            <div class="animate-slide-up" id="promo-content">
-                <span class="px-3 py-1.5 bg-brand-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-lg mb-4 inline-block shadow-lg shadow-brand-500/40">Rekomendasi Spesial</span>
-                <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black mb-3 lg:mb-4 tracking-tighter drop-shadow-xl leading-tight" id="cds-promo-title">Selamat Datang</h1>
-                <p class="text-sm sm:text-lg lg:text-2xl text-slate-300 font-medium drop-shadow-md" id="cds-promo-desc">Nikmati sajian istimewa dari dapur kami.</p>
+            <!-- Teks Utama yang Berganti -->
+            <div class="animate-slide-up mt-auto mb-8 lg:mb-12" id="promo-content">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-brand-600 to-purple-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-lg mb-4 shadow-lg shadow-brand-500/40">
+                  <i class="ph-fill ph-star"></i> Rekomendasi Spesial
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black mb-3 lg:mb-4 tracking-tighter drop-shadow-2xl leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200" id="cds-promo-title">Selamat Datang</h1>
+                <p class="text-lg sm:text-xl lg:text-3xl text-brand-100 font-semibold drop-shadow-md flex items-center gap-3" id="cds-promo-desc">Nikmati sajian istimewa dari dapur kami.</p>
+            </div>
+
+            <!-- Carousel / Grid Produk Rekomendasi Bawah -->
+            <div class="hidden lg:block w-full">
+                <h3 class="text-[11px] font-black text-slate-300 uppercase tracking-[0.3em] mb-4 flex items-center gap-2"><i class="ph-bold ph-fire text-orange-500"></i> Menu Paling Diminati</h3>
+                <div class="grid grid-cols-3 gap-4" id="cds-promo-grid">
+                    <!-- Muncul otomatis dari JS -->
+                </div>
+            </div>
+         </div>
+
+         <!-- Running Text Promosi Bawah -->
+         <div class="absolute bottom-0 left-0 w-full bg-brand-600/90 backdrop-blur-md text-white text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase py-3 overflow-hidden z-20 flex whitespace-nowrap border-t border-white/10 shadow-[0_-10px_30px_rgba(79,70,229,0.3)]">
+            <div class="animate-marquee inline-block">
+                <span class="mx-6">🌟 NIKMATI POTONGAN HARGA KHUSUS UNTUK PELANGGAN SETIA</span> • 
+                <span class="mx-6">🔥 COBA MENU BARU KAMI HARI INI</span> • 
+                <span class="mx-6">💳 KAMI MENERIMA PEMBAYARAN QRIS, KARTU DEBIT, DAN TUNAI</span> •
+                <span class="mx-6">🌟 NIKMATI POTONGAN HARGA KHUSUS UNTUK PELANGGAN SETIA</span> • 
+                <span class="mx-6">🔥 COBA MENU BARU KAMI HARI INI</span> • 
+                <span class="mx-6">💳 KAMI MENERIMA PEMBAYARAN QRIS, KARTU DEBIT, DAN TUNAI</span>
             </div>
          </div>
       </div>
@@ -768,7 +796,7 @@
          <div class="p-6 lg:p-10 border-b border-slate-100 bg-slate-50/80 flex items-center justify-between shrink-0">
             <div>
                <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Pesanan Anda</h3>
-               <p class="text-[10px] lg:text-xs text-slate-500 font-bold uppercase tracking-[0.2em] mt-1.5">Live View</p>
+               <p class="text-[10px] lg:text-xs text-slate-500 font-bold uppercase tracking-[0.2em] mt-1.5">Live View Sinkronisasi</p>
             </div>
             <!-- Indikator Sinkron Kedap-Kedip -->
             <span class="px-3 py-1.5 lg:px-4 lg:py-2 bg-emerald-100 text-emerald-700 rounded-xl text-[10px] lg:text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-sm border border-emerald-200"><div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div> Sinkron</span>
@@ -852,7 +880,7 @@
 
   <!-- Pratinjau QR Code Struk Digital -->
   <div id="modal-qrcode" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center z-[100] p-4">
-    <div class="bg-white p-8 rounded-[2rem] w-full max-w-[280px] text-center shadow-floating transform transition-transform duration-300 border border-slate-100">
+    <div class="bg-white p-8 rounded-[2rem] w-full max-w-[320px] text-center shadow-floating transform transition-transform duration-300 border border-slate-100">
        <div class="flex justify-end mb-2 -mt-4 -mr-4">
           <button onclick="closeModal('modal-qrcode')" class="text-slate-400 hover:text-slate-800 bg-slate-50 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
        </div>
@@ -1019,13 +1047,13 @@
                 const h = getReceiptHTML(trx.trxId, trx.date, trx.total, trx.cash, trx.change, trx.client, trx.cashier, items);
                 document.body.innerHTML = `
                   <div class="min-h-screen bg-[#f4f7fb] flex flex-col items-center py-10 px-4 bg-pattern">
-                    <div class="w-full max-w-[340px] bg-white p-6 rounded-[2rem] shadow-floating border border-slate-100 mb-6 animate-slide-up relative overflow-hidden">
+                    <div id="area-struk-mobile" class="w-full max-w-[340px] bg-white p-6 rounded-[2rem] shadow-floating border border-slate-100 mb-6 animate-slide-up relative overflow-hidden">
                       <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-500 to-purple-500"></div>
                       ${h}
                     </div>
                     <div class="w-full max-w-[340px] flex flex-col gap-3 animate-slide-up" style="animation-delay: 0.1s;">
-                       <button onclick="window.print()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-4 rounded-2xl text-sm flex justify-center items-center gap-2 shadow-lg shadow-brand-500/30 transition-all">
-                         <i class="ph-bold ph-printer text-xl"></i> Simpan PDF / Cetak
+                       <button onclick="downloadMobilePDF('${trx.trxId}')" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-4 rounded-2xl text-sm flex justify-center items-center gap-2 shadow-lg shadow-brand-500/30 transition-all">
+                         <i class="ph-bold ph-download-simple text-xl"></i> Unduh Struk (PDF)
                        </button>
                        <a href="${safeBaseUrl}" class="w-full bg-white text-slate-700 font-bold py-4 rounded-2xl text-sm text-center shadow-sm border border-slate-200 hover:bg-slate-50 transition-all">
                          Halaman Utama
@@ -1581,6 +1609,27 @@
       if(promoInterval) clearInterval(promoInterval);
       
       const promoItems = products.filter(p => p.image);
+      const allItems = products.length > 0 ? products : [];
+      
+      // Mengisi Grid Rekomendasi di Bawah Layar Klien
+      const grid = document.getElementById('cds-promo-grid');
+      if (grid && allItems.length > 0) {
+          // Ambil 3 produk teratas
+          const top3 = allItems.slice(0, 3);
+          grid.innerHTML = '';
+          top3.forEach((p, idx) => {
+              const bg = p.image ? `background-image: url('${p.image}')` : `background-color: #334155`;
+              grid.innerHTML += `
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-2xl flex items-center gap-3 hover:bg-white/20 transition-all animate-slide-up" style="animation-delay: ${idx * 0.1}s">
+                   <div class="w-14 h-14 rounded-xl bg-cover bg-center shadow-inner shrink-0" style="${bg}"></div>
+                   <div class="overflow-hidden">
+                      <div class="text-xs font-black text-white truncate tracking-wide">${p.name}</div>
+                      <div class="text-[10px] font-bold text-brand-200 mt-1">${formatRp(p.price)}</div>
+                   </div>
+                </div>
+              `;
+          });
+      }
       
       // Menggunakan gambar kuliner premium berkecepatan tinggi sebagai fallback
       const defaultImages = [
@@ -1598,11 +1647,11 @@
               const item = promoItems[promoIndex % promoItems.length];
               if(slider) slider.style.backgroundImage = `url('${item.image}')`;
               if(title) { title.innerText = item.name; title.classList.remove('animate-slide-up'); void title.offsetWidth; title.classList.add('animate-slide-up'); }
-              if(desc) desc.innerText = `Rekomendasi Spesial: ${formatRp(item.price)}`;
+              if(desc) desc.innerText = `Cuma ${formatRp(item.price)} - Spesial Hari Ini!`;
           } else {
               const img = defaultImages[promoIndex % defaultImages.length];
               if(slider) slider.style.backgroundImage = `url('${img}')`;
-              if(title) { title.innerText = "Selamat Datang"; title.classList.remove('animate-slide-up'); void title.offsetWidth; title.classList.add('animate-slide-up'); }
+              if(title) { title.innerText = "Kualitas Premium"; title.classList.remove('animate-slide-up'); void title.offsetWidth; title.classList.add('animate-slide-up'); }
               if(desc) desc.innerText = "Nikmati sajian istimewa dari dapur kami.";
           }
           promoIndex++;
@@ -1644,8 +1693,18 @@
                   </div>
               </div>`;
               
-          // Mengurangi dimensi QR dari 220px ke 130px agar pasti muat
-          setTimeout(() => { document.getElementById('cds-qrcode-display').innerHTML = ''; new QRCode(document.getElementById('cds-qrcode-display'), { text: qrUrl, width: 130, height: 130, colorDark : "#0f172a", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.M }); }, 100);
+          // Menyesuaikan ukuran QR Code agar tampil super jernih dan mudah di-scan oleh kamera HP
+          setTimeout(() => { 
+            document.getElementById('cds-qrcode-display').innerHTML = ''; 
+            new QRCode(document.getElementById('cds-qrcode-display'), { 
+              text: qrUrl, 
+              width: 160, 
+              height: 160, 
+              colorDark : "#000000", 
+              colorLight: "#ffffff", 
+              correctLevel : QRCode.CorrectLevel.L 
+            }); 
+          }, 100);
           return;
       }
       
@@ -1680,6 +1739,22 @@
     }
 
     // ================= FUNGSI BANTUAN LAINNYA (CETAK PDF, QR, DLL) =================
+    
+    // Fungsi khusus untuk HP/Mobile agar struk bisa diunduh langsung menjadi PDF
+    function downloadMobilePDF(tid) {
+      showToast("Memproses Struk PDF...");
+      const element = document.getElementById('area-struk-mobile');
+      html2pdf().set({ 
+        margin: 0.1, 
+        filename: `Struk_${tid}.pdf`, 
+        image: { type: 'jpeg', quality: 1 }, 
+        html2canvas: { scale: 3, useCORS: true }, 
+        jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
+      }).from(element).save().then(() => {
+        showToast("Struk berhasil diunduh!");
+      });
+    }
+
     function generateReceipt(tid, d, t, c, cg, cl, ksr, items) {
       const a = document.getElementById('receipt-print-area'), m = document.getElementById('receipt-visual-content');
       let h = getReceiptHTML(tid, d, t, c, cg, cl, ksr, items);
@@ -1710,7 +1785,7 @@
     function showQRCode(tid) {
       currentQRTrx = tid; document.getElementById('qr-trx-id').innerText = tid;
       const qrc = document.getElementById('qrcode-container'); qrc.innerHTML = ''; 
-      new QRCode(qrc, { text: window.location.href.split('?')[0].split('#')[0] + "?receipt=" + tid, width: 200, height: 200, colorDark: "#0f172a" });
+      new QRCode(qrc, { text: window.location.href.split('?')[0].split('#')[0] + "?receipt=" + tid, width: 240, height: 240, colorDark: "#000000", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.L });
       openModal('modal-qrcode');
     }
     
