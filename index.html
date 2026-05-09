@@ -50,7 +50,7 @@
     
     body.cds-mode header, body.cds-mode aside, body.cds-mode .mobile-bottom-nav, body.cds-mode main { display: none !important; }
 
-    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
@@ -120,19 +120,19 @@
 </head>
 <body class="overflow-hidden selection:bg-brand-100 selection:text-brand-900 relative text-slate-800">
 
-  <div id="toast" class="fixed top-6 right-6 px-5 py-4 rounded-2xl shadow-floating z-[100] text-sm font-semibold tracking-wide transform translate-x-[120%] opacity-0 transition-all duration-400 ease-out flex items-center gap-3 border card-glass text-slate-800 border-slate-200">
+  <div id="toast" class="fixed top-6 right-6 px-4 py-3 sm:px-5 sm:py-4 rounded-2xl shadow-floating z-[100] text-xs sm:text-sm font-semibold tracking-wide transform translate-x-[120%] opacity-0 transition-all duration-400 ease-out flex items-center gap-3 border card-glass text-slate-800 border-slate-200">
     <i id="toast-icon" class="text-xl"></i>
     <span id="toast-msg"></span>
   </div>
 
   <div id="modal-confirm" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[90] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-8 rounded-[2rem] w-full max-w-sm shadow-floating flex flex-col items-center transform transition-transform duration-300 text-center border border-white">
-      <div class="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-5 shadow-sm"><i class="ph-fill ph-warning-octagon text-3xl"></i></div>
-      <h3 class="text-xl font-extrabold text-slate-900 mb-2">Konfirmasi Tindakan</h3>
-      <p id="confirm-msg" class="text-sm text-slate-500 mb-8 font-medium">Apakah Anda yakin ingin melanjutkan?</p>
-      <div class="flex gap-3 w-full">
-        <button onclick="closeModal('modal-confirm')" class="flex-1 py-3.5 bg-slate-100 text-slate-600 font-bold rounded-xl hover:bg-slate-200 transition-colors">Batal</button>
-        <button id="btn-confirm-yes" class="flex-1 py-3.5 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors shadow-lg shadow-red-500/30">Ya, Lanjutkan</button>
+    <div class="bg-white p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] w-full max-w-[320px] sm:max-w-sm shadow-floating flex flex-col items-center transform transition-transform duration-300 text-center border border-white">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 shadow-sm"><i class="ph-fill ph-warning-octagon text-3xl"></i></div>
+      <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-1 sm:mb-2">Konfirmasi</h3>
+      <p id="confirm-msg" class="text-xs sm:text-sm text-slate-500 mb-6 sm:mb-8 font-medium">Apakah Anda yakin ingin melanjutkan?</p>
+      <div class="flex gap-2 sm:gap-3 w-full">
+        <button onclick="closeModal('modal-confirm')" class="flex-1 py-3 bg-slate-100 text-slate-600 font-bold rounded-xl text-xs sm:text-sm hover:bg-slate-200 transition-colors">Batal</button>
+        <button id="btn-confirm-yes" class="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl text-xs sm:text-sm hover:bg-red-600 transition-colors shadow-lg shadow-red-500/30">Ya, Lanjutkan</button>
       </div>
     </div>
   </div>
@@ -150,499 +150,513 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 relative overflow-y-auto custom-scrollbar">
-      <div class="w-full max-w-[420px] my-auto bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-[2rem] shadow-glass border border-white">
-        <div class="text-center mb-10">
-          <div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto lg:hidden shadow-lg"><i class="ph-fill ph-storefront"></i></div>
-          <h2 class="text-3xl font-black text-slate-900 tracking-tight" id="auth-title">Selamat Datang</h2>
-          <p class="text-slate-500 text-sm mt-2 font-medium" id="auth-subtitle">Silakan masuk menggunakan akun Anda.</p>
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-5 sm:p-12 relative overflow-y-auto custom-scrollbar">
+      <div class="w-full max-w-[420px] my-auto bg-white/90 backdrop-blur-xl p-6 sm:p-10 rounded-[2rem] shadow-glass border border-white">
+        <div class="text-center mb-8 sm:mb-10">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-2xl flex items-center justify-center text-2xl sm:text-3xl mb-5 mx-auto lg:hidden shadow-lg"><i class="ph-fill ph-storefront"></i></div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" id="auth-title">Selamat Datang</h2>
+          <p class="text-slate-500 text-xs sm:text-sm mt-2 font-medium" id="auth-subtitle">Silakan masuk menggunakan akun Anda.</p>
         </div>
 
-        <form id="login-form" onsubmit="event.preventDefault(); handleLogin();" class="space-y-5 animate-slide-up">
+        <form id="login-form" onsubmit="event.preventDefault(); handleLogin();" class="space-y-4 sm:space-y-5 animate-slide-up">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">ID Pengguna</label>
+            <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">ID Pengguna</label>
             <div class="relative">
-              <i class="ph-fill ph-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
-              <input type="text" id="username" class="w-full pl-12 pr-4 py-3.5 input-clean text-sm font-semibold text-slate-900" placeholder="Ketik username Anda" required>
+              <i class="ph-fill ph-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-base sm:text-lg"></i>
+              <input type="text" id="username" class="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-3.5 input-clean text-xs sm:text-sm font-semibold text-slate-900" placeholder="Ketik username Anda" required>
             </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Kata Sandi</label>
+            <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Kata Sandi</label>
             <div class="relative">
-              <i class="ph-fill ph-lock-key absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
-              <input type="password" id="password" class="w-full pl-12 pr-12 py-3.5 input-clean text-sm font-semibold text-slate-900" placeholder="••••••••" required>
-              <button type="button" onclick="togglePassword('password', 'eye-icon')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brand-600 transition-colors"><i id="eye-icon" class="ph-bold ph-eye text-lg"></i></button>
+              <i class="ph-fill ph-lock-key absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-base sm:text-lg"></i>
+              <input type="password" id="password" class="w-full pl-10 sm:pl-12 pr-12 py-3 sm:py-3.5 input-clean text-xs sm:text-sm font-semibold text-slate-900" placeholder="••••••••" required>
+              <button type="button" onclick="togglePassword('password', 'eye-icon')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brand-600 transition-colors"><i id="eye-icon" class="ph-bold ph-eye text-base sm:text-lg"></i></button>
             </div>
           </div>
           <div class="flex items-center justify-between pt-1">
-            <label class="flex items-center gap-2.5 cursor-pointer group">
+            <label class="flex items-center gap-2 cursor-pointer group">
               <div class="relative flex items-center justify-center">
-                <input type="checkbox" id="remember-me" class="w-5 h-5 appearance-none rounded-md border-2 border-slate-300 checked:border-brand-500 checked:bg-brand-500 transition-colors cursor-pointer">
-                <i class="ph-bold ph-check text-white text-xs absolute pointer-events-none opacity-0 peer-checked:opacity-100" style="opacity: 0;"></i>
+                <input type="checkbox" id="remember-me" class="w-4 h-4 sm:w-5 sm:h-5 appearance-none rounded border-2 border-slate-300 checked:border-brand-500 checked:bg-brand-500 transition-colors cursor-pointer">
+                <i class="ph-bold ph-check text-white text-[10px] sm:text-xs absolute pointer-events-none opacity-0 peer-checked:opacity-100" style="opacity: 0;"></i>
               </div>
-              <span class="text-sm font-semibold text-slate-600 group-hover:text-slate-900 transition-colors">Ingat Saya</span>
+              <span class="text-xs sm:text-sm font-semibold text-slate-600 group-hover:text-slate-900 transition-colors">Ingat Saya</span>
             </label>
-            <a href="#" onclick="showToast('Silakan hubungi Administrator.', true);" class="text-sm font-bold text-brand-600 hover:text-brand-800 transition-colors">Lupa Sandi?</a>
+            <a href="#" onclick="showToast('Silakan hubungi Administrator.', true);" class="text-xs sm:text-sm font-bold text-brand-600 hover:text-brand-800 transition-colors">Lupa Sandi?</a>
           </div>
-          <button type="submit" id="btn-login" class="w-full btn-solid font-bold py-4 mt-4 flex justify-center items-center gap-2 text-base">
+          <button type="submit" id="btn-login" class="w-full btn-solid font-bold py-3.5 sm:py-4 mt-2 sm:mt-4 flex justify-center items-center gap-2 text-sm sm:text-base">
             Masuk Portal <i class="ph-bold ph-arrow-right"></i>
           </button>
-          <div class="text-center mt-8 pt-6 border-t border-slate-100">
-            <p class="text-sm text-slate-500 font-medium">Buka akses Layar Pelanggan? <a href="#" onclick="toggleRegister()" class="text-brand-600 font-bold hover:underline ml-1">Daftar Klien</a></p>
+          <div class="text-center mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-slate-100">
+            <p class="text-xs sm:text-sm text-slate-500 font-medium">Buka akses Layar Pelanggan? <a href="#" onclick="toggleRegister()" class="text-brand-600 font-bold hover:underline ml-1">Daftar Klien</a></p>
           </div>
         </form>
 
-        <form id="register-form" onsubmit="event.preventDefault(); handleRegister();" class="space-y-5 hidden animate-slide-up">
+        <form id="register-form" onsubmit="event.preventDefault(); handleRegister();" class="space-y-4 sm:space-y-5 hidden animate-slide-up">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Nama Layar (Klien)</label>
-            <input type="text" id="reg-name" class="w-full px-4 py-3.5 input-clean text-sm font-semibold text-slate-900" placeholder="Contoh: Layar Depan" required>
+            <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama Layar (Klien)</label>
+            <input type="text" id="reg-name" class="w-full px-4 py-3 sm:py-3.5 input-clean text-xs sm:text-sm font-semibold text-slate-900" placeholder="Contoh: Layar Depan" required>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">ID Akses</label>
-            <input type="text" id="reg-user" class="w-full px-4 py-3.5 input-clean text-sm font-semibold text-slate-900" placeholder="Buat username layar" required>
+            <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">ID Akses</label>
+            <input type="text" id="reg-user" class="w-full px-4 py-3 sm:py-3.5 input-clean text-xs sm:text-sm font-semibold text-slate-900" placeholder="Buat username layar" required>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Kata Sandi</label>
+            <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Kata Sandi</label>
             <div class="relative">
-              <input type="password" id="reg-pass" class="w-full pl-4 pr-12 py-3.5 input-clean text-sm font-semibold text-slate-900" placeholder="Buat sandi baru" required>
-              <button type="button" onclick="togglePassword('reg-pass', 'reg-eye-icon')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brand-600"><i id="reg-eye-icon" class="ph-bold ph-eye text-lg"></i></button>
+              <input type="password" id="reg-pass" class="w-full pl-4 pr-12 py-3 sm:py-3.5 input-clean text-xs sm:text-sm font-semibold text-slate-900" placeholder="Buat sandi baru" required>
+              <button type="button" onclick="togglePassword('reg-pass', 'reg-eye-icon')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brand-600"><i id="reg-eye-icon" class="ph-bold ph-eye text-base sm:text-lg"></i></button>
             </div>
           </div>
-          <button type="submit" id="btn-register" class="w-full btn-dark font-bold py-4 mt-4 flex justify-center items-center gap-2 text-base">
+          <button type="submit" id="btn-register" class="w-full btn-dark font-bold py-3.5 sm:py-4 mt-2 sm:mt-4 flex justify-center items-center gap-2 text-sm sm:text-base">
             Ajukan Akses <i class="ph-bold ph-paper-plane-tilt"></i>
           </button>
-          <div class="text-center mt-8 pt-6 border-t border-slate-100">
-            <p class="text-sm text-slate-500 font-medium">Sudah disetujui? <a href="#" onclick="toggleRegister()" class="text-brand-600 font-bold hover:underline ml-1">Kembali Masuk</a></p>
+          <div class="text-center mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-slate-100">
+            <p class="text-xs sm:text-sm text-slate-500 font-medium">Sudah disetujui? <a href="#" onclick="toggleRegister()" class="text-brand-600 font-bold hover:underline ml-1">Kembali Masuk</a></p>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <div id="app-wrapper" class="hidden h-screen bg-[#f4f7fb] flex overflow-hidden">
+  <div id="app-wrapper" class="hidden h-[100dvh] bg-[#f4f7fb] flex overflow-hidden">
     <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity opacity-0 duration-300"></div>
 
-    <aside id="sidebar" class="w-[280px] bg-white border-r border-slate-100 flex flex-col transition-transform duration-300 fixed lg:relative z-50 h-full -translate-x-full lg:translate-x-0 shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-      <div class="h-20 flex justify-between items-center px-6 border-b border-slate-50 shrink-0">
+    <aside id="sidebar" class="w-[260px] sm:w-[280px] bg-white border-r border-slate-100 flex flex-col transition-transform duration-300 fixed lg:relative z-50 h-full -translate-x-full lg:translate-x-0 shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+      <div class="h-16 sm:h-20 flex justify-between items-center px-5 sm:px-6 border-b border-slate-50 shrink-0">
         <div class="flex items-center gap-3 w-full">
-          <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-xl flex items-center justify-center text-xl shadow-lg shadow-brand-500/20 shrink-0" id="sidebar-logo-container"><i class="ph-fill ph-storefront"></i></div>
-          <span class="font-black text-slate-900 tracking-tight text-xl truncate" id="app-brand-name">JABANA</span>
+          <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl shadow-lg shadow-brand-500/20 shrink-0" id="sidebar-logo-container"><i class="ph-fill ph-storefront"></i></div>
+          <span class="font-black text-slate-900 tracking-tight text-lg sm:text-xl truncate" id="app-brand-name">JABANA</span>
         </div>
-        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-slate-900 p-2 bg-slate-50 rounded-lg"><i class="ph-bold ph-x text-xl"></i></button>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-slate-900 p-1.5 sm:p-2 bg-slate-50 rounded-lg"><i class="ph-bold ph-x text-lg sm:text-xl"></i></button>
       </div>
       
-      <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1.5 custom-scrollbar" id="nav-menu">
-        <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 px-3">Main Menu</div>
-        <button onclick="switchView('dashboard')" class="nav-item role-admin role-user w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-squares-four text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Dasbor
+      <div class="flex-1 overflow-y-auto py-5 sm:py-6 px-3 sm:px-4 space-y-1 sm:space-y-1.5 custom-scrollbar" id="nav-menu">
+        <div class="text-[10px] sm:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 sm:mb-3 px-3">Main Menu</div>
+        <button onclick="switchView('dashboard')" class="nav-item role-admin role-user w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-squares-four text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Dasbor
         </button>
-        <button onclick="switchView('pos')" class="nav-item role-admin role-user w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-calculator text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Terminal Kasir
+        <button onclick="switchView('pos')" class="nav-item role-admin role-user w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-calculator text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Terminal Kasir
         </button>
-        <button onclick="switchView('transactions')" class="nav-item role-admin role-user w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-receipt text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Riwayat
+        <button onclick="switchView('transactions')" class="nav-item role-admin role-user w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-receipt text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Riwayat
         </button>
-        <button onclick="switchView('reports')" class="nav-item role-admin role-user w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-chart-line-up text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Laporan
-        </button>
-
-        <div class="role-admin text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 px-3 mt-8 hidden">Manajemen</div>
-        <button onclick="switchView('products')" class="nav-item role-admin w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-package text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Produk & Aset
-        </button>
-        <button onclick="switchView('users')" class="nav-item role-admin w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-users text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Pengguna
+        <button onclick="switchView('reports')" class="nav-item role-admin role-user w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-chart-line-up text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Laporan
         </button>
 
-        <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 px-3 mt-8">Sistem</div>
-        <button onclick="switchView('config')" class="nav-item role-admin w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-gear text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Pengaturan Toko
+        <div class="role-admin text-[10px] sm:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 sm:mb-3 px-3 mt-6 sm:mt-8 hidden">Manajemen</div>
+        <button onclick="switchView('products')" class="nav-item role-admin w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-package text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Produk & Aset
         </button>
-        <button onclick="switchView('activity')" class="nav-item role-admin w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-clock-counter-clockwise text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Log Aktivitas
+        <button onclick="switchView('users')" class="nav-item role-admin w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-users text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Pengguna
         </button>
-        <button onclick="switchView('profile')" class="nav-item w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left group">
-          <i class="ph-duotone ph-user-circle text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Profil Saya
+
+        <div class="text-[10px] sm:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 sm:mb-3 px-3 mt-6 sm:mt-8">Sistem</div>
+        <button onclick="switchView('config')" class="nav-item role-admin w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-gear text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Pengaturan Toko
+        </button>
+        <button onclick="switchView('activity')" class="nav-item role-admin w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-clock-counter-clockwise text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Log Aktivitas
+        </button>
+        <button onclick="switchView('profile')" class="nav-item w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left group">
+          <i class="ph-duotone ph-user-circle text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Profil Saya
         </button>
         
-        <button onclick="switchView('klien-dashboard')" class="nav-item role-klien role-admin w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
-          <i class="ph-duotone ph-monitor-play text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Mode Klien
+        <button onclick="switchView('klien-dashboard')" class="nav-item role-klien role-admin w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-monitor-play text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Mode Klien
         </button>
       </div>
       
-      <div class="p-5 border-t border-slate-50 shrink-0 bg-slate-50/50">
-        <div class="flex items-center justify-between bg-white p-2.5 rounded-2xl border border-slate-100 shadow-sm">
-          <div class="flex items-center gap-3 min-w-0 pl-1">
-            <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-black text-sm shrink-0" id="user-avatar">A</div>
+      <div class="p-4 sm:p-5 border-t border-slate-50 shrink-0 bg-slate-50/50">
+        <div class="flex items-center justify-between bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-100 shadow-sm">
+          <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 pl-1">
+            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-black text-xs sm:text-sm shrink-0" id="user-avatar">A</div>
             <div class="overflow-hidden">
-              <div class="text-xs font-black text-slate-900 truncate" id="user-name">Admin</div>
-              <div class="text-[10px] font-bold text-emerald-500 flex items-center gap-1 mt-0.5"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div> Aktif</div>
+              <div class="text-[11px] sm:text-xs font-black text-slate-900 truncate" id="user-name">Admin</div>
+              <div class="text-[9px] sm:text-[10px] font-bold text-emerald-500 flex items-center gap-1 mt-0.5"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div> Aktif</div>
             </div>
           </div>
-          <button onclick="logout()" class="text-slate-400 hover:text-red-500 p-2 rounded-xl hover:bg-red-50 transition-colors" title="Keluar">
-            <i class="ph-bold ph-sign-out text-xl"></i>
+          <button onclick="logout()" class="text-slate-400 hover:text-red-500 p-1.5 sm:p-2 rounded-xl hover:bg-red-50 transition-colors" title="Keluar">
+            <i class="ph-bold ph-sign-out text-lg sm:text-xl"></i>
           </button>
         </div>
       </div>
     </aside>
 
     <div class="flex-1 flex flex-col min-w-0 relative" id="main-content-wrapper">
-      <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/50 flex items-center justify-between px-6 lg:px-8 z-30 shrink-0 sticky top-0">
-        <div class="flex items-center gap-4">
-          <button onclick="toggleSidebar()" class="lg:hidden text-slate-500 hover:text-brand-600 transition-colors bg-white p-2 rounded-xl shadow-sm border border-slate-100"><i class="ph-bold ph-list text-xl"></i></button>
-          <h2 id="topbar-title" class="text-2xl font-black text-slate-900 tracking-tight">Beranda</h2>
+      <header class="h-16 sm:h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/50 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-30 shrink-0 sticky top-0">
+        <div class="flex items-center gap-3 sm:gap-4">
+          <button onclick="toggleSidebar()" class="lg:hidden text-slate-500 hover:text-brand-600 transition-colors bg-white p-1.5 sm:p-2 rounded-xl shadow-sm border border-slate-100"><i class="ph-bold ph-list text-xl"></i></button>
+          <h2 id="topbar-title" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">Beranda</h2>
         </div>
-        <div class="flex items-center gap-5">
-          <div id="dash-active-users-badge" class="hidden sm:flex text-xs font-bold text-slate-600 items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-100">
+        <div class="flex items-center gap-3 sm:gap-5">
+          <div id="dash-active-users-badge" class="hidden sm:flex text-[10px] sm:text-xs font-bold text-slate-600 items-center gap-1.5 sm:gap-2 bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm border border-slate-100">
             <i class="ph-fill ph-users text-brand-500"></i> <span id="dash-active-users-count">Memuat...</span>
           </div>
-          <div class="text-sm font-black text-slate-800 font-mono bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200" id="clock-display">00:00:00</div>
+          <div class="text-xs sm:text-sm font-black text-slate-800 font-mono bg-slate-100 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg border border-slate-200" id="clock-display">00:00:00</div>
         </div>
       </header>
 
-      <main class="flex-1 flex flex-col overflow-y-auto overflow-x-hidden custom-scrollbar w-full p-4 sm:p-8 pb-24 lg:pb-8 relative z-0">
+      <main class="flex-1 flex flex-col overflow-y-auto overflow-x-hidden custom-scrollbar w-full p-3 sm:p-6 lg:p-8 pb-24 lg:pb-8 relative z-0">
         
-        <div id="view-dashboard" class="view-section hidden max-w-7xl mx-auto w-full space-y-6 animate-slide-up">
-          <div class="flex justify-between items-end mb-2">
+        <!-- HALAMAN 1: DASHBOARD ANALITIK -->
+        <div id="view-dashboard" class="view-section hidden max-w-7xl mx-auto w-full space-y-4 sm:space-y-6 animate-slide-up">
+          <div class="flex justify-between items-end mb-1 sm:mb-2">
             <div>
-              <h3 class="text-base font-black text-slate-900">Ringkasan Hari Ini</h3>
-              <p class="text-xs font-medium text-slate-500 mt-1">Pantau performa bisnis Anda secara real-time.</p>
+              <h3 class="text-sm sm:text-base font-black text-slate-900">Ringkasan Hari Ini</h3>
+              <p class="text-[10px] sm:text-xs font-medium text-slate-500 mt-0.5 sm:mt-1">Pantau performa bisnis Anda secara real-time.</p>
             </div>
-            <button onclick="loadDashboardStats()" class="bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-xs font-bold py-2 px-3 rounded-xl flex items-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-sm"></i> Segarkan</button>
+            <button onclick="loadDashboardStats()" class="bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-2.5 sm:px-3 rounded-lg sm:rounded-xl flex items-center gap-1.5 sm:gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-xs sm:text-sm"></i> Segarkan</button>
           </div>
 
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div class="card-glass p-6 flex flex-col justify-center relative overflow-hidden group">
-              <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="ph-fill ph-trend-up text-6xl text-brand-500"></i></div>
-              <div class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Omzet Harian</div>
-              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" id="dash-revenue-today">Rp 0</div>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div class="card-glass p-4 sm:p-6 flex flex-col justify-center relative overflow-hidden group">
+              <div class="absolute top-0 right-0 p-3 sm:p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="ph-fill ph-trend-up text-4xl sm:text-6xl text-brand-500"></i></div>
+              <div class="text-[10px] sm:text-xs font-bold text-slate-500 mb-1 sm:mb-2 uppercase tracking-wider">Omzet Harian</div>
+              <div class="text-lg sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight truncate" id="dash-revenue-today">Rp 0</div>
             </div>
-            <div class="card-glass p-6 flex flex-col justify-center bg-gradient-to-br from-brand-600 to-brand-900 text-white border-transparent relative overflow-hidden shadow-glow">
-              <div class="absolute top-0 right-0 p-4 opacity-20"><i class="ph-fill ph-wallet text-6xl text-white"></i></div>
-              <div class="text-xs font-bold text-brand-200 mb-2 uppercase tracking-wider relative z-10">Total Akumulasi</div>
-              <div class="text-2xl sm:text-3xl font-black text-white tracking-tight relative z-10 drop-shadow-md" id="dash-revenue-total">Rp 0</div>
+            <div class="card-glass p-4 sm:p-6 flex flex-col justify-center bg-gradient-to-br from-brand-600 to-brand-900 text-white border-transparent relative overflow-hidden shadow-glow">
+              <div class="absolute top-0 right-0 p-3 sm:p-4 opacity-20"><i class="ph-fill ph-wallet text-4xl sm:text-6xl text-white"></i></div>
+              <div class="text-[10px] sm:text-xs font-bold text-brand-200 mb-1 sm:mb-2 uppercase tracking-wider relative z-10">Total Akumulasi</div>
+              <div class="text-lg sm:text-2xl lg:text-3xl font-black text-white tracking-tight relative z-10 drop-shadow-md truncate" id="dash-revenue-total">Rp 0</div>
             </div>
-            <div class="card-glass p-6 flex flex-col justify-center relative overflow-hidden group">
-              <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="ph-fill ph-receipt text-6xl text-slate-500"></i></div>
-              <div class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Transaksi</div>
-              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" id="dash-trx-count">0</div>
+            <div class="card-glass p-4 sm:p-6 flex flex-col justify-center relative overflow-hidden group">
+              <div class="absolute top-0 right-0 p-3 sm:p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="ph-fill ph-receipt text-4xl sm:text-6xl text-slate-500"></i></div>
+              <div class="text-[10px] sm:text-xs font-bold text-slate-500 mb-1 sm:mb-2 uppercase tracking-wider">Transaksi</div>
+              <div class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight" id="dash-trx-count">0</div>
             </div>
-            <div class="card-glass p-6 flex flex-col justify-center relative overflow-hidden group">
-              <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="ph-fill ph-package text-6xl text-slate-500"></i></div>
-              <div class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Katalog Aset</div>
-              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" id="dash-prod-count">0</div>
+            <div class="card-glass p-4 sm:p-6 flex flex-col justify-center relative overflow-hidden group">
+              <div class="absolute top-0 right-0 p-3 sm:p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="ph-fill ph-package text-4xl sm:text-6xl text-slate-500"></i></div>
+              <div class="text-[10px] sm:text-xs font-bold text-slate-500 mb-1 sm:mb-2 uppercase tracking-wider">Katalog Aset</div>
+              <div class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight" id="dash-prod-count">0</div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-2">
-            <div class="lg:col-span-2 card-glass p-6 sm:p-8">
-              <h3 class="text-base font-black text-slate-800 mb-6">Grafik Penjualan (7 Hari)</h3>
-              <div class="h-64 w-full relative"><canvas id="revenueChart"></canvas></div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mt-1 sm:mt-2">
+            <div class="lg:col-span-2 card-glass p-4 sm:p-8">
+              <h3 class="text-sm sm:text-base font-black text-slate-800 mb-4 sm:mb-6">Grafik Penjualan (7 Hari)</h3>
+              <div class="h-48 sm:h-64 w-full relative"><canvas id="revenueChart"></canvas></div>
             </div>
             
-            <div class="card-glass p-6 sm:p-8 flex flex-col">
-              <h3 class="text-base font-black text-slate-800 mb-6">Akses Cepat</h3>
-              <div class="grid grid-cols-2 gap-4 flex-1">
-                <button onclick="switchView('pos')" class="flex flex-col items-center justify-center gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-5 rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-xs font-bold group">
-                  <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-calculator text-3xl text-brand-500"></i></div> Kasir
+            <div class="card-glass p-4 sm:p-8 flex flex-col">
+              <h3 class="text-sm sm:text-base font-black text-slate-800 mb-4 sm:mb-6">Akses Cepat</h3>
+              <div class="grid grid-cols-2 gap-3 sm:gap-4 flex-1">
+                <button onclick="switchView('pos')" class="flex flex-col items-center justify-center gap-2 sm:gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-3 sm:p-5 rounded-xl sm:rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-[10px] sm:text-xs font-bold group">
+                  <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-lg sm:rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-calculator text-2xl sm:text-3xl text-brand-500"></i></div> Kasir
                 </button>
-                <button onclick="switchView('transactions')" class="flex flex-col items-center justify-center gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-5 rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-xs font-bold group">
-                  <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-receipt text-3xl text-brand-500"></i></div> Riwayat
+                <button onclick="switchView('transactions')" class="flex flex-col items-center justify-center gap-2 sm:gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-3 sm:p-5 rounded-xl sm:rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-[10px] sm:text-xs font-bold group">
+                  <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-lg sm:rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-receipt text-2xl sm:text-3xl text-brand-500"></i></div> Riwayat
                 </button>
-                <button onclick="switchView('reports')" class="flex flex-col items-center justify-center gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-5 rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-xs font-bold group">
-                  <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-chart-line-up text-3xl text-brand-500"></i></div> Laporan
+                <button onclick="switchView('reports')" class="flex flex-col items-center justify-center gap-2 sm:gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-3 sm:p-5 rounded-xl sm:rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-[10px] sm:text-xs font-bold group">
+                  <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-lg sm:rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-chart-line-up text-2xl sm:text-3xl text-brand-500"></i></div> Laporan
                 </button>
-                <button onclick="switchView('products'); setTimeout(()=>openModal('modal-product'),300)" class="role-admin flex flex-col items-center justify-center gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-5 rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-xs font-bold hidden group">
-                  <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-plus text-3xl text-brand-500"></i></div> Add Produk
+                <button onclick="switchView('products'); setTimeout(()=>openModal('modal-product'),300)" class="role-admin flex flex-col items-center justify-center gap-2 sm:gap-3 bg-[#f8fafc] hover:bg-brand-50 text-slate-600 hover:text-brand-700 p-3 sm:p-5 rounded-xl sm:rounded-2xl transition-all border border-slate-200 hover:border-brand-200 text-[10px] sm:text-xs font-bold hidden group">
+                  <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-lg sm:rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform"><i class="ph-duotone ph-plus text-2xl sm:text-3xl text-brand-500"></i></div> Add Produk
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div id="view-pos" class="view-section hidden flex-col md:flex-row gap-4 sm:gap-6 w-full h-[calc(100vh-12rem)] md:h-[calc(100vh-7.5rem)] flex-1 animate-slide-up">
-          <div class="flex-1 flex flex-col h-[55%] md:h-full relative min-w-0 bg-white rounded-[2rem] shadow-sm border border-slate-200 p-4">
-            <div class="mb-4 shrink-0 relative">
-              <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
-              <input type="text" id="pos-search" class="w-full py-3.5 pl-12 pr-4 bg-[#f8fafc] border border-slate-100 rounded-xl text-sm font-semibold outline-none focus:bg-white focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition-all" placeholder="Cari nama atau kategori barang..." onkeyup="renderPOSProducts()">
+        <!-- HALAMAN 2: TERMINAL POS (KASIR UTAMA) -->
+        <div id="view-pos" class="view-section hidden flex-col lg:flex-row gap-3 sm:gap-6 w-full h-[calc(100dvh-9rem)] lg:h-[calc(100dvh-7.5rem)] flex-1 animate-slide-up">
+          
+          <!-- Etalase Barang Kiri -->
+          <div class="flex-1 flex flex-col h-[55%] lg:h-full relative min-w-0 bg-white rounded-2xl sm:rounded-[2rem] shadow-sm border border-slate-200 p-3 sm:p-4">
+            <div class="mb-3 sm:mb-4 shrink-0 relative">
+              <i class="ph-bold ph-magnifying-glass absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400 text-base sm:text-lg"></i>
+              <input type="text" id="pos-search" class="w-full py-2.5 sm:py-3.5 pl-10 sm:pl-12 pr-4 bg-[#f8fafc] border border-slate-100 rounded-xl text-xs sm:text-sm font-semibold outline-none focus:bg-white focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition-all" placeholder="Cari barang..." onkeyup="renderPOSProducts()">
             </div>
-            <div id="pos-product-grid" class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4 content-start pb-4">
+            <!-- Modifikasi grid agar responsif sempurna dari layar terkecil HP hingga Desktop -->
+            <div id="pos-product-grid" class="flex-1 overflow-y-auto custom-scrollbar pr-1 sm:pr-2 grid grid-cols-2 min-[400px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-4 content-start pb-4">
             </div>
           </div>
 
-          <div class="w-full h-[45%] md:h-full md:w-[360px] xl:w-[400px] bg-white rounded-[2rem] flex flex-col shrink-0 border border-slate-200 shadow-glass overflow-hidden relative">
-            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0">
-              <h3 class="font-black text-slate-900 text-lg flex items-center gap-2"><i class="ph-fill ph-shopping-bag text-brand-500"></i> Pesanan <span class="bg-brand-100 text-brand-700 px-2.5 py-0.5 rounded-lg text-xs font-black" id="cart-item-count">0</span></h3>
-              <button onclick="clearCart()" class="text-xs font-bold text-slate-400 hover:text-red-500 transition-colors bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm"><i class="ph-bold ph-trash align-middle"></i> Reset</button>
+          <!-- Struk Keranjang Kanan (Responsive Bottom Sheet on Mobile) -->
+          <div class="w-full h-[45%] lg:h-full lg:w-[380px] xl:w-[400px] bg-white rounded-t-3xl lg:rounded-[2rem] flex flex-col shrink-0 border border-slate-200 shadow-[0_-15px_40px_rgba(0,0,0,0.08)] lg:shadow-glass overflow-hidden relative z-20 transition-all">
+            <div class="p-3 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0">
+              <h3 class="font-black text-slate-900 text-base sm:text-lg flex items-center gap-2"><i class="ph-fill ph-shopping-bag text-brand-500"></i> Pesanan <span class="bg-brand-100 text-brand-700 px-2 sm:px-2.5 py-0.5 rounded-lg text-[10px] sm:text-xs font-black" id="cart-item-count">0</span></h3>
+              <button onclick="clearCart()" class="text-[10px] sm:text-xs font-bold text-slate-400 hover:text-red-500 transition-colors bg-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 shadow-sm"><i class="ph-bold ph-trash align-middle"></i> Reset</button>
             </div>
             
-            <div id="cart-items" class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2 bg-[#f8fafc]">
+            <div id="cart-items" class="flex-1 overflow-y-auto custom-scrollbar p-2 sm:p-3 space-y-2 bg-[#f8fafc]">
             </div>
 
-            <div class="p-5 border-t border-slate-100 shrink-0 bg-white flex flex-col gap-4 shadow-[0_-10px_20px_rgba(0,0,0,0.02)] relative z-10">
+            <div class="p-3 sm:p-5 border-t border-slate-100 shrink-0 bg-white flex flex-col gap-2.5 sm:gap-4 shadow-[0_-10px_20px_rgba(0,0,0,0.02)] relative z-10">
               <div class="flex justify-between items-end px-1">
-                <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Total Tagihan</span>
-                <span id="cart-total" class="text-3xl font-black text-brand-600 tracking-tighter drop-shadow-sm">Rp 0</span>
+                <span class="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest">Total Tagihan</span>
+                <span id="cart-total" class="text-2xl sm:text-3xl font-black text-brand-600 tracking-tighter drop-shadow-sm">Rp 0</span>
               </div>
               
-              <div class="flex gap-3">
+              <div class="flex gap-2 sm:gap-3">
                 <div class="relative w-1/2">
-                  <i class="ph-bold ph-money absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                  <input type="number" id="pos-cash" class="w-full pl-9 pr-3 py-3 bg-[#f8fafc] border border-slate-200 rounded-xl text-right font-bold text-sm outline-none focus:border-brand-500 focus:bg-white transition-all" placeholder="Uang Tunai" onkeyup="calculateChange()">
+                  <i class="ph-bold ph-money absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm sm:text-base"></i>
+                  <input type="number" id="pos-cash" class="w-full pl-8 sm:pl-9 pr-2 sm:pr-3 py-2.5 sm:py-3 bg-[#f8fafc] border border-slate-200 rounded-xl text-right font-bold text-xs sm:text-sm outline-none focus:border-brand-500 focus:bg-white transition-all" placeholder="Tunai" onkeyup="calculateChange()">
                 </div>
                 <div class="relative w-1/2">
-                  <i class="ph-bold ph-user absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                  <input type="text" id="pos-client-name" class="w-full pl-9 pr-3 py-3 bg-[#f8fafc] border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-brand-500 focus:bg-white transition-all" placeholder="Nama Klien">
+                  <i class="ph-bold ph-user absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm sm:text-base"></i>
+                  <input type="text" id="pos-client-name" class="w-full pl-8 sm:pl-9 pr-2 sm:pr-3 py-2.5 sm:py-3 bg-[#f8fafc] border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold outline-none focus:border-brand-500 focus:bg-white transition-all" placeholder="Pelanggan">
                 </div>
               </div>
               
-              <div class="flex justify-between items-center px-4 py-3 bg-emerald-50 border border-emerald-100 rounded-xl hidden animate-slide-up text-emerald-700" id="pos-change-container">
-                <span class="text-xs font-black uppercase tracking-wider flex items-center gap-1"><i class="ph-bold ph-arrows-left-right"></i> Kembalian</span>
-                <span id="pos-change" class="text-lg font-black">Rp 0</span>
+              <div class="flex justify-between items-center px-3 sm:px-4 py-2 sm:py-3 bg-emerald-50 border border-emerald-100 rounded-xl hidden animate-slide-up text-emerald-700" id="pos-change-container">
+                <span class="text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1"><i class="ph-bold ph-arrows-left-right"></i> Kembali</span>
+                <span id="pos-change" class="text-base sm:text-lg font-black">Rp 0</span>
               </div>
               
-              <button onclick="processCheckout()" id="btn-checkout" class="w-full btn-solid py-4 font-black text-sm flex items-center justify-center gap-2 disabled:opacity-60 shadow-glow">
-                PROSES PEMBAYARAN <i class="ph-bold ph-check-circle text-lg"></i>
+              <button onclick="processCheckout()" id="btn-checkout" class="w-full btn-solid py-3 sm:py-4 font-black text-xs sm:text-sm flex items-center justify-center gap-2 disabled:opacity-60 shadow-glow">
+                PROSES <span class="hidden sm:inline">PEMBAYARAN</span> <i class="ph-bold ph-check-circle text-base sm:text-lg"></i>
               </button>
             </div>
           </div>
         </div>
 
+        <!-- HALAMAN 3: RIWAYAT BUKU BESAR -->
         <div id="view-transactions" class="view-section hidden max-w-6xl mx-auto w-full animate-slide-up">
-          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div>
-              <h2 class="text-2xl font-black text-slate-900">Riwayat Transaksi</h2>
-              <p class="text-sm font-medium text-slate-500 mt-1">Daftar lengkap seluruh aktivitas kasir.</p>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900">Riwayat Transaksi</h2>
+              <p class="text-xs sm:text-sm font-medium text-slate-500 mt-0.5 sm:mt-1">Daftar lengkap seluruh aktivitas kasir.</p>
             </div>
             
-            <div class="flex flex-wrap items-center gap-3 w-full md:w-auto bg-white p-2 rounded-2xl shadow-sm border border-slate-200">
-              <select id="filter-time" onchange="toggleCustomDate('filter-time', 'custom-date-trx'); filterTransactions();" class="px-4 py-2.5 bg-[#f8fafc] border-transparent rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3 w-full md:w-auto bg-white p-1.5 sm:p-2 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200">
+              <select id="filter-time" onchange="toggleCustomDate('filter-time', 'custom-date-trx'); filterTransactions();" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-[#f8fafc] border-transparent rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer">
                 <option value="all">Semua Waktu</option>
                 <option value="today">Hari Ini</option>
                 <option value="week">7 Hari Terakhir</option>
                 <option value="month">Bulan Ini</option>
                 <option value="custom">Pilih Tanggal...</option>
               </select>
-              <div id="custom-date-trx" class="hidden items-center gap-2 bg-[#f8fafc] p-1 rounded-xl">
-                <input type="date" id="trx-date-start" onchange="filterTransactions()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold outline-none focus:border-brand-500">
-                <span class="text-slate-400 text-xs font-bold">SD</span>
-                <input type="date" id="trx-date-end" onchange="filterTransactions()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold outline-none focus:border-brand-500">
+              <div id="custom-date-trx" class="hidden items-center gap-1.5 sm:gap-2 bg-[#f8fafc] p-1 rounded-lg sm:rounded-xl">
+                <input type="date" id="trx-date-start" onchange="filterTransactions()" class="px-2 sm:px-3 py-1.5 bg-white border border-slate-200 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-semibold outline-none focus:border-brand-500">
+                <span class="text-slate-400 text-[10px] sm:text-xs font-bold">SD</span>
+                <input type="date" id="trx-date-end" onchange="filterTransactions()" class="px-2 sm:px-3 py-1.5 bg-white border border-slate-200 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-semibold outline-none focus:border-brand-500">
               </div>
-              <div class="relative flex-1 md:w-56">
-                <i class="ph-bold ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" id="search-trx" class="w-full pl-9 pr-4 py-2.5 bg-[#f8fafc] border-transparent rounded-xl text-xs font-bold outline-none focus:bg-white focus:ring-2 focus:ring-brand-500/20 transition-colors" placeholder="Cari referensi / kasir..." onkeyup="filterTransactions()">
+              <div class="relative flex-1 md:w-56 min-w-[140px]">
+                <i class="ph-bold ph-magnifying-glass absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs sm:text-sm"></i>
+                <input type="text" id="search-trx" class="w-full pl-7 sm:pl-9 pr-3 sm:pr-4 py-2 sm:py-2.5 bg-[#f8fafc] border-transparent rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold outline-none focus:bg-white focus:ring-2 focus:ring-brand-500/20 transition-colors" placeholder="Cari referensi..." onkeyup="filterTransactions()">
               </div>
-              <button onclick="printTransactionReport()" class="w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl hover:bg-brand-600 transition-colors shadow-md" title="Cetak Laporan"><i class="ph-bold ph-printer text-lg"></i></button>
+              <button onclick="printTransactionReport()" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-slate-900 text-white rounded-lg sm:rounded-xl hover:bg-brand-600 transition-colors shadow-md" title="Cetak Laporan"><i class="ph-bold ph-printer text-sm sm:text-lg"></i></button>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6" id="trx-summary"></div>
+          <div class="grid grid-cols-1 min-[500px]:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6" id="trx-summary"></div>
 
           <div class="card-glass overflow-hidden border border-slate-200">
             <div class="overflow-x-auto custom-scrollbar">
-              <table class="w-full text-left text-sm whitespace-nowrap">
-                <thead class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-black text-slate-500 uppercase tracking-widest">
+              <table class="w-full text-left text-xs sm:text-sm whitespace-nowrap">
+                <thead class="bg-slate-50/80 border-b border-slate-200 text-[10px] sm:text-[11px] font-black text-slate-500 uppercase tracking-widest">
                   <tr>
-                    <th class="py-4 px-6">Waktu & Tanggal</th>
-                    <th class="py-4 px-6">No. Referensi</th>
-                    <th class="py-4 px-6">Pelanggan / Kasir</th>
-                    <th class="py-4 px-6 text-right">Nilai (Rp)</th>
-                    <th class="py-4 px-6 text-center">Tindakan</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">Waktu & Tanggal</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">No. Referensi</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">Pelanggan / Kasir</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-right">Nilai (Rp)</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-center">Tindakan</th>
                   </tr>
                 </thead>
-                <tbody id="trx-list" class="divide-y divide-slate-100 text-xs font-medium text-slate-700 bg-white">
+                <tbody id="trx-list" class="divide-y divide-slate-100 text-[11px] sm:text-xs font-medium text-slate-700 bg-white">
                 </tbody>
               </table>
             </div>
           </div>
         </div>
 
+        <!-- HALAMAN 4: LAPORAN ANALITIK BARANG -->
         <div id="view-reports" class="view-section hidden max-w-6xl mx-auto w-full animate-slide-up">
-           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
              <div>
-               <h2 class="text-2xl font-black text-slate-900">Analitik Produk</h2>
-               <p class="text-sm font-medium text-slate-500 mt-1">Laporan detail barang mana yang paling laku terjual.</p>
+               <h2 class="text-xl sm:text-2xl font-black text-slate-900">Analitik Produk</h2>
+               <p class="text-xs sm:text-sm font-medium text-slate-500 mt-0.5 sm:mt-1">Laporan detail barang mana yang paling laku terjual.</p>
              </div>
-             <div class="flex flex-wrap items-center gap-3 w-full md:w-auto bg-white p-2 rounded-2xl shadow-sm border border-slate-200">
-               <select id="filter-report-time" onchange="toggleCustomDate('filter-report-time', 'custom-date-report'); generateItemReport();" class="px-4 py-2.5 bg-[#f8fafc] border-transparent rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer">
+             <div class="flex flex-wrap items-center gap-2 sm:gap-3 w-full md:w-auto bg-white p-1.5 sm:p-2 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200">
+               <select id="filter-report-time" onchange="toggleCustomDate('filter-report-time', 'custom-date-report'); generateItemReport();" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-[#f8fafc] border-transparent rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer">
                   <option value="all">Semua Waktu</option>
                   <option value="today">Hari Ini</option>
                   <option value="week">7 Hari Terakhir</option>
                   <option value="month">Bulan Ini</option>
                   <option value="custom">Pilih Tanggal...</option>
                </select>
-               <div id="custom-date-report" class="hidden items-center gap-2 bg-[#f8fafc] p-1 rounded-xl">
-                 <input type="date" id="report-date-start" onchange="generateItemReport()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold outline-none focus:border-brand-500">
-                 <span class="text-slate-400 text-xs font-bold">SD</span>
-                 <input type="date" id="report-date-end" onchange="generateItemReport()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold outline-none focus:border-brand-500">
+               <div id="custom-date-report" class="hidden items-center gap-1.5 sm:gap-2 bg-[#f8fafc] p-1 rounded-lg sm:rounded-xl">
+                 <input type="date" id="report-date-start" onchange="generateItemReport()" class="px-2 sm:px-3 py-1.5 bg-white border border-slate-200 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-semibold outline-none focus:border-brand-500">
+                 <span class="text-slate-400 text-[10px] sm:text-xs font-bold">SD</span>
+                 <input type="date" id="report-date-end" onchange="generateItemReport()" class="px-2 sm:px-3 py-1.5 bg-white border border-slate-200 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-semibold outline-none focus:border-brand-500">
                </div>
-               <button onclick="printProductReport()" class="w-10 h-10 flex items-center justify-center bg-brand-600 text-white rounded-xl hover:bg-brand-700 transition-colors shadow-md shadow-brand-500/30" title="Cetak Rekap Barang"><i class="ph-bold ph-printer text-lg"></i></button>
+               <button onclick="printProductReport()" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-brand-600 text-white rounded-lg sm:rounded-xl hover:bg-brand-700 transition-colors shadow-md shadow-brand-500/30" title="Cetak Rekap Barang"><i class="ph-bold ph-printer text-sm sm:text-lg"></i></button>
              </div>
            </div>
            
-           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6" id="report-summary"></div>
+           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6" id="report-summary"></div>
            
            <div class="card-glass overflow-hidden border border-slate-200">
              <div class="overflow-x-auto custom-scrollbar">
-               <table class="w-full text-left text-sm whitespace-nowrap">
-                 <thead class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-black text-slate-500 uppercase tracking-widest">
+               <table class="w-full text-left text-xs sm:text-sm whitespace-nowrap">
+                 <thead class="bg-slate-50/80 border-b border-slate-200 text-[10px] sm:text-[11px] font-black text-slate-500 uppercase tracking-widest">
                    <tr>
-                     <th class="py-4 px-6">Rincian Produk</th>
-                     <th class="py-4 px-6 text-right">Harga Satuan</th>
-                     <th class="py-4 px-6 text-center">Unit Terjual</th>
-                     <th class="py-4 px-6 text-right">Total Omzet (Estimasi)</th>
+                     <th class="py-3 sm:py-4 px-4 sm:px-6">Rincian Produk</th>
+                     <th class="py-3 sm:py-4 px-4 sm:px-6 text-right">Harga Satuan</th>
+                     <th class="py-3 sm:py-4 px-4 sm:px-6 text-center">Unit Terjual</th>
+                     <th class="py-3 sm:py-4 px-4 sm:px-6 text-right">Total Omzet</th>
                    </tr>
                  </thead>
-                 <tbody id="report-list" class="divide-y divide-slate-100 text-xs font-medium text-slate-700 bg-white">
+                 <tbody id="report-list" class="divide-y divide-slate-100 text-[11px] sm:text-xs font-medium text-slate-700 bg-white">
                  </tbody>
                </table>
              </div>
            </div>
         </div>
 
+        <!-- HALAMAN 5: MANAJEMEN ASET / BARANG (HANYA ADMIN) -->
         <div id="view-products" class="view-section hidden max-w-6xl mx-auto w-full animate-slide-up">
-          <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+          <div class="flex justify-between items-center mb-4 sm:mb-6 bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200">
             <div>
-              <h2 class="text-xl font-black text-slate-900 ml-2">Direktori Aset</h2>
+              <h2 class="text-lg sm:text-xl font-black text-slate-900 ml-1 sm:ml-2">Direktori Aset</h2>
             </div>
-            <button onclick="openModal('modal-product'); document.getElementById('form-product').reset(); document.getElementById('prod-img-b64').value=''; document.getElementById('prod-id').value = 'P' + new Date().getTime().toString().slice(-4);" class="btn-solid py-2.5 px-5 text-sm font-bold flex items-center gap-2 shadow-glow">
-              <i class="ph-bold ph-plus-circle text-lg"></i> Tambah Item
+            <button onclick="openModal('modal-product'); document.getElementById('form-product').reset(); document.getElementById('prod-img-b64').value=''; document.getElementById('prod-id').value = 'P' + new Date().getTime().toString().slice(-4);" class="btn-solid py-2 sm:py-2.5 px-3 sm:px-5 text-[10px] sm:text-sm font-bold flex items-center gap-1.5 sm:gap-2 shadow-glow">
+              <i class="ph-bold ph-plus-circle text-base sm:text-lg"></i> Tambah Item
             </button>
           </div>
           <div class="card-glass overflow-hidden border border-slate-200">
             <div class="overflow-x-auto custom-scrollbar">
-              <table class="w-full text-left text-sm whitespace-nowrap">
-                <thead class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-black text-slate-500 uppercase tracking-widest">
+              <table class="w-full text-left text-xs sm:text-sm whitespace-nowrap">
+                <thead class="bg-slate-50/80 border-b border-slate-200 text-[10px] sm:text-[11px] font-black text-slate-500 uppercase tracking-widest">
                   <tr>
-                    <th class="py-4 px-6 w-20">Visual</th>
-                    <th class="py-4 px-6">SKU / ID</th>
-                    <th class="py-4 px-6">Nama Produk & Kategori</th>
-                    <th class="py-4 px-6 text-right">Harga (Rp)</th>
-                    <th class="py-4 px-6 text-center">Stok</th>
-                    <th class="py-4 px-6 text-center">Kelola</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 w-16 sm:w-20">Visual</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">SKU / ID</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">Nama Produk & Kategori</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-right">Harga (Rp)</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-center">Stok</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-center">Kelola</th>
                   </tr>
                 </thead>
-                <tbody id="prod-list" class="divide-y divide-slate-100 text-xs font-medium text-slate-700 bg-white"></tbody>
+                <tbody id="prod-list" class="divide-y divide-slate-100 text-[11px] sm:text-xs font-medium text-slate-700 bg-white"></tbody>
               </table>
             </div>
           </div>
         </div>
 
+        <!-- HALAMAN 6: KONTROL AKSES (HANYA ADMIN) -->
         <div id="view-users" class="view-section hidden max-w-5xl mx-auto w-full animate-slide-up">
-          <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-            <h2 class="text-xl font-black text-slate-900 ml-2">Pengguna Sistem</h2>
-            <button onclick="openModal('modal-user'); document.getElementById('form-user').reset();" class="btn-dark py-2.5 px-5 text-sm font-bold flex items-center gap-2">
-              <i class="ph-bold ph-user-plus text-lg"></i> Tambah Akses
+          <div class="flex justify-between items-center mb-4 sm:mb-6 bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-lg sm:text-xl font-black text-slate-900 ml-1 sm:ml-2">Pengguna Sistem</h2>
+            <button onclick="openModal('modal-user'); document.getElementById('form-user').reset();" class="btn-dark py-2 sm:py-2.5 px-3 sm:px-5 text-[10px] sm:text-sm font-bold flex items-center gap-1.5 sm:gap-2">
+              <i class="ph-bold ph-user-plus text-base sm:text-lg"></i> Tambah Akses
             </button>
           </div>
           <div class="card-glass overflow-hidden border border-slate-200">
             <div class="overflow-x-auto custom-scrollbar">
-              <table class="w-full text-left text-sm whitespace-nowrap">
-                <thead class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-black text-slate-500 uppercase tracking-widest">
+              <table class="w-full text-left text-xs sm:text-sm whitespace-nowrap">
+                <thead class="bg-slate-50/80 border-b border-slate-200 text-[10px] sm:text-[11px] font-black text-slate-500 uppercase tracking-widest">
                   <tr>
-                    <th class="py-4 px-6">ID Username</th>
-                    <th class="py-4 px-6">Identitas & Kontak</th>
-                    <th class="py-4 px-6 text-center">Tingkat Akses</th>
-                    <th class="py-4 px-6 text-center">Kelola</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">ID Username</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6">Identitas & Kontak</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-center">Tingkat Akses</th>
+                    <th class="py-3 sm:py-4 px-4 sm:px-6 text-center">Kelola</th>
                   </tr>
                 </thead>
-                <tbody id="user-list" class="divide-y divide-slate-100 text-xs font-medium text-slate-700 bg-white"></tbody>
+                <tbody id="user-list" class="divide-y divide-slate-100 text-[11px] sm:text-xs font-medium text-slate-700 bg-white"></tbody>
               </table>
             </div>
           </div>
         </div>
 
+        <!-- HALAMAN 7: IDENTITAS TOKO / SISTEM (HANYA ADMIN) -->
         <div id="view-config" class="view-section hidden max-w-2xl mx-auto w-full animate-slide-up">
-          <h2 class="text-2xl font-black text-slate-900 mb-6">Pengaturan Identitas Toko</h2>
-          <div class="card-glass p-8 border border-slate-200">
-            <form id="form-config" onsubmit="event.preventDefault(); saveConfig();" class="space-y-5">
-              <div class="flex items-center gap-5 mb-6 pb-6 border-b border-slate-100">
-                <div id="cfg-logo-preview" class="w-20 h-20 rounded-2xl bg-[#f8fafc] border border-slate-200 flex items-center justify-center text-slate-300 bg-contain bg-center bg-no-repeat overflow-hidden shrink-0 shadow-sm"><i class="ph-fill ph-image text-3xl"></i></div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6">Pengaturan Identitas Toko</h2>
+          <div class="card-glass p-5 sm:p-8 border border-slate-200">
+            <form id="form-config" onsubmit="event.preventDefault(); saveConfig();" class="space-y-4 sm:space-y-5">
+              <div class="flex items-center gap-3 sm:gap-5 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-slate-100">
+                <div id="cfg-logo-preview" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-[#f8fafc] border border-slate-200 flex items-center justify-center text-slate-300 bg-contain bg-center bg-no-repeat overflow-hidden shrink-0 shadow-sm"><i class="ph-fill ph-image text-2xl sm:text-3xl"></i></div>
                 <div class="flex-1">
-                  <label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Tautan URL Logo (PNG Transparan)</label>
-                  <input type="text" id="cfg-logo" class="w-full px-4 py-3 input-clean text-sm font-semibold" placeholder="https://..." onchange="document.getElementById('cfg-logo-preview').style.backgroundImage = this.value ? `url('${this.value}')` : ''">
+                  <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">URL Logo (Transparan)</label>
+                  <input type="text" id="cfg-logo" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold" placeholder="https://..." onchange="document.getElementById('cfg-logo-preview').style.backgroundImage = this.value ? `url('${this.value}')` : ''">
                 </div>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Nama Bisnis</label><input type="text" id="cfg-name" required class="w-full px-4 py-3 input-clean text-sm font-bold"></div>
-                  <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Telepon / WhatsApp</label><input type="text" id="cfg-phone" required class="w-full px-4 py-3 input-clean text-sm font-semibold"></div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Nama Bisnis</label><input type="text" id="cfg-name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"></div>
+                  <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Telepon / WhatsApp</label><input type="text" id="cfg-phone" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold"></div>
               </div>
-              <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Alamat Lengkap</label><textarea id="cfg-address" rows="2" required class="w-full px-4 py-3 input-clean text-sm font-semibold custom-scrollbar"></textarea></div>
+              <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Alamat Lengkap</label><textarea id="cfg-address" rows="2" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold custom-scrollbar"></textarea></div>
               
-              <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl mt-4 space-y-4">
-                  <h4 class="text-sm font-black text-slate-800 flex items-center gap-2"><i class="ph-fill ph-receipt"></i> Konfigurasi Teks Struk Cetak</h4>
-                  <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Teks Header Struk (Opsional)</label><input type="text" id="cfg-receipt-header" class="w-full px-4 py-3 input-clean text-sm font-semibold" placeholder="Contoh: Spesialis Kuliner Nusantara"></div>
-                  <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Pesan Penutup / Footer</label><input type="text" id="cfg-receipt-footer" class="w-full px-4 py-3 input-clean text-sm font-semibold" placeholder="Contoh: Terima Kasih atas Kunjungan Anda!"></div>
-                  <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Catatan Promosi / Info Tambahan</label><textarea id="cfg-promo-note" rows="2" class="w-full px-4 py-3 input-clean text-sm font-semibold custom-scrollbar" placeholder="Contoh: Tunjukkan struk ini di kunjungan berikutnya untuk diskon 10%"></textarea></div>
+              <div class="p-3 sm:p-4 bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl mt-3 sm:mt-4 space-y-3 sm:space-y-4">
+                  <h4 class="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 sm:gap-2"><i class="ph-fill ph-receipt"></i> Konfigurasi Teks Struk</h4>
+                  <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Teks Header Struk</label><input type="text" id="cfg-receipt-header" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold" placeholder="Opsional"></div>
+                  <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Pesan Penutup</label><input type="text" id="cfg-receipt-footer" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold" placeholder="Terima Kasih!"></div>
+                  <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Catatan Promosi</label><textarea id="cfg-promo-note" rows="2" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold custom-scrollbar" placeholder="Info tambahan/diskon"></textarea></div>
               </div>
               
-              <button type="submit" class="btn-solid py-3.5 px-6 text-sm font-bold w-full mt-6 flex justify-center items-center gap-2 shadow-glow"><i class="ph-bold ph-floppy-disk text-lg"></i> Simpan Perubahan</button>
+              <button type="submit" class="btn-solid py-3 sm:py-3.5 px-6 text-xs sm:text-sm font-bold w-full mt-4 sm:mt-6 flex justify-center items-center gap-2 shadow-glow"><i class="ph-bold ph-floppy-disk text-base sm:text-lg"></i> Simpan Perubahan</button>
             </form>
           </div>
         </div>
 
+        <!-- HALAMAN 8: PROFIL PENGGUNA AKTIF -->
         <div id="view-profile" class="view-section hidden max-w-2xl mx-auto w-full animate-slide-up">
-          <h2 class="text-2xl font-black text-slate-900 mb-6">Preferensi Profil Saya</h2>
-          <div class="card-glass p-8 border border-slate-200">
-            <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100">
-              <div class="w-16 h-16 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center font-black text-2xl shadow-inner" id="prof-avatar-preview">U</div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6">Preferensi Profil Saya</h2>
+          <div class="card-glass p-5 sm:p-8 border border-slate-200">
+            <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-slate-100">
+              <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center font-black text-xl sm:text-2xl shadow-inner" id="prof-avatar-preview">U</div>
               <div>
-                <h3 class="font-bold text-slate-900" id="prof-header-name">User</h3>
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1" id="prof-header-role">Role</p>
+                <h3 class="font-bold text-slate-900 text-sm sm:text-base" id="prof-header-name">User</h3>
+                <p class="text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-widest mt-0.5 sm:mt-1" id="prof-header-role">Role</p>
               </div>
             </div>
-            <form id="form-profile" onsubmit="event.preventDefault(); saveProfile();" class="space-y-5">
-              <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Nama Lengkap</label><input type="text" id="prof-name" required class="w-full px-4 py-3 input-clean text-sm font-bold"></div>
-              <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Alamat Email</label><input type="email" id="prof-email" class="w-full px-4 py-3 input-clean text-sm font-semibold"></div>
-              <div><label class="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Ganti Sandi (Biarkan kosong jika tidak berubah)</label><input type="password" id="prof-pass" class="w-full px-4 py-3 input-clean text-sm font-semibold" placeholder="••••••••"></div>
-              <button type="submit" class="btn-dark py-3.5 px-6 text-sm font-bold w-full mt-6 flex justify-center items-center gap-2"><i class="ph-bold ph-shield-check text-lg"></i> Perbarui Akun</button>
+            <form id="form-profile" onsubmit="event.preventDefault(); saveProfile();" class="space-y-4 sm:space-y-5">
+              <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Nama Lengkap</label><input type="text" id="prof-name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"></div>
+              <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Alamat Email</label><input type="email" id="prof-email" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold"></div>
+              <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 sm:mb-2 uppercase tracking-wider">Ganti Sandi (Opsional)</label><input type="password" id="prof-pass" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold" placeholder="••••••••"></div>
+              <button type="submit" class="btn-dark py-3 sm:py-3.5 px-6 text-xs sm:text-sm font-bold w-full mt-4 sm:mt-6 flex justify-center items-center gap-2"><i class="ph-bold ph-shield-check text-base sm:text-lg"></i> Perbarui Akun</button>
             </form>
           </div>
         </div>
 
+        <!-- HALAMAN 9: PEMANTAUAN LOG AKTIVITAS (HANYA ADMIN) -->
         <div id="view-activity" class="view-section hidden max-w-4xl mx-auto w-full animate-slide-up">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-            <h2 class="text-2xl font-black text-slate-900">Pemantauan Sistem</h2>
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900">Pemantauan Sistem</h2>
             <div class="flex gap-2 bg-white p-1.5 rounded-xl shadow-sm border border-slate-200">
-              <select id="filter-log-action" onchange="renderActivityLogs()" class="px-3 py-2 bg-[#f8fafc] border-transparent rounded-lg text-xs font-bold outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer">
+              <select id="filter-log-action" onchange="renderActivityLogs()" class="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#f8fafc] border-transparent rounded-lg text-[10px] sm:text-xs font-bold outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer">
                  <option value="all">Semua Tipe</option>
                  <option value="Login">Akses Masuk</option>
                  <option value="Transaksi">Pembayaran</option>
                  <option value="Produk">Aset Master</option>
                  <option value="User">Otoritas User</option>
               </select>
-              <button onclick="loadActivityData()" class="px-3 py-2 bg-slate-900 text-white rounded-lg hover:bg-brand-600 transition-colors shadow-sm"><i class="ph-bold ph-arrows-clockwise"></i></button>
+              <button onclick="loadActivityData()" class="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-900 text-white rounded-lg hover:bg-brand-600 transition-colors shadow-sm"><i class="ph-bold ph-arrows-clockwise text-xs sm:text-sm"></i></button>
             </div>
           </div>
-          <div class="card-glass p-6 md:p-8 max-h-[650px] overflow-y-auto custom-scrollbar border border-slate-200">
-            <div class="relative border-l-2 border-slate-200 ml-4 space-y-6" id="activity-timeline"></div>
+          <div class="card-glass p-5 md:p-8 max-h-[650px] overflow-y-auto custom-scrollbar border border-slate-200">
+            <div class="relative border-l-2 border-slate-200 ml-3 sm:ml-4 space-y-5 sm:space-y-6" id="activity-timeline"></div>
           </div>
         </div>
+
       </main>
 
-      <div class="lg:hidden mobile-bottom-nav fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 z-40 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
-        <div class="flex justify-around items-center px-2 h-16 relative">
+      <div class="lg:hidden mobile-bottom-nav fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+        <div class="flex justify-around items-center px-1 h-16 relative">
           <button onclick="switchView('dashboard')" class="mob-nav-link role-admin role-user flex-1 flex flex-col items-center justify-center text-slate-400 hover:text-brand-600 hidden transition-colors group">
-            <i class="ph-fill ph-squares-four text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
+            <i class="ph-fill ph-squares-four text-xl sm:text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
             <span class="text-[9px] font-bold">Dasbor</span>
           </button>
           <button onclick="switchView('transactions')" class="mob-nav-link role-admin role-user flex-1 flex flex-col items-center justify-center text-slate-400 hover:text-brand-600 hidden transition-colors group">
-            <i class="ph-fill ph-receipt text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
+            <i class="ph-fill ph-receipt text-xl sm:text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
             <span class="text-[9px] font-bold">Riwayat</span>
           </button>
           
           <div class="flex-1 flex justify-center role-admin role-user hidden relative z-20">
-            <button onclick="switchView('pos')" class="absolute -top-6 w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-full flex items-center justify-center text-2xl shadow-lg shadow-brand-500/40 border-[3px] border-[#f4f7fb] hover:scale-105 transition-transform">
+            <button onclick="switchView('pos')" class="absolute -top-6 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-lg shadow-brand-500/40 border-[3px] border-[#f4f7fb] hover:scale-105 transition-transform">
               <i class="ph-fill ph-calculator"></i>
             </button>
           </div>
           
           <button onclick="switchView('reports')" class="mob-nav-link role-admin role-user flex-1 flex flex-col items-center justify-center text-slate-400 hover:text-brand-600 hidden transition-colors group">
-            <i class="ph-fill ph-chart-pie-slice text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
+            <i class="ph-fill ph-chart-pie-slice text-xl sm:text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
             <span class="text-[9px] font-bold">Laporan</span>
           </button>
           <button onclick="toggleSidebar()" class="flex-1 flex flex-col items-center justify-center text-slate-400 hover:text-slate-900 transition-colors group">
-            <i class="ph-bold ph-list text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
+            <i class="ph-bold ph-list text-xl sm:text-2xl mb-1 group-hover:-translate-y-1 transition-transform"></i>
             <span class="text-[9px] font-bold">Menu</span>
           </button>
         </div>
@@ -650,140 +664,150 @@
     </div>
   </div>
 
+  <!-- ================= LAYAR PELANGGAN / CUSTOMER DISPLAY SYSTEM (CDS) ================= -->
   <div id="view-klien-dashboard" class="view-section hidden w-full h-screen animate-fade-in flex-col lg:flex-row bg-slate-900 overflow-hidden fixed inset-0 z-[100]">
       
       <!-- Area Gambar Promosi (Atas di HP, Kiri di PC) -->
-      <div class="w-full lg:flex-1 relative flex flex-col justify-between overflow-hidden order-2 lg:order-1 h-[45%] lg:h-full shrink-0">
+      <div class="flex-1 relative flex flex-col justify-between overflow-hidden order-2 lg:order-1 h-1/2 lg:h-full">
          <div id="promo-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-105"></div>
          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent z-0"></div>
-         <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 to-transparent z-0"></div>
+         <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 to-transparent z-0 hidden lg:block"></div>
          
-         <div class="relative z-10 p-4 lg:p-10 flex justify-between items-start w-full">
-            <div class="flex items-center gap-3 lg:gap-4">
-               <div class="w-10 h-10 lg:w-14 lg:h-14 bg-brand-600 rounded-xl lg:rounded-2xl flex items-center justify-center text-xl lg:text-3xl shadow-glow border border-white/20 text-white"><i class="ph-fill ph-storefront"></i></div>
+         <!-- Header Kiri Atas (Logo & Jam) -->
+         <div class="relative z-10 p-5 sm:p-6 lg:p-10 flex justify-between items-start w-full">
+            <div class="flex items-center gap-3 sm:gap-4">
+               <div class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-brand-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl lg:text-3xl shadow-glow border border-white/20 text-white"><i class="ph-fill ph-storefront"></i></div>
                <div>
-                  <h2 class="text-lg lg:text-3xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg" id="cds-store-name-promo">JABANA SAVORY</h2>
-                  <p class="text-brand-300 text-[9px] lg:text-xs font-bold tracking-widest uppercase mt-0.5 lg:mt-1">Kualitas Premium</p>
+                  <h2 class="text-lg sm:text-xl lg:text-3xl font-black tracking-[0.2em] uppercase text-white drop-shadow-lg" id="cds-store-name-promo">JABANA SAVORY</h2>
+                  <p class="text-brand-300 text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-widest uppercase mt-0.5 lg:mt-1">Kualitas Premium</p>
                </div>
             </div>
             <div class="hidden sm:flex flex-col items-end">
-               <div id="cds-clock" class="text-2xl lg:text-4xl font-black text-white font-mono drop-shadow-md">00:00</div>
-               <div id="cds-date" class="text-[10px] lg:text-sm font-bold text-slate-300 uppercase tracking-widest mt-1">Hari, Tanggal</div>
+               <div id="cds-clock" class="text-xl sm:text-2xl lg:text-4xl font-black text-white font-mono drop-shadow-md">00:00</div>
+               <div id="cds-date" class="text-[9px] sm:text-[10px] lg:text-sm font-bold text-slate-300 uppercase tracking-widest mt-1">Hari, Tanggal</div>
             </div>
          </div>
 
-         <div class="relative z-10 p-4 lg:p-14 h-full flex flex-col justify-center text-white">
+         <!-- Konten Promo Tengah -->
+         <div class="relative z-10 p-5 sm:p-6 lg:p-14 h-full flex flex-col justify-center text-white pb-6 lg:pb-24">
             <div class="animate-slide-up" id="promo-content">
-                <div class="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-4">
-                   <span class="px-2 py-1 lg:px-3 lg:py-1.5 bg-brand-600 text-white text-[8px] lg:text-[10px] font-black uppercase tracking-[0.2em] rounded-md lg:rounded-lg shadow-lg shadow-brand-500/40 animate-pulse"><i class="ph-fill ph-star"></i> REKOMENDASI SPESIAL</span>
-                   <span class="px-2 py-1 lg:px-3 lg:py-1.5 bg-white/20 backdrop-blur-md text-white text-[8px] lg:text-[10px] font-black uppercase tracking-[0.2em] rounded-md lg:rounded-lg border border-white/20">MENU TERLARIS</span>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-4">
+                   <span class="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-brand-600 text-white text-[8px] sm:text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] rounded-md sm:rounded-lg shadow-lg shadow-brand-500/40 animate-pulse"><i class="ph-fill ph-star"></i> REKOMENDASI SPESIAL</span>
+                   <span class="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-white/20 backdrop-blur-md text-white text-[8px] sm:text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] rounded-md sm:rounded-lg border border-white/20">MENU TERLARIS</span>
                 </div>
-                <h1 class="text-2xl sm:text-4xl lg:text-7xl font-black mb-1 lg:mb-6 tracking-tighter drop-shadow-2xl leading-tight line-clamp-2" id="cds-promo-title">Selamat Datang</h1>
-                <p class="text-xs sm:text-lg lg:text-3xl text-slate-200 font-medium drop-shadow-lg max-w-2xl leading-snug line-clamp-2" id="cds-promo-desc">Nikmati sajian istimewa dari dapur kami.</p>
+                <h1 class="text-2xl sm:text-4xl lg:text-7xl font-black mb-1.5 sm:mb-3 lg:mb-6 tracking-tighter drop-shadow-2xl leading-tight line-clamp-2" id="cds-promo-title">Selamat Datang</h1>
+                <p class="text-xs sm:text-base lg:text-3xl text-slate-200 font-medium drop-shadow-lg max-w-2xl leading-snug line-clamp-2" id="cds-promo-desc">Nikmati sajian istimewa dari dapur kami.</p>
             </div>
          </div>
 
-         <div class="relative z-10 bg-brand-900/80 backdrop-blur-md border-t border-white/10 flex items-center h-8 lg:h-12 overflow-hidden shrink-0">
-            <div class="bg-brand-600 text-white font-black text-[9px] lg:text-xs tracking-widest uppercase px-3 lg:px-6 h-full flex items-center z-20 shadow-[10px_0_20px_rgba(0,0,0,0.5)] whitespace-nowrap"><i class="ph-fill ph-megaphone mr-1.5 lg:mr-2 text-sm lg:text-lg"></i> INFO TOKO</div>
-            <marquee class="text-white text-[10px] lg:text-sm font-bold tracking-widest uppercase flex-1 whitespace-nowrap" scrollamount="5">
+         <!-- Running Text (Marquee) Bawah -->
+         <div class="relative z-10 bg-brand-900/80 backdrop-blur-md border-t border-white/10 flex items-center h-8 sm:h-10 lg:h-12 overflow-hidden shrink-0">
+            <div class="bg-brand-600 text-white font-black text-[9px] sm:text-[10px] lg:text-xs tracking-widest uppercase px-3 sm:px-4 lg:px-6 h-full flex items-center z-20 shadow-[10px_0_20px_rgba(0,0,0,0.5)] whitespace-nowrap"><i class="ph-fill ph-megaphone mr-1.5 sm:mr-2 text-sm sm:text-base lg:text-lg"></i> INFO TOKO</div>
+            <marquee class="text-white text-[9px] sm:text-[10px] lg:text-sm font-bold tracking-widest uppercase flex-1 whitespace-nowrap" scrollamount="5">
                SELAMAT DATANG DI SISTEM KASIR KAMI. KAMI MENERIMA PEMBAYARAN TUNAI, QRIS, DAN TRANSFER BANK. SILAKAN PERIKSA PESANAN ANDA DI LAYAR INI. NIKMATI MENU SPESIAL DAN PROMO MENARIK SETIAP HARINYA!
             </marquee>
          </div>
       </div>
       
-      <!-- Area Layar Struk (Bawah di HP, Kanan di PC) -->
-      <div class="w-full lg:w-[420px] xl:w-[500px] bg-white flex flex-col h-[55%] lg:h-full shrink-0 shadow-[0_-20px_50px_rgba(0,0,0,0.3)] lg:shadow-[-30px_0_60px_rgba(0,0,0,0.25)] relative z-20 order-1 lg:order-2 rounded-t-[2rem] lg:rounded-none overflow-hidden">
+      <!-- Area Layar Struk / Sinkronisasi Langsung (Kanan) -->
+      <div class="w-full lg:w-[420px] xl:w-[500px] bg-white flex flex-col h-1/2 lg:h-full shrink-0 shadow-[0_-20px_50px_rgba(0,0,0,0.3)] lg:shadow-[-30px_0_60px_rgba(0,0,0,0.25)] relative z-20 order-1 lg:order-2 rounded-t-3xl lg:rounded-none overflow-hidden">
          
-         <!-- Panel Kontrol Melayang (Fullscreen & Tutup) -->
-         <div class="absolute top-4 right-4 flex items-center gap-2 z-50">
-             <button onclick="toggleFullScreen()" class="bg-white/90 backdrop-blur-md text-slate-600 hover:text-brand-600 p-2 lg:p-2.5 rounded-xl transition-all shadow-sm border border-slate-200 group" title="Layar Penuh">
-                 <i id="icon-fullscreen" class="ph-bold ph-corners-out text-base lg:text-lg group-hover:scale-110 transition-transform"></i>
+         <div class="absolute top-3 sm:top-4 right-3 sm:right-4 flex items-center gap-1.5 sm:gap-2 z-50">
+             <button onclick="toggleFullScreen()" class="bg-white/90 backdrop-blur-md text-slate-600 hover:text-brand-600 p-1.5 sm:p-2 lg:p-2.5 rounded-lg sm:rounded-xl transition-all shadow-sm border border-slate-200 group" title="Layar Penuh">
+                 <i id="icon-fullscreen" class="ph-bold ph-corners-out text-sm sm:text-base lg:text-lg group-hover:scale-110 transition-transform"></i>
              </button>
-             <button onclick="switchView('dashboard')" class="bg-white/90 backdrop-blur-md text-slate-600 hover:text-red-600 hover:bg-red-50 p-2 lg:p-2.5 rounded-xl transition-all role-admin hidden shadow-sm border border-slate-200 group" title="Tutup Layar Klien">
-                 <i class="ph-bold ph-x text-base lg:text-lg group-hover:rotate-90 transition-transform"></i>
+             <button onclick="switchView('dashboard')" class="bg-white/90 backdrop-blur-md text-slate-600 hover:text-red-600 hover:bg-red-50 p-1.5 sm:p-2 lg:p-2.5 rounded-lg sm:rounded-xl transition-all role-admin hidden shadow-sm border border-slate-200 group" title="Tutup Layar Klien">
+                 <i class="ph-bold ph-x text-sm sm:text-base lg:text-lg group-hover:rotate-90 transition-transform"></i>
              </button>
          </div>
 
-         <div class="p-5 lg:p-10 border-b border-slate-100 bg-slate-50/80 flex items-center justify-between shrink-0">
-            <div class="pr-20">
-               <h3 class="text-lg lg:text-2xl font-black text-slate-900 tracking-tight">Pesanan Anda</h3>
-               <p class="text-[9px] lg:text-xs text-slate-500 font-bold uppercase tracking-[0.2em] mt-1 lg:mt-1.5">Daftar Belanja</p>
+         <div class="p-4 sm:p-6 lg:p-10 border-b border-slate-100 bg-slate-50/80 flex items-center justify-between shrink-0">
+            <div class="pr-16 sm:pr-20">
+               <h3 class="text-base sm:text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Pesanan Anda</h3>
+               <p class="text-[9px] sm:text-[10px] lg:text-xs text-slate-500 font-bold uppercase tracking-[0.2em] mt-1 lg:mt-1.5">Live View</p>
             </div>
-            <span class="hidden sm:flex px-3 py-1.5 lg:px-4 lg:py-2 bg-emerald-100 text-emerald-700 rounded-xl text-[9px] lg:text-xs font-black uppercase tracking-widest items-center gap-2 shadow-sm border border-emerald-200"><div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div> SINKRON</span>
+            <span class="hidden sm:flex px-2.5 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 bg-emerald-100 text-emerald-700 rounded-lg sm:rounded-xl text-[9px] lg:text-xs font-black uppercase tracking-widest items-center gap-1.5 sm:gap-2 shadow-sm border border-emerald-200"><div class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse"></div> SINKRON</span>
          </div>
          
-         <div id="cds-cart-items" class="flex-1 overflow-y-auto p-4 lg:p-8 space-y-3 lg:space-y-4 transparent-scrollbar bg-[#f8fafc]">
+         <div id="cds-cart-items" class="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8 space-y-2.5 sm:space-y-4 transparent-scrollbar bg-[#f8fafc]">
+            <div class="flex flex-col items-center justify-center h-full text-slate-400 opacity-60">
+               <div class="relative mb-4 sm:mb-6">
+                  <div class="absolute inset-0 bg-brand-400 blur-xl opacity-20 rounded-full animate-pulse-slow"></div>
+                  <i class="ph-duotone ph-basket text-5xl sm:text-6xl lg:text-8xl text-slate-300 relative z-10 animate-bounce" style="animation-duration: 3s;"></i>
+               </div>
+               <span class="text-[9px] sm:text-[11px] lg:text-sm font-bold tracking-[0.2em] uppercase text-center px-4">Menunggu Input Kasir...</span>
+            </div>
          </div>
 
-         <div class="p-5 lg:p-10 border-t border-slate-100 bg-white shrink-0 shadow-[0_-15px_40px_rgba(0,0,0,0.04)] relative z-10">
-            <p class="text-[9px] lg:text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-1 lg:mb-3">Total Tagihan</p>
-            <p class="text-3xl lg:text-6xl font-black tracking-tighter text-brand-600 drop-shadow-sm" id="cds-total">Rp 0</p>
+         <div class="p-4 sm:p-6 lg:p-10 border-t border-slate-100 bg-white shrink-0 shadow-[0_-15px_40px_rgba(0,0,0,0.04)] relative z-10">
+            <p class="text-[9px] sm:text-[11px] lg:text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-1 lg:mb-3">Total Pembayaran</p>
+            <p class="text-2xl sm:text-4xl lg:text-6xl font-black tracking-tighter text-brand-600 drop-shadow-sm" id="cds-total">Rp 0</p>
          </div>
       </div>
   </div>
 
   <div id="modal-product" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[80] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-8 rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-black text-slate-900">Formulir Aset</h3>
-        <button onclick="closeModal('modal-product')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
+    <div class="bg-white p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
+      <div class="flex justify-between items-center mb-4 sm:mb-6">
+        <h3 class="text-lg sm:text-xl font-black text-slate-900">Formulir Aset</h3>
+        <button onclick="closeModal('modal-product')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-base sm:text-lg"></i></button>
       </div>
-      <form id="form-product" onsubmit="event.preventDefault(); saveProduct();" class="space-y-4">
+      <form id="form-product" onsubmit="event.preventDefault(); saveProduct();" class="space-y-3 sm:space-y-4">
         <input type="hidden" id="prod-id">
         <input type="hidden" id="prod-img-b64">
-        <div><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama / Merek</label><input type="text" id="prod-name" required class="w-full px-4 py-3 input-clean text-sm font-bold"></div>
-        <div class="flex gap-4">
-          <div class="w-1/2"><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Kategori</label><input type="text" id="prod-cat" required class="w-full px-4 py-3 input-clean text-sm font-semibold"></div>
-          <div class="w-1/2"><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Stok Fisik</label><input type="number" id="prod-stock" required class="w-full px-4 py-3 input-clean text-sm font-semibold text-right"></div>
+        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama / Merek</label><input type="text" id="prod-name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"></div>
+        <div class="flex gap-3 sm:gap-4">
+          <div class="w-1/2"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Kategori</label><input type="text" id="prod-cat" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold"></div>
+          <div class="w-1/2"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Stok Fisik</label><input type="number" id="prod-stock" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold text-right"></div>
         </div>
-        <div><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Harga Jual (Rp)</label><input type="number" id="prod-price" required class="w-full px-4 py-3 input-clean text-sm font-bold text-brand-600"></div>
-        <div><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Unggah Visual (Maks 2MB)</label><input type="file" accept="image/*" onchange="encodeImage(this)" class="w-full px-4 py-2.5 input-clean text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"></div>
-        <button type="submit" class="btn-solid font-bold py-3.5 w-full mt-4 text-sm">Simpan Aset Master</button>
+        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Harga Jual (Rp)</label><input type="number" id="prod-price" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold text-brand-600"></div>
+        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Unggah Visual (Maks 2MB)</label><input type="file" accept="image/*" onchange="encodeImage(this)" class="w-full px-3 sm:px-4 py-2 sm:py-2.5 input-clean text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded-md sm:file:rounded-lg file:border-0 file:text-[10px] sm:file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"></div>
+        <button type="submit" class="btn-solid font-bold py-3 sm:py-3.5 w-full mt-3 sm:mt-4 text-xs sm:text-sm">Simpan Aset Master</button>
       </form>
     </div>
   </div>
 
   <div id="modal-user" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[80] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-8 rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-black text-slate-900">Formulir Pengguna</h3>
-        <button onclick="closeModal('modal-user')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
+    <div class="bg-white p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
+      <div class="flex justify-between items-center mb-4 sm:mb-6">
+        <h3 class="text-lg sm:text-xl font-black text-slate-900">Formulir Pengguna</h3>
+        <button onclick="closeModal('modal-user')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-base sm:text-lg"></i></button>
       </div>
-      <form id="form-user" onsubmit="event.preventDefault(); saveUser();" class="space-y-4">
-        <div><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">ID Akses Login</label><input type="text" id="u-username" required class="w-full px-4 py-3 input-clean text-sm font-bold"></div>
-        <div><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Sandi Keamanan</label><input type="password" id="u-pass" class="w-full px-4 py-3 input-clean text-sm" placeholder="Isi untuk ubah sandi"></div>
-        <div class="flex gap-4">
-          <div class="w-2/3"><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama Personel</label><input type="text" id="u-name" required class="w-full px-4 py-3 input-clean text-sm font-semibold"></div>
-          <div class="w-1/3"><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Otoritas</label><select id="u-role" class="w-full px-3 py-3 input-clean text-sm font-bold"><option value="admin">Admin</option><option value="user">Staf Kasir</option><option value="klien">Layar</option></select></div>
+      <form id="form-user" onsubmit="event.preventDefault(); saveUser();" class="space-y-3 sm:space-y-4">
+        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">ID Akses Login</label><input type="text" id="u-username" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"></div>
+        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Sandi Keamanan</label><input type="password" id="u-pass" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm" placeholder="Isi untuk ubah sandi"></div>
+        <div class="flex gap-3 sm:gap-4">
+          <div class="w-2/3"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama Personel</label><input type="text" id="u-name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold"></div>
+          <div class="w-1/3"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Otoritas</label><select id="u-role" class="w-full px-2 sm:px-3 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"><option value="admin">Admin</option><option value="user">Staf Kasir</option><option value="klien">Layar</option></select></div>
         </div>
-        <div><label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Alamat Email</label><input type="email" id="u-email" class="w-full px-4 py-3 input-clean text-sm"></div>
-        <button type="submit" class="btn-dark font-bold py-3.5 w-full mt-4 text-sm">Terbitkan Akses</button>
+        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Alamat Email</label><input type="email" id="u-email" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm"></div>
+        <button type="submit" class="btn-dark font-bold py-3 sm:py-3.5 w-full mt-3 sm:mt-4 text-xs sm:text-sm">Terbitkan Akses</button>
       </form>
     </div>
   </div>
 
   <div id="modal-receipt" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center z-[100] p-4">
-    <div class="bg-slate-100 p-4 sm:p-6 rounded-[2rem] w-full max-w-sm shadow-floating flex flex-col transform transition-transform duration-300">
-      <div class="flex justify-between items-center mb-4 px-2">
-        <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest">Preview Struk</h3>
-        <button onclick="closeModal('modal-receipt')" class="text-slate-400 hover:text-red-500 bg-white p-1.5 rounded-lg shadow-sm"><i class="ph-bold ph-x text-lg"></i></button>
+    <div class="bg-slate-100 p-4 sm:p-6 rounded-[1.5rem] sm:rounded-[2rem] w-full max-w-[340px] sm:max-w-sm shadow-floating flex flex-col transform transition-transform duration-300">
+      <div class="flex justify-between items-center mb-3 sm:mb-4 px-1 sm:px-2">
+        <h3 class="text-xs sm:text-sm font-black text-slate-800 uppercase tracking-widest">Preview Struk</h3>
+        <button onclick="closeModal('modal-receipt')" class="text-slate-400 hover:text-red-500 bg-white p-1.5 rounded-lg shadow-sm"><i class="ph-bold ph-x text-base sm:text-lg"></i></button>
       </div>
-      <div id="receipt-visual-content" class="bg-white rounded-xl shadow-inner mx-auto overflow-y-auto max-h-[60vh] custom-scrollbar border border-slate-200"></div>
-      <div class="flex gap-3 mt-6">
-        <button onclick="document.getElementById('receipt-print-area').classList.remove('hidden'); window.print(); setTimeout(() => { document.getElementById('receipt-print-area').classList.add('hidden'); }, 1000);" class="flex-1 btn-solid py-3 text-xs font-bold flex justify-center gap-2"><i class="ph-bold ph-printer text-base"></i> Cetak ke Printer</button>
+      <div id="receipt-visual-content" class="bg-white rounded-xl shadow-inner mx-auto overflow-y-auto max-h-[50vh] sm:max-h-[60vh] custom-scrollbar border border-slate-200"></div>
+      <div class="flex gap-2 sm:gap-3 mt-4 sm:mt-6">
+        <button onclick="document.getElementById('receipt-print-area').classList.remove('hidden'); window.print(); setTimeout(() => { document.getElementById('receipt-print-area').classList.add('hidden'); }, 1000);" class="flex-1 btn-solid py-2.5 sm:py-3 text-[10px] sm:text-xs font-bold flex justify-center items-center gap-1.5 sm:gap-2"><i class="ph-bold ph-printer text-sm sm:text-base"></i> Cetak ke Printer</button>
       </div>
     </div>
   </div>
 
   <div id="modal-qrcode" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center z-[100] p-4">
-    <div class="bg-white p-8 rounded-[2rem] w-full max-w-[320px] text-center shadow-floating transform transition-transform duration-300 border border-slate-100">
-       <div class="flex justify-end mb-2 -mt-4 -mr-4">
-          <button onclick="closeModal('modal-qrcode')" class="text-slate-400 hover:text-slate-800 bg-slate-50 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
+    <div class="bg-white p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] w-full max-w-[260px] sm:max-w-[320px] text-center shadow-floating transform transition-transform duration-300 border border-slate-100">
+       <div class="flex justify-end mb-2 -mt-2 sm:-mt-4 -mr-2 sm:-mr-4">
+          <button onclick="closeModal('modal-qrcode')" class="text-slate-400 hover:text-slate-800 bg-slate-50 p-1.5 rounded-lg"><i class="ph-bold ph-x text-base sm:text-lg"></i></button>
        </div>
-       <h3 class="text-sm font-black text-slate-900 mb-1">e-Receipt Digital</h3>
-       <p class="text-[10px] text-slate-500 font-bold mb-5 font-mono" id="qr-trx-id"></p>
-       <div id="qrcode-container" class="inline-block p-4 bg-white border border-slate-100 rounded-xl shadow-sm mb-6 min-h-[240px] min-w-[240px] flex items-center justify-center"></div>
-       <button onclick="downloadQR()" class="w-full btn-dark py-3 text-xs font-bold">Simpan Gambar QR</button>
+       <h3 class="text-xs sm:text-sm font-black text-slate-900 mb-0.5 sm:mb-1">e-Receipt Digital</h3>
+       <p class="text-[9px] sm:text-[10px] text-slate-500 font-bold mb-4 sm:mb-5 font-mono" id="qr-trx-id"></p>
+       <div id="qrcode-container" class="inline-block p-2 sm:p-4 bg-white border border-slate-100 rounded-xl shadow-sm mb-4 sm:mb-6 min-h-[160px] min-w-[160px] sm:min-h-[240px] sm:min-w-[240px] flex items-center justify-center"></div>
+       <button onclick="downloadQR()" class="w-full btn-dark py-2.5 sm:py-3 text-[10px] sm:text-xs font-bold">Simpan Gambar QR</button>
     </div>
   </div>
 
@@ -822,6 +846,7 @@
     let lastCdsState = ''; 
     let promoInterval;
     let promoIndex = 0;
+    let currentQRTrx = '';
 
     function getReceiptHTML(tid, d, t, c, cg, cl, ksr, items) {
       const logoHtml = storeConfig.StoreLogo ? `<img src="${storeConfig.StoreLogo}" style="max-height: 45px; margin: 0 auto 10px;" alt="Logo">` : '';
@@ -865,7 +890,7 @@
       const t = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
       document.getElementById('toast-icon').className = isError ? "ph-fill ph-warning-circle text-red-500" : "ph-fill ph-check-circle text-brand-600";
-      t.className = `fixed top-6 right-6 px-5 py-4 rounded-2xl shadow-floating z-[100] text-sm font-bold tracking-wide transform translate-x-[120%] opacity-0 transition-all duration-400 ease-out flex items-center gap-3 border card-glass ${isError?'text-red-900 border-red-200 bg-red-50':'text-slate-800 border-slate-200'}`;
+      t.className = `fixed top-6 right-6 px-4 py-3 sm:px-5 sm:py-4 rounded-2xl shadow-floating z-[100] text-xs sm:text-sm font-semibold tracking-wide transform translate-x-[120%] opacity-0 transition-all duration-400 ease-out flex items-center gap-3 border card-glass ${isError?'text-red-900 border-red-200 bg-red-50':'text-slate-800 border-slate-200'}`;
       t.classList.remove('translate-x-[120%]', 'opacity-0');
       setTimeout(() => { t.classList.add('translate-x-[120%]', 'opacity-0'); }, 3500);
     }
@@ -886,8 +911,8 @@
 
     function togglePassword(inputId, iconId) {
       const p = document.getElementById(inputId); const i = document.getElementById(iconId);
-      if(p.type === 'password') { p.type = 'text'; i.className = 'ph-bold ph-eye-slash text-lg text-brand-600'; } 
-      else { p.type = 'password'; i.className = 'ph-bold ph-eye text-lg text-slate-400'; }
+      if(p.type === 'password') { p.type = 'text'; i.className = 'ph-bold ph-eye-slash text-base sm:text-lg text-brand-600'; } 
+      else { p.type = 'password'; i.className = 'ph-bold ph-eye text-base sm:text-lg text-slate-400'; }
     }
 
     function toggleRegister() {
@@ -923,16 +948,16 @@
                 try { items = JSON.parse(decodeURIComponent(trx.detail)); } catch(e) {}
                 const h = getReceiptHTML(trx.trxId, trx.date, trx.total, trx.cash, trx.change, trx.client, trx.cashier, items);
                 document.body.innerHTML = `
-                  <div class="min-h-screen bg-[#f4f7fb] flex flex-col items-center py-10 px-4 bg-pattern">
-                    <div id="area-struk-mobile" class="w-full max-w-[340px] bg-white p-6 rounded-[2rem] shadow-floating border border-slate-100 mb-6 animate-slide-up relative overflow-hidden">
-                      <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-500 to-purple-500"></div>
+                  <div class="min-h-screen bg-[#f4f7fb] flex flex-col items-center py-6 sm:py-10 px-4 bg-pattern overflow-y-auto">
+                    <div id="area-struk-mobile" class="w-full max-w-[340px] bg-white p-5 sm:p-6 rounded-[1.5rem] sm:rounded-[2rem] shadow-floating border border-slate-100 mb-6 animate-slide-up relative overflow-hidden">
+                      <div class="absolute top-0 left-0 w-full h-1.5 sm:h-2 bg-gradient-to-r from-brand-500 to-purple-500"></div>
                       ${h}
                     </div>
-                    <div class="w-full max-w-[340px] flex flex-col gap-3 animate-slide-up" style="animation-delay: 0.1s;">
-                       <button onclick="downloadMobilePDF('${trx.trxId}')" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-4 rounded-2xl text-sm flex justify-center items-center gap-2 shadow-lg shadow-brand-500/30 transition-all">
-                         <i class="ph-bold ph-download-simple text-xl"></i> Unduh Struk (PDF)
+                    <div class="w-full max-w-[340px] flex flex-col gap-2.5 sm:gap-3 animate-slide-up pb-10" style="animation-delay: 0.1s;">
+                       <button onclick="downloadMobilePDF('${trx.trxId}')" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex justify-center items-center gap-2 shadow-lg shadow-brand-500/30 transition-all">
+                         <i class="ph-bold ph-download-simple text-lg sm:text-xl"></i> Unduh Struk (PDF)
                        </button>
-                       <a href="${safeBaseUrl}" class="w-full bg-white text-slate-700 font-bold py-4 rounded-2xl text-sm text-center shadow-sm border border-slate-200 hover:bg-slate-50 transition-all">
+                       <a href="${safeBaseUrl}" class="w-full bg-white text-slate-700 font-bold py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-center shadow-sm border border-slate-200 hover:bg-slate-50 transition-all">
                          Halaman Utama
                        </a>
                     </div>
@@ -944,11 +969,11 @@
         } catch(err) {
             document.body.innerHTML = `
               <div class="min-h-screen bg-[#f4f7fb] flex items-center justify-center p-6 text-center">
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-floating border border-slate-100 max-w-sm w-full animate-slide-up">
-                  <div class="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6"><i class="ph-fill ph-warning-octagon text-4xl"></i></div>
-                  <h2 class="text-2xl font-black text-slate-900 mb-2">Gagal Dimuat</h2>
-                  <p class="text-sm font-medium text-slate-500 mb-8 leading-relaxed">${err.message || 'Unknown error'}</p>
-                  <a href="${safeBaseUrl}" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-sm inline-block shadow-lg hover:bg-slate-800 transition-colors">Tutup Jendela</a>
+                <div class="bg-white p-8 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-floating border border-slate-100 max-w-sm w-full animate-slide-up">
+                  <div class="w-16 h-16 sm:w-20 sm:h-20 bg-red-50 text-red-500 rounded-[1.5rem] sm:rounded-3xl flex items-center justify-center mx-auto mb-5 sm:mb-6"><i class="ph-fill ph-warning-octagon text-3xl sm:text-4xl"></i></div>
+                  <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-2">Gagal Dimuat</h2>
+                  <p class="text-xs sm:text-sm font-medium text-slate-500 mb-6 sm:mb-8 leading-relaxed">${err.message || 'Unknown error'}</p>
+                  <a href="${safeBaseUrl}" class="w-full bg-slate-900 text-white py-3 sm:py-4 rounded-xl font-bold text-xs sm:text-sm inline-block shadow-lg hover:bg-slate-800 transition-colors">Tutup Jendela</a>
                 </div>
               </div>`;
         }
@@ -1201,13 +1226,13 @@
                     data: [1.2, 1.9, 1.5, 2.1, 1.8, 2.8, (s.todayRevenue/1000000)], 
                     borderColor: '#4f46e5', backgroundColor: gradient, borderWidth: 4, 
                     tension: 0.4, fill: true, pointBackgroundColor: '#ffffff', pointBorderColor: '#4f46e5', 
-                    pointBorderWidth: 3, pointRadius: 5, pointHoverRadius: 7 
+                    pointBorderWidth: 3, pointRadius: 4, pointHoverRadius: 6 
                 }] 
             },
             options: { 
                 responsive: true, maintainAspectRatio: false, plugins: { legend: {display: false}, tooltip: {backgroundColor:'rgba(15,23,42,0.9)', titleFont:{family:"Plus Jakarta Sans"}, bodyFont:{family:"Plus Jakarta Sans"}, padding: 12, cornerRadius: 8} }, 
                 scales: { 
-                    y: { beginAtZero: true, grid:{borderDash:[5,5], color:'#e2e8f0', drawBorder: false}, ticks: {font:{family:"Plus Jakarta Sans", weight: 600, color:'#64748b'}} }, 
+                    y: { beginAtZero: true, grid:{borderDash:[5,5], color:'#e2e8f0', drawBorder: false}, ticks: {font:{family:"Plus Jakarta Sans", weight: 600, color:'#64748b'}, maxTicksLimit: 5} }, 
                     x: { grid:{display:false, drawBorder: false}, ticks: {font:{family:"Plus Jakarta Sans", weight: 700, color:'#64748b'}} } 
                 } 
             }
@@ -1240,25 +1265,25 @@
       const search = document.getElementById('pos-search').value.toLowerCase(); const grid = document.getElementById('pos-product-grid'); grid.innerHTML = '';
       const filtered = products.filter(p => p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search));
       
-      if(!filtered.length) { grid.innerHTML = `<div class="col-span-full flex flex-col items-center justify-center py-16 text-slate-400 font-bold"><div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mb-3"><i class="ph-duotone ph-package text-4xl text-slate-300"></i></div>Data Kosong.</div>`; return; }
+      if(!filtered.length) { grid.innerHTML = `<div class="col-span-full flex flex-col items-center justify-center py-16 text-slate-400 font-bold"><div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-100 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3"><i class="ph-duotone ph-package text-3xl sm:text-4xl text-slate-300"></i></div>Data Kosong.</div>`; return; }
 
       filtered.forEach(p => {
         const out = p.stock <= 0;
         const lowStock = p.stock > 0 && p.stock <= 5;
-        const imgHtml = p.image ? `<div class="w-full aspect-[4/3] rounded-xl bg-cover bg-center mb-3 shadow-sm border border-slate-100" style="background-image: url('${p.image}')"></div>` : `<div class="w-full aspect-[4/3] rounded-xl bg-[#f8fafc] border border-slate-100 flex items-center justify-center text-slate-300 mb-3"><i class="ph-duotone ph-image text-3xl"></i></div>`;
+        const imgHtml = p.image ? `<div class="w-full aspect-[4/3] rounded-lg sm:rounded-xl bg-cover bg-center mb-2 sm:mb-3 shadow-sm border border-slate-100" style="background-image: url('${p.image}')"></div>` : `<div class="w-full aspect-[4/3] rounded-lg sm:rounded-xl bg-[#f8fafc] border border-slate-100 flex items-center justify-center text-slate-300 mb-2 sm:mb-3"><i class="ph-duotone ph-image text-2xl sm:text-3xl"></i></div>`;
         
         const clickAnim = `this.classList.add('scale-95'); setTimeout(()=>this.classList.remove('scale-95'), 150);`;
         
         grid.innerHTML += `
-          <div class="bg-white p-3 border border-slate-100 rounded-2xl cursor-pointer flex flex-col h-full select-none relative transition-all duration-200 ${out ? 'opacity-50 grayscale' : 'hover:border-brand-300 hover:shadow-lg hover:shadow-brand-500/10'}" onclick="${out ? '' : `${clickAnim} addToCart('${p.id}')`}">
-            ${!out && lowStock ? `<div class="absolute top-1.5 right-1.5 bg-orange-500 text-white text-[9px] font-black tracking-widest px-2 py-0.5 rounded-md shadow-sm animate-pulse z-10">TERBATAS</div>` : ''}
+          <div class="bg-white p-2 sm:p-3 border border-slate-100 rounded-xl sm:rounded-2xl cursor-pointer flex flex-col h-full select-none relative transition-all duration-200 ${out ? 'opacity-50 grayscale' : 'hover:border-brand-300 hover:shadow-lg hover:shadow-brand-500/10'}" onclick="${out ? '' : `${clickAnim} addToCart('${p.id}')`}">
+            ${!out && lowStock ? `<div class="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 bg-orange-500 text-white text-[8px] sm:text-[9px] font-black tracking-widest px-1.5 sm:px-2 py-0.5 rounded-md shadow-sm animate-pulse z-10">TERBATAS</div>` : ''}
             ${imgHtml}
             <div class="flex flex-col flex-1 px-1">
-              <span class="text-[9px] font-black text-brand-500 uppercase tracking-widest mb-1 line-clamp-1">${p.category}</span>
-              <div class="font-black text-slate-800 text-xs sm:text-sm leading-snug mb-2 line-clamp-2">${p.name}</div>
-              <div class="mt-auto flex justify-between items-center pt-2 border-t border-slate-50">
-                <div class="text-slate-900 font-black text-sm sm:text-base">${formatRp(p.price)}</div>
-                <div class="text-[10px] font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">${p.stock} Qty</div>
+              <span class="text-[8px] sm:text-[9px] font-black text-brand-500 uppercase tracking-widest mb-0.5 sm:mb-1 line-clamp-1">${p.category}</span>
+              <div class="font-black text-slate-800 text-[10px] sm:text-xs leading-snug mb-1.5 sm:mb-2 line-clamp-2">${p.name}</div>
+              <div class="mt-auto flex justify-between items-center pt-1.5 sm:pt-2 border-t border-slate-50">
+                <div class="text-slate-900 font-black text-xs sm:text-sm">${formatRp(p.price)}</div>
+                <div class="text-[8px] sm:text-[10px] font-bold text-slate-400 bg-slate-50 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md border border-slate-100">${p.stock} Qty</div>
               </div>
             </div>
           </div>`;
@@ -1288,22 +1313,22 @@
     function renderCart(skipBroadcast = false) {
       const container = document.getElementById('cart-items'); container.innerHTML = ''; let total = 0; let qtyTotal = 0;
       if(!cart.length) { 
-        container.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-slate-300 py-12"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mb-3"><i class="ph-duotone ph-shopping-cart text-3xl"></i></div><span class="text-xs font-black tracking-widest uppercase text-slate-400">Daftar Kosong</span></div>`; 
+        container.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-slate-300 py-10 sm:py-12"><div class="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mb-3"><i class="ph-duotone ph-shopping-cart text-2xl sm:text-3xl"></i></div><span class="text-[10px] sm:text-xs font-black tracking-widest uppercase text-slate-400">Daftar Kosong</span></div>`; 
       } else {
         cart.forEach(item => {
           total += item.price * item.qty; qtyTotal += item.qty;
-          const imgHtml = item.image ? `<div class="w-12 h-12 rounded-xl bg-cover bg-center shrink-0 border border-slate-100 shadow-sm" style="background-image: url('${item.image}')"></div>` : `<div class="w-12 h-12 rounded-xl bg-[#f8fafc] border border-slate-100 flex items-center justify-center text-slate-300 shrink-0"><i class="ph-duotone ph-image text-xl"></i></div>`;
+          const imgHtml = item.image ? `<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-cover bg-center shrink-0 border border-slate-100 shadow-sm" style="background-image: url('${item.image}')"></div>` : `<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[#f8fafc] border border-slate-100 flex items-center justify-center text-slate-300 shrink-0"><i class="ph-duotone ph-image text-lg sm:text-xl"></i></div>`;
           container.innerHTML += `
-            <div class="bg-white p-3 border border-slate-100 rounded-2xl flex items-center gap-3 animate-fade-in shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+            <div class="bg-white p-2 sm:p-3 border border-slate-100 rounded-xl sm:rounded-2xl flex items-center gap-2.5 sm:gap-3 animate-fade-in shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
               ${imgHtml}
               <div class="flex-1 min-w-0 pr-1">
-                <div class="font-bold text-slate-800 text-xs sm:text-sm truncate">${item.name}</div>
-                <div class="text-brand-600 font-black text-sm mt-0.5">${formatRp(item.price)}</div>
+                <div class="font-bold text-slate-800 text-[11px] sm:text-sm truncate leading-tight">${item.name}</div>
+                <div class="text-brand-600 font-black text-xs sm:text-sm mt-0.5">${formatRp(item.price)}</div>
               </div>
-              <div class="flex items-center gap-1.5 bg-[#f8fafc] p-1.5 rounded-xl border border-slate-200">
-                <button onclick="changeQty('${item.id}', -1)" class="w-7 h-7 flex items-center justify-center bg-white rounded-lg text-slate-500 hover:text-slate-900 shadow-sm border border-slate-100 hover:border-slate-300 transition-colors"><i class="ph-bold ph-minus text-xs"></i></button>
-                <span class="w-5 text-center font-black text-sm text-slate-800">${item.qty}</span>
-                <button onclick="changeQty('${item.id}', 1)" class="w-7 h-7 flex items-center justify-center bg-white rounded-lg text-slate-500 hover:text-slate-900 shadow-sm border border-slate-100 hover:border-slate-300 transition-colors"><i class="ph-bold ph-plus text-xs"></i></button>
+              <div class="flex items-center gap-1 sm:gap-1.5 bg-[#f8fafc] p-1 sm:p-1.5 rounded-lg sm:rounded-xl border border-slate-200">
+                <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center bg-white rounded-md sm:rounded-lg text-slate-500 hover:text-slate-900 shadow-sm border border-slate-100 hover:border-slate-300 transition-colors"><i class="ph-bold ph-minus text-[10px] sm:text-xs"></i></button>
+                <span class="w-4 sm:w-5 text-center font-black text-xs sm:text-sm text-slate-800">${item.qty}</span>
+                <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center bg-white rounded-md sm:rounded-lg text-slate-500 hover:text-slate-900 shadow-sm border border-slate-100 hover:border-slate-300 transition-colors"><i class="ph-bold ph-plus text-[10px] sm:text-xs"></i></button>
               </div>
             </div>`;
         });
@@ -1404,35 +1429,35 @@
       const totVol = data.reduce((s,t) => s+parseFloat(t.total),0);
       
       document.getElementById('trx-summary').innerHTML = `
-        <div class="card-glass p-5 bg-gradient-to-br from-slate-800 to-slate-950 text-white border-transparent">
-          <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Volume Penjualan</div>
-          <div class="text-2xl font-black tracking-tight drop-shadow-md">${formatRp(totVol)}</div>
+        <div class="card-glass p-4 sm:p-5 bg-gradient-to-br from-slate-800 to-slate-950 text-white border-transparent">
+          <div class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">Volume Penjualan</div>
+          <div class="text-xl sm:text-2xl font-black tracking-tight drop-shadow-md">${formatRp(totVol)}</div>
         </div>
-        <div class="card-glass p-5">
-          <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Referensi</div>
-          <div class="text-2xl font-black text-slate-900 tracking-tight">${data.length} <span class="text-sm font-bold text-slate-400 ml-1">Dok.</span></div>
+        <div class="card-glass p-4 sm:p-5">
+          <div class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">Total Referensi</div>
+          <div class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">${data.length} <span class="text-xs sm:text-sm font-bold text-slate-400 ml-1">Dok.</span></div>
         </div>
-        <div class="card-glass p-5">
-          <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nilai Rata-Rata</div>
-          <div class="text-2xl font-black text-slate-900 tracking-tight">${formatRp(data.length ? totVol/data.length : 0)}</div>
+        <div class="card-glass p-4 sm:p-5">
+          <div class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">Nilai Rata-Rata</div>
+          <div class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">${formatRp(data.length ? totVol/data.length : 0)}</div>
         </div>`;
 
-      if(!data.length) { tb.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-slate-400 text-sm font-semibold"><div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3"><i class="ph-duotone ph-receipt text-3xl"></i></div>Tidak ada riwayat ditemukan.</td></tr>`; return; }
+      if(!data.length) { tb.innerHTML = `<tr><td colspan="5" class="text-center py-10 sm:py-12 text-slate-400 text-xs sm:text-sm font-semibold"><div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3"><i class="ph-duotone ph-receipt text-2xl sm:text-3xl"></i></div>Tidak ada riwayat ditemukan.</td></tr>`; return; }
       
       data.forEach(t => {
         globalTrxMap[t.trxId] = t; 
         tb.innerHTML += `
           <tr class="hover:bg-brand-50/50 transition-colors">
-            <td class="py-4 px-6 text-sm font-semibold">${t.date.split(' ')[0]} <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-bold text-slate-500 ml-2">${t.date.split(' ')[1]||''}</span></td>
-            <td class="py-4 px-6 font-mono font-bold text-brand-600">${t.trxId}</td>
-            <td class="py-4 px-6 font-bold text-slate-900">${t.client} <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded ml-2 border border-slate-100">${t.cashier}</span></td>
-            <td class="py-4 px-6 font-black text-slate-900 text-right text-base">${formatRp(t.total)}</td>
-            <td class="py-4 px-6 text-center">
-              <div class="flex justify-center gap-1.5">
-                <button onclick="printReceiptFromMap('${t.trxId}')" class="text-brand-600 hover:text-white hover:bg-brand-600 w-8 h-8 flex items-center justify-center bg-brand-50 rounded-lg transition-colors"><i class="ph-bold ph-printer"></i></button>
-                <button onclick="downloadPDFFromMap('${t.trxId}')" class="text-slate-500 hover:text-white hover:bg-slate-600 w-8 h-8 flex items-center justify-center bg-slate-100 rounded-lg transition-colors"><i class="ph-bold ph-file-pdf"></i></button>
-                <button onclick="showQRCode('${t.trxId}')" class="text-slate-500 hover:text-white hover:bg-slate-600 w-8 h-8 flex items-center justify-center bg-slate-100 rounded-lg transition-colors"><i class="ph-bold ph-qr-code"></i></button>
-                <button onclick="delTrx('${t.trxId}')" class="role-admin text-red-500 hover:text-white hover:bg-red-500 w-8 h-8 flex items-center justify-center bg-red-50 rounded-lg transition-colors hidden"><i class="ph-bold ph-trash"></i></button>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 text-xs sm:text-sm font-semibold">${t.date.split(' ')[0]} <span class="text-[9px] sm:text-[10px] bg-slate-100 px-1.5 sm:px-2 py-0.5 rounded-md font-bold text-slate-500 ml-1 sm:ml-2">${t.date.split(' ')[1]||''}</span></td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 font-mono font-bold text-brand-600">${t.trxId}</td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 font-bold text-slate-900">${t.client} <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-50 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded ml-1 sm:ml-2 border border-slate-100">${t.cashier}</span></td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 font-black text-slate-900 text-right text-sm sm:text-base">${formatRp(t.total)}</td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 text-center">
+              <div class="flex justify-center gap-1 sm:gap-1.5">
+                <button onclick="printReceiptFromMap('${t.trxId}')" class="text-brand-600 hover:text-white hover:bg-brand-600 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-brand-50 rounded-md sm:rounded-lg transition-colors"><i class="ph-bold ph-printer"></i></button>
+                <button onclick="downloadPDFFromMap('${t.trxId}')" class="text-slate-500 hover:text-white hover:bg-slate-600 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-100 rounded-md sm:rounded-lg transition-colors"><i class="ph-bold ph-file-pdf"></i></button>
+                <button onclick="showQRCode('${t.trxId}')" class="text-slate-500 hover:text-white hover:bg-slate-600 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-100 rounded-md sm:rounded-lg transition-colors"><i class="ph-bold ph-qr-code"></i></button>
+                <button onclick="delTrx('${t.trxId}')" class="role-admin text-red-500 hover:text-white hover:bg-red-500 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-red-50 rounded-md sm:rounded-lg transition-colors hidden"><i class="ph-bold ph-trash"></i></button>
               </div>
             </td>
           </tr>`
@@ -1489,12 +1514,10 @@
     function startPromoSlider() {
       if(promoInterval) clearInterval(promoInterval);
       
-      const promoItems = products.length > 0 ? products : [];
-      
+      const promoItems = products.filter(p => p.image);
       const defaultImages = [
           'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80',
-          'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80',
-          'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80'
+          'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80'
       ];
 
       const updatePromo = () => {
@@ -1524,7 +1547,7 @@
           } else {
               const img = defaultImages[promoIndex % defaultImages.length];
               if(slider) slider.style.backgroundImage = `url('${img}')`;
-              if(title) { title.innerText = "Selamat Datang"; title.classList.remove('animate-slide-up'); void title.offsetWidth; title.classList.add('animate-slide-up'); }
+              if(title) title.innerText = "Selamat Datang";
               if(desc) desc.innerText = "Nikmati sajian istimewa dari dapur kami.";
           }
           promoIndex++;
@@ -1544,62 +1567,149 @@
           const qrUrl = window.location.href.split('?')[0].split('#')[0] + "?receipt=" + trxId;
           
           container.innerHTML = `
-              <div class="absolute inset-0 bg-white/90 backdrop-blur-md z-0"></div>
-              <div class="relative z-10 flex flex-col items-center justify-center h-full space-y-4 py-4 animate-slide-up text-center px-4 w-full">
-                  <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-lg border-4 border-white mb-2"><i class="ph-bold ph-check text-3xl"></i></div>
-                  <h3 class="text-2xl font-black text-slate-900 tracking-tight">Transaksi Sukses!</h3>
-                  <p class="text-sm text-slate-500 font-bold mb-4">Pindai kode QR untuk menyimpan e-Receipt.</p>
+              <div class="absolute inset-0 bg-white/80 backdrop-blur-sm z-0"></div>
+              <div class="relative z-10 flex flex-col items-center justify-center h-full space-y-3 py-2 animate-slide-up text-center px-4">
+                  <div class="relative mt-2">
+                     <div class="absolute inset-0 bg-emerald-400 blur-lg opacity-40 rounded-full animate-pulse-slow"></div>
+                     <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-2xl flex items-center justify-center shadow-xl border-2 border-white relative z-10 transform hover:scale-105 transition-transform"><i class="ph-bold ph-check text-3xl sm:text-4xl"></i></div>
+                  </div>
+                  <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight drop-shadow-sm">Transaksi Sukses!</h3>
+                  <p class="text-[10px] sm:text-xs text-slate-500 font-bold leading-relaxed max-w-[250px]">Pindai kode QR untuk menyimpan e-Receipt.</p>
                   
-                  <div class="bg-white p-5 rounded-2xl shadow-floating border border-slate-200 inline-flex flex-col items-center min-h-[220px] min-w-[220px]">
-                     <div id="cds-qrcode-display" class="w-full h-full flex justify-center items-center bg-white"></div>
+                  <div class="bg-white p-3 rounded-2xl sm:rounded-3xl shadow-floating border border-slate-200 mt-2 relative overflow-hidden group">
+                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-brand-500"></div>
+                     <div id="cds-qrcode-display" class="relative z-10 p-1"></div>
                   </div>
                   
-                  <div class="flex items-center gap-2 mt-4 text-slate-400">
-                     <i class="ph-fill ph-receipt text-lg"></i>
-                     <span class="text-xs font-black font-mono tracking-widest uppercase">${trxId}</span>
+                  <div class="flex items-center gap-1.5 mt-2 opacity-80">
+                     <i class="ph-fill ph-receipt text-slate-400 text-xs sm:text-sm"></i>
+                     <span class="text-[9px] sm:text-[10px] text-slate-500 font-black font-mono tracking-[0.2em] uppercase">${trxId}</span>
                   </div>
               </div>`;
               
-          setTimeout(() => { 
-            document.getElementById('cds-qrcode-display').innerHTML = ''; 
-            new QRCode(document.getElementById('cds-qrcode-display'), { 
-              text: qrUrl, 
-              width: 180, 
-              height: 180, 
-              colorDark : "#0f172a", 
-              colorLight: "#ffffff", 
-              correctLevel : QRCode.CorrectLevel.L 
-            }); 
-          }, 150);
+          setTimeout(() => { document.getElementById('cds-qrcode-display').innerHTML = ''; new QRCode(document.getElementById('cds-qrcode-display'), { text: qrUrl, width: 140, height: 140, colorDark : "#0f172a", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.M }); }, 150);
           return;
       }
       
       if(!liveCart || !liveCart.length) {
         container.innerHTML = `
-           <div class="flex flex-col items-center justify-center h-full text-slate-300 opacity-70 py-10">
-              <div class="relative mb-6">
+           <div class="flex flex-col items-center justify-center h-full text-slate-300 opacity-60">
+              <div class="relative mb-4 sm:mb-6">
                  <div class="absolute inset-0 bg-brand-400 blur-xl opacity-20 rounded-full animate-pulse-slow"></div>
-                 <i class="ph-duotone ph-shopping-cart text-7xl text-slate-300 relative z-10 animate-bounce" style="animation-duration: 3s;"></i>
+                 <i class="ph-duotone ph-basket text-5xl sm:text-6xl lg:text-8xl text-slate-300 relative z-10 animate-bounce" style="animation-duration: 3s;"></i>
               </div>
-              <span class="text-[10px] font-black tracking-[0.2em] uppercase text-slate-400 bg-white px-5 py-2 rounded-full shadow-sm border border-slate-100">Keranjang Kosong</span>
+              <span class="text-[9px] sm:text-[11px] lg:text-sm font-bold tracking-[0.2em] uppercase text-center px-4">Belum Ada Input Kasir</span>
            </div>`;
       } else {
         container.innerHTML = '';
         liveCart.forEach((item, index) => {
           container.innerHTML += `
-            <div class="bg-white p-4 rounded-2xl border border-slate-100 flex justify-between items-center shadow-sm hover:shadow-md transition-all transform hover:-translate-y-1 relative overflow-hidden group" style="animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.05}s forwards; opacity: 0; transform: translateY(15px);">
+            <div class="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100 flex justify-between items-center shadow-sm hover:shadow-md transition-all transform hover:-translate-y-1 relative overflow-hidden group" style="animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.05}s forwards; opacity: 0; transform: translateY(15px);">
               <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div class="flex-1 min-w-0 pr-4">
-                <div class="font-black text-slate-900 text-base truncate tracking-tight mb-0.5 group-hover:text-brand-600 transition-colors">${item.name}</div>
-                <div class="text-xs text-slate-500 font-bold flex items-center gap-2">
-                   <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md shadow-inner border border-slate-200/60">${item.qty}x</span> 
+              <div class="flex-1 min-w-0 pr-3 sm:pr-4">
+                <div class="font-black text-slate-900 text-sm sm:text-base truncate tracking-tight mb-0.5 group-hover:text-brand-600 transition-colors">${item.name}</div>
+                <div class="text-[10px] sm:text-xs text-slate-500 font-bold flex items-center gap-1.5 sm:gap-2">
+                   <span class="bg-slate-100 text-slate-700 px-1.5 sm:px-2 py-0.5 rounded-md shadow-inner border border-slate-200/60">${item.qty}x</span> 
                    <span class="opacity-80">${formatRp(item.price)}</span>
                 </div>
               </div>
-              <div class="text-brand-600 font-black text-xl shrink-0 drop-shadow-sm">${formatRp(item.price * item.qty)}</div>
+              <div class="text-brand-600 font-black text-lg sm:text-xl shrink-0 drop-shadow-sm">${formatRp(item.price * item.qty)}</div>
             </div>`;
         });
       }
+    }
+
+    function generateReceipt(tid, d, t, c, cg, cl, ksr, items) {
+      const a = document.getElementById('receipt-print-area'), m = document.getElementById('receipt-visual-content');
+      let h = getReceiptHTML(tid, d, t, c, cg, cl, ksr, items);
+      a.innerHTML = h; 
+      m.innerHTML = `<div style="width: 58mm; background: white; padding: 15px sm:padding: 25px; font-family: 'Plus Jakarta Sans', sans-serif;">${h}</div>`;
+      openModal('modal-receipt');
+    }
+
+    function printProductReport() {
+      const printHtml = `
+        <div style="padding: 30px; font-family: 'Plus Jakarta Sans', sans-serif;">
+          <h2 style="margin-bottom: 25px; font-weight: 900; font-size: 20px; text-transform: uppercase; border-bottom: 3px solid #0f172a; padding-bottom: 10px;">Laporan Analitik Produk - ${storeConfig.StoreName}</h2>
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
+            <thead><tr style="border-bottom: 2px solid #cbd5e1; color: #64748b; text-transform: uppercase; letter-spacing: 1px; font-size: 10px;"><th style="padding: 10px 5px;">Aset Terjual</th><th style="padding: 10px 5px; text-align: right;">Harga Satuan</th><th style="padding: 10px 5px; text-align: center;">Kuantitas</th><th style="padding: 10px 5px; text-align: right;">Total Nilai</th></tr></thead>
+            <tbody>
+              ${currentReportData.map(item => `<tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 12px 5px; font-weight: 700;">${item.name}</td><td style="padding: 12px 5px; text-align: right; font-weight: 600;">${item.price.toLocaleString('id-ID')}</td><td style="padding: 12px 5px; text-align: center; font-weight: 800;">${item.qty}</td><td style="padding: 12px 5px; text-align: right; font-weight: 800; color: #0f172a;">${item.revenue.toLocaleString('id-ID')}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('receipt-print-area').innerHTML = printHtml;
+      document.getElementById('receipt-print-area').classList.remove('hidden');
+      window.print();
+      setTimeout(() => { document.getElementById('receipt-print-area').classList.add('hidden'); }, 1000);
+    }
+
+    function printReceiptFromMap(tid) { 
+      const t = globalTrxMap[tid]; 
+      if(t) {
+        let items = []; try { items = JSON.parse(decodeURIComponent(t.detail)); } catch(e) {}
+        generateReceipt(t.trxId, t.date, t.total, t.cash, t.change, t.client, t.cashier, items); 
+      }
+    }
+    
+    function downloadPDFFromMap(tid) {
+      const t = globalTrxMap[tid];
+      if(t) {
+        showToast("Memproses Dokumen PDF...");
+        let items = []; try { items = JSON.parse(decodeURIComponent(t.detail)); } catch(e) {}
+        let h = getReceiptHTML(t.trxId, t.date, t.total, t.cash, t.change, t.client, t.cashier, items);
+        const el = document.createElement('div'); el.innerHTML = `<div style="width: 80mm; background: white; padding: 25px;">${h}</div>`;
+        html2pdf().set({ margin: 0.1, filename: `Invoice_Premium_${tid}.pdf`, image: { type: 'jpeg', quality: 1 }, html2canvas: { scale: 3 }, jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } }).from(el).save();
+      }
+    }
+
+    function showQRCode(tid) {
+      currentQRTrx = tid; document.getElementById('qr-trx-id').innerText = tid;
+      const qrc = document.getElementById('qrcode-container'); qrc.innerHTML = ''; 
+      new QRCode(qrc, { text: window.location.href.split('?')[0].split('#')[0] + "?receipt=" + tid, width: 200, height: 200, colorDark: "#0f172a", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.M });
+      openModal('modal-qrcode');
+    }
+    
+    function downloadQR() {
+      const c = document.getElementById('qrcode-container').querySelector('canvas');
+      if(c) { const l = document.createElement('a'); l.download = `QR_Digital_${currentQRTrx}.png`; l.href = c.toDataURL("image/png"); l.click(); showToast("Tersimpan ke Galeri."); }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+              showToast(`Layar Penuh Gagal: ${err.message}`, true);
+          });
+      } else {
+          if (document.exitFullscreen) {
+              document.exitFullscreen();
+          }
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        const icon = document.getElementById('icon-fullscreen');
+        if(icon) {
+            if (document.fullscreenElement) {
+                icon.classList.replace('ph-corners-out', 'ph-corners-in');
+            } else {
+                icon.classList.replace('ph-corners-in', 'ph-corners-out');
+            }
+        }
+    });
+
+    function downloadMobilePDF(tid) {
+      showToast("Memproses Struk PDF...");
+      const element = document.getElementById('area-struk-mobile');
+      html2pdf().set({ 
+        margin: 0.1, 
+        filename: `Struk_${tid}.pdf`, 
+        image: { type: 'jpeg', quality: 1 }, 
+        html2canvas: { scale: 3, useCORS: true }, 
+        jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
+      }).from(element).save().then(() => {
+        showToast("Struk berhasil diunduh!");
+      });
     }
 
     async function generateItemReport() {
@@ -1607,7 +1717,7 @@
       let startD = '', endD = '';
       if(period === 'custom') { startD = document.getElementById('report-date-start').value; endD = document.getElementById('report-date-end').value; }
 
-      document.getElementById('report-list').innerHTML = `<tr><td colspan="4" class="text-center py-12"><div class="spinner border-brand-200 border-top-brand-600 mx-auto"></div></td></tr>`;
+      document.getElementById('report-list').innerHTML = `<tr><td colspan="4" class="text-center py-10 sm:py-12"><div class="spinner border-brand-200 border-top-brand-600 mx-auto"></div></td></tr>`;
       
       try {
           const d = await fetchAPI('getProductReport', {period: period, customStartDate: startD, customEndDate: endD});
@@ -1619,52 +1729,52 @@
           d.forEach(item => { totalQty += item.qty; totalRev += item.revenue; });
 
           sumBox.innerHTML = `
-            <div class="card-glass p-6">
-              <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2"><i class="ph-fill ph-package text-lg"></i> Akumulasi Unit Keluar</div>
-              <div class="text-3xl font-black text-slate-900 tracking-tight">${totalQty} <span class="text-sm text-slate-400 font-bold ml-1">Pcs</span></div>
+            <div class="card-glass p-4 sm:p-6">
+              <div class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2"><i class="ph-fill ph-package text-base sm:text-lg"></i> Akumulasi Unit Keluar</div>
+              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">${totalQty} <span class="text-xs sm:text-sm text-slate-400 font-bold ml-1">Pcs</span></div>
             </div>
-            <div class="card-glass p-6 bg-gradient-to-br from-brand-600 to-brand-800 text-white border-transparent shadow-glow">
-              <div class="text-[10px] font-black text-brand-200 uppercase tracking-widest mb-2 flex items-center gap-2"><i class="ph-fill ph-chart-line-up text-lg"></i> Konversi Omzet Final</div>
-              <div class="text-3xl font-black tracking-tight drop-shadow-md">${formatRp(totalRev)}</div>
+            <div class="card-glass p-4 sm:p-6 bg-gradient-to-br from-brand-600 to-brand-800 text-white border-transparent shadow-glow">
+              <div class="text-[9px] sm:text-[10px] font-black text-brand-200 uppercase tracking-widest mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2"><i class="ph-fill ph-chart-line-up text-base sm:text-lg"></i> Konversi Omzet Final</div>
+              <div class="text-2xl sm:text-3xl font-black tracking-tight drop-shadow-md truncate">${formatRp(totalRev)}</div>
             </div>`;
 
-          if(!d.length) { tb.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-slate-400 text-sm font-semibold"><div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3"><i class="ph-duotone ph-chart-bar text-3xl"></i></div>Belum ada kalkulasi.</td></tr>`; return; }
+          if(!d.length) { tb.innerHTML = `<tr><td colspan="4" class="text-center py-10 sm:py-12 text-slate-400 text-xs sm:text-sm font-semibold"><div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3"><i class="ph-duotone ph-chart-bar text-2xl sm:text-3xl"></i></div>Belum ada kalkulasi.</td></tr>`; return; }
 
           d.forEach(item => {
             tb.innerHTML += `
               <tr class="hover:bg-brand-50/50 transition-colors">
-                <td class="py-4 px-6">
-                  <div class="font-black text-slate-900 text-sm">${item.name}</div>
-                  <div class="text-[10px] font-bold text-slate-400 font-mono mt-0.5 bg-slate-50 inline-block px-1.5 py-0.5 rounded border border-slate-100">${item.id}</div>
+                <td class="py-3 sm:py-4 px-4 sm:px-6">
+                  <div class="font-black text-slate-900 text-xs sm:text-sm">${item.name}</div>
+                  <div class="text-[9px] sm:text-[10px] font-bold text-slate-400 font-mono mt-0.5 bg-slate-50 inline-block px-1 sm:px-1.5 py-0.5 rounded border border-slate-100">${item.id}</div>
                 </td>
-                <td class="py-4 px-6 text-right font-bold text-slate-600">${formatRp(item.price)}</td>
-                <td class="py-4 px-6 text-center">
-                   <span class="bg-brand-100 text-brand-700 px-3 py-1 rounded-lg font-black">${item.qty}</span>
+                <td class="py-3 sm:py-4 px-4 sm:px-6 text-right font-bold text-slate-600">${formatRp(item.price)}</td>
+                <td class="py-3 sm:py-4 px-4 sm:px-6 text-center">
+                   <span class="bg-brand-100 text-brand-700 px-2 sm:px-3 py-1 rounded-md sm:rounded-lg font-black">${item.qty}</span>
                 </td>
-                <td class="py-4 px-6 font-black text-slate-900 text-right text-base">${formatRp(item.revenue)}</td>
+                <td class="py-3 sm:py-4 px-4 sm:px-6 font-black text-slate-900 text-right text-sm sm:text-base">${formatRp(item.revenue)}</td>
               </tr>`;
           });
       } catch(e) {
-          document.getElementById('report-list').innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500 text-xs">${e.message}</td></tr>`;
+          document.getElementById('report-list').innerHTML = `<tr><td colspan="4" class="text-center py-5 sm:py-6 text-red-500 text-[10px] sm:text-xs">${e.message}</td></tr>`;
       }
     }
 
     function renderProductTable() {
       const tb = document.getElementById('prod-list'); tb.innerHTML = '';
-      if(!products.length) tb.innerHTML = `<tr><td colspan="6" class="text-center py-12 text-slate-400 font-semibold text-sm">Belum ada aset terdaftar.</td></tr>`;
+      if(!products.length) tb.innerHTML = `<tr><td colspan="6" class="text-center py-10 sm:py-12 text-slate-400 font-semibold text-xs sm:text-sm">Belum ada aset terdaftar.</td></tr>`;
       products.forEach(p => {
-        const imgHtml = p.image ? `<div class="w-12 h-12 rounded-xl bg-cover bg-center border border-slate-200 shadow-sm" style="background-image: url('${p.image}')"></div>` : `<div class="w-12 h-12 rounded-xl bg-[#f8fafc] border border-slate-100 flex justify-center items-center text-slate-300"><i class="ph-duotone ph-image text-xl"></i></div>`;
+        const imgHtml = p.image ? `<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-cover bg-center border border-slate-200 shadow-sm" style="background-image: url('${p.image}')"></div>` : `<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[#f8fafc] border border-slate-100 flex justify-center items-center text-slate-300"><i class="ph-duotone ph-image text-lg sm:text-xl"></i></div>`;
         tb.innerHTML += `
           <tr class="hover:bg-brand-50/50 transition-colors">
-            <td class="py-3 px-6">${imgHtml}</td>
-            <td class="py-3 px-6 font-mono text-[11px] font-bold text-brand-600 bg-brand-50 inline-block px-2 py-1 rounded-lg mt-3 ml-2 border border-brand-100">${p.id}</td>
-            <td class="py-3 px-6"><div class="font-black text-slate-900 text-sm">${p.name}</div><div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">${p.category}</div></td>
-            <td class="py-3 px-6 text-right font-black text-slate-800 text-base">${formatRp(p.price)}</td>
-            <td class="py-3 px-6 text-center"><span class="bg-slate-100 px-3 py-1.5 rounded-lg font-bold text-slate-700">${p.stock}</span></td>
-            <td class="py-3 px-6 text-center">
-              <div class="flex justify-center gap-1.5">
-                 <button onclick="editProduct('${p.id}')" class="text-brand-600 hover:text-white hover:bg-brand-600 w-8 h-8 flex justify-center items-center rounded-lg shadow-sm bg-brand-50 transition-colors"><i class="ph-bold ph-pencil-simple"></i></button>
-                 <button onclick="delProduct('${p.id}')" class="text-red-500 hover:text-white hover:bg-red-500 w-8 h-8 flex justify-center items-center rounded-lg shadow-sm bg-red-50 transition-colors"><i class="ph-bold ph-trash"></i></button>
+            <td class="py-2.5 sm:py-3 px-4 sm:px-6">${imgHtml}</td>
+            <td class="py-2.5 sm:py-3 px-4 sm:px-6 font-mono text-[9px] sm:text-[11px] font-bold text-brand-600 bg-brand-50 inline-block px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md sm:rounded-lg mt-2.5 sm:mt-3 ml-1 sm:ml-2 border border-brand-100">${p.id}</td>
+            <td class="py-2.5 sm:py-3 px-4 sm:px-6"><div class="font-black text-slate-900 text-xs sm:text-sm">${p.name}</div><div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-0.5 sm:mt-1">${p.category}</div></td>
+            <td class="py-2.5 sm:py-3 px-4 sm:px-6 text-right font-black text-slate-800 text-sm sm:text-base">${formatRp(p.price)}</td>
+            <td class="py-2.5 sm:py-3 px-4 sm:px-6 text-center"><span class="bg-slate-100 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg font-bold text-slate-700">${p.stock}</span></td>
+            <td class="py-2.5 sm:py-3 px-4 sm:px-6 text-center">
+              <div class="flex justify-center gap-1 sm:gap-1.5">
+                 <button onclick="editProduct('${p.id}')" class="text-brand-600 hover:text-white hover:bg-brand-600 w-7 h-7 sm:w-8 sm:h-8 flex justify-center items-center rounded-md sm:rounded-lg shadow-sm bg-brand-50 transition-colors"><i class="ph-bold ph-pencil-simple"></i></button>
+                 <button onclick="delProduct('${p.id}')" class="text-red-500 hover:text-white hover:bg-red-500 w-7 h-7 sm:w-8 sm:h-8 flex justify-center items-center rounded-md sm:rounded-lg shadow-sm bg-red-50 transition-colors"><i class="ph-bold ph-trash"></i></button>
               </div>
             </td>
           </tr>`;
@@ -1692,16 +1802,16 @@
           const d = await fetchAPI('getUsers');
           const tb = document.getElementById('user-list'); tb.innerHTML = '';
           d.forEach(u => {
-            const roleBadge = u.role === 'admin' ? '<span class="bg-slate-900 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm">Eksekutif</span>' : (u.role === 'klien' ? '<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-emerald-200">Layar</span>' : '<span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-200">Staf Kasir</span>');
+            const roleBadge = u.role === 'admin' ? '<span class="bg-slate-900 text-white px-2 sm:px-3 py-1 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest shadow-sm">Eksekutif</span>' : (u.role === 'klien' ? '<span class="bg-emerald-100 text-emerald-700 px-2 sm:px-3 py-1 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-emerald-200">Layar</span>' : '<span class="bg-slate-100 text-slate-600 px-2 sm:px-3 py-1 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-slate-200">Staf Kasir</span>');
             tb.innerHTML += `
               <tr class="hover:bg-brand-50/50 transition-colors">
-                <td class="py-4 px-6 font-black text-slate-800 text-sm"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-black">${u.username.charAt(0).toUpperCase()}</div>${u.username}</div></td>
-                <td class="py-4 px-6"><div class="font-bold text-slate-900">${u.name}</div> <div class="text-[10px] font-bold text-slate-400 mt-0.5">${u.email || '-'}</div></td>
-                <td class="py-4 px-6 text-center">${roleBadge}</td>
-                <td class="py-4 px-6 text-center">
-                  <div class="flex justify-center gap-1.5">
-                    <button onclick="editUser('${u.username}','${u.name}','${u.email}','${u.role}')" class="text-brand-600 hover:text-white hover:bg-brand-600 w-8 h-8 flex justify-center items-center rounded-lg shadow-sm bg-brand-50 transition-colors"><i class="ph-bold ph-pencil-simple"></i></button>
-                    ${u.username!=='admin'?`<button onclick="delUser('${u.username}')" class="text-red-500 hover:text-white hover:bg-red-500 w-8 h-8 flex justify-center items-center rounded-lg shadow-sm bg-red-50 transition-colors"><i class="ph-bold ph-trash"></i></button>`:''}
+                <td class="py-3 sm:py-4 px-4 sm:px-6 font-black text-slate-800 text-xs sm:text-sm"><div class="flex items-center gap-2 sm:gap-3"><div class="w-6 h-6 sm:w-8 sm:h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-black">${u.username.charAt(0).toUpperCase()}</div>${u.username}</div></td>
+                <td class="py-3 sm:py-4 px-4 sm:px-6"><div class="font-bold text-slate-900">${u.name}</div> <div class="text-[9px] sm:text-[10px] font-bold text-slate-400 mt-0.5">${u.email || '-'}</div></td>
+                <td class="py-3 sm:py-4 px-4 sm:px-6 text-center">${roleBadge}</td>
+                <td class="py-3 sm:py-4 px-4 sm:px-6 text-center">
+                  <div class="flex justify-center gap-1 sm:gap-1.5">
+                    <button onclick="editUser('${u.username}','${u.name}','${u.email}','${u.role}')" class="text-brand-600 hover:text-white hover:bg-brand-600 w-7 h-7 sm:w-8 sm:h-8 flex justify-center items-center rounded-md sm:rounded-lg shadow-sm bg-brand-50 transition-colors"><i class="ph-bold ph-pencil-simple"></i></button>
+                    ${u.username!=='admin'?`<button onclick="delUser('${u.username}')" class="text-red-500 hover:text-white hover:bg-red-500 w-7 h-7 sm:w-8 sm:h-8 flex justify-center items-center rounded-md sm:rounded-lg shadow-sm bg-red-50 transition-colors"><i class="ph-bold ph-trash"></i></button>`:''}
                   </div>
                 </td>
               </tr>`;
@@ -1767,12 +1877,12 @@
     }
 
     async function loadActivityData() {
-      document.getElementById('activity-timeline').innerHTML = `<div class="text-center py-10"><div class="spinner border-brand-200 border-top-brand-600 mx-auto w-8 h-8"></div><p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-4">Mengumpulkan Jejak...</p></div>`;
+      document.getElementById('activity-timeline').innerHTML = `<div class="text-center py-10 sm:py-12"><div class="spinner border-brand-200 border-top-brand-600 mx-auto w-6 h-6 sm:w-8 sm:h-8"></div><p class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mt-3 sm:mt-4">Mengumpulkan Jejak...</p></div>`;
       try {
           const res = await fetchAPI('getActivityData');
           allLogsCache = res.logs || []; renderActivityLogs();
       } catch(e) {
-          document.getElementById('activity-timeline').innerHTML = `<div class="text-center py-6 text-red-500 font-bold text-sm">Gagal memuat jejak sistem.</div>`;
+          document.getElementById('activity-timeline').innerHTML = `<div class="text-center py-5 sm:py-6 text-red-500 font-bold text-xs sm:text-sm">Gagal memuat jejak sistem.</div>`;
       }
     }
 
@@ -1781,7 +1891,7 @@
       const actionFilter = document.getElementById('filter-log-action') ? document.getElementById('filter-log-action').value : 'all';
 
       let filteredLogs = allLogsCache.filter(log => actionFilter === 'all' || log.action === actionFilter);
-      if(!filteredLogs.length) { tml.innerHTML = `<div class="text-center py-10"><div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3"><i class="ph-duotone ph-clock text-3xl text-slate-300"></i></div><p class="text-sm font-bold text-slate-400">Belum ada rekam jejak.</p></div>`; return; }
+      if(!filteredLogs.length) { tml.innerHTML = `<div class="text-center py-10 sm:py-12"><div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"><i class="ph-duotone ph-clock text-2xl sm:text-3xl text-slate-300"></i></div><p class="text-xs sm:text-sm font-bold text-slate-400">Belum ada rekam jejak.</p></div>`; return; }
 
       filteredLogs.forEach(log => {
         let timeDisplay = log.time instanceof Date ? new Date(log.time).toLocaleString('id-ID') : log.time; 
@@ -1793,106 +1903,13 @@
         if(log.action === 'User') iconHtml = '<i class="ph-fill ph-shield-check text-blue-500"></i>';
 
         tml.innerHTML += `
-          <div class="relative pl-8 pb-6 group">
-            <div class="absolute left-[-17px] top-1 w-8 h-8 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-lg shadow-sm group-hover:scale-110 transition-transform">${iconHtml}</div>
-            <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl group-hover:bg-white group-hover:shadow-md transition-all">
-               <div class="text-sm font-black text-slate-800">${log.user} <span class="text-slate-400 font-bold ml-2 text-[10px] bg-white px-2 py-1 rounded-lg border border-slate-100">${timeDisplay}</span></div>
-               <div class="text-sm font-medium text-slate-600 mt-2 leading-relaxed"><span class="font-black text-slate-900 bg-slate-200 px-2 py-0.5 rounded text-xs mr-1">${log.action}</span> ${log.detail}</div>
+          <div class="relative pl-6 sm:pl-8 pb-5 sm:pb-6 group">
+            <div class="absolute left-[-13px] sm:left-[-17px] top-0 sm:top-1 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-sm sm:text-lg shadow-sm group-hover:scale-110 transition-transform">${iconHtml}</div>
+            <div class="bg-slate-50 border border-slate-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl group-hover:bg-white group-hover:shadow-md transition-all">
+               <div class="text-xs sm:text-sm font-black text-slate-800">${log.user} <span class="text-slate-400 font-bold ml-1.5 sm:ml-2 text-[8px] sm:text-[10px] bg-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md sm:rounded-lg border border-slate-100">${timeDisplay}</span></div>
+               <div class="text-xs sm:text-sm font-medium text-slate-600 mt-1.5 sm:mt-2 leading-relaxed"><span class="font-black text-slate-900 bg-slate-200 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs mr-1">${log.action}</span> ${log.detail}</div>
             </div>
           </div>`;
-      });
-    }
-
-    function generateReceipt(tid, d, t, c, cg, cl, ksr, items) {
-      const a = document.getElementById('receipt-print-area'), m = document.getElementById('receipt-visual-content');
-      let h = getReceiptHTML(tid, d, t, c, cg, cl, ksr, items);
-      a.innerHTML = h; 
-      m.innerHTML = `<div style="width: 58mm; background: white; padding: 25px; font-family: 'Plus Jakarta Sans', sans-serif;">${h}</div>`;
-      openModal('modal-receipt');
-    }
-
-    function printProductReport() {
-      const printHtml = `
-        <div style="padding: 30px; font-family: 'Plus Jakarta Sans', sans-serif;">
-          <h2 style="margin-bottom: 25px; font-weight: 900; font-size: 20px; text-transform: uppercase; border-bottom: 3px solid #0f172a; padding-bottom: 10px;">Laporan Analitik Produk - ${storeConfig.StoreName}</h2>
-          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
-            <thead><tr style="border-bottom: 2px solid #cbd5e1; color: #64748b; text-transform: uppercase; letter-spacing: 1px; font-size: 10px;"><th style="padding: 10px 5px;">Aset Terjual</th><th style="padding: 10px 5px; text-align: right;">Harga Satuan</th><th style="padding: 10px 5px; text-align: center;">Kuantitas</th><th style="padding: 10px 5px; text-align: right;">Total Nilai</th></tr></thead>
-            <tbody>
-              ${currentReportData.map(item => `<tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 12px 5px; font-weight: 700;">${item.name}</td><td style="padding: 12px 5px; text-align: right; font-weight: 600;">${item.price.toLocaleString('id-ID')}</td><td style="padding: 12px 5px; text-align: center; font-weight: 800;">${item.qty}</td><td style="padding: 12px 5px; text-align: right; font-weight: 800; color: #0f172a;">${item.revenue.toLocaleString('id-ID')}</td></tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-      document.getElementById('receipt-print-area').innerHTML = printHtml;
-      document.getElementById('receipt-print-area').classList.remove('hidden');
-      window.print();
-      setTimeout(() => { document.getElementById('receipt-print-area').classList.add('hidden'); }, 1000);
-    }
-
-    function printReceiptFromMap(tid) { 
-      const t = globalTrxMap[tid]; 
-      if(t) {
-        let items = []; try { items = JSON.parse(decodeURIComponent(t.detail)); } catch(e) {}
-        generateReceipt(t.trxId, t.date, t.total, t.cash, t.change, t.client, t.cashier, items); 
-      }
-    }
-    
-    function downloadPDFFromMap(tid) {
-      const t = globalTrxMap[tid];
-      if(t) {
-        showToast("Memproses Dokumen PDF...");
-        let items = []; try { items = JSON.parse(decodeURIComponent(t.detail)); } catch(e) {}
-        let h = getReceiptHTML(t.trxId, t.date, t.total, t.cash, t.change, t.client, t.cashier, items);
-        const el = document.createElement('div'); el.innerHTML = `<div style="width: 80mm; background: white; padding: 25px;">${h}</div>`;
-        html2pdf().set({ margin: 0.1, filename: `Invoice_Premium_${tid}.pdf`, image: { type: 'jpeg', quality: 1 }, html2canvas: { scale: 3 }, jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } }).from(el).save();
-      }
-    }
-
-    function showQRCode(tid) {
-      currentQRTrx = tid; document.getElementById('qr-trx-id').innerText = tid;
-      const qrc = document.getElementById('qrcode-container'); qrc.innerHTML = ''; 
-      new QRCode(qrc, { text: window.location.href.split('?')[0].split('#')[0] + "?receipt=" + tid, width: 240, height: 240, colorDark: "#000000", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.L });
-      openModal('modal-qrcode');
-    }
-    
-    function downloadQR() {
-      const c = document.getElementById('qrcode-container').querySelector('canvas');
-      if(c) { const l = document.createElement('a'); l.download = `QR_Digital_${currentQRTrx}.png`; l.href = c.toDataURL("image/png"); l.click(); showToast("Tersimpan ke Galeri."); }
-    }
-
-    function toggleFullScreen() {
-      if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(err => {
-              showToast(`Layar Penuh Gagal: ${err.message}`, true);
-          });
-      } else {
-          if (document.exitFullscreen) {
-              document.exitFullscreen();
-          }
-      }
-    }
-
-    document.addEventListener('fullscreenchange', () => {
-        const icon = document.getElementById('icon-fullscreen');
-        if(icon) {
-            if (document.fullscreenElement) {
-                icon.classList.replace('ph-corners-out', 'ph-corners-in');
-            } else {
-                icon.classList.replace('ph-corners-in', 'ph-corners-out');
-            }
-        }
-    });
-
-    function downloadMobilePDF(tid) {
-      showToast("Memproses Struk PDF...");
-      const element = document.getElementById('area-struk-mobile');
-      html2pdf().set({ 
-        margin: 0.1, 
-        filename: `Struk_${tid}.pdf`, 
-        image: { type: 'jpeg', quality: 1 }, 
-        html2canvas: { scale: 3, useCORS: true }, 
-        jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
-      }).from(element).save().then(() => {
-        showToast("Struk berhasil diunduh!");
       });
     }
   </script>
