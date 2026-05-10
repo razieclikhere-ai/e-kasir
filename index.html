@@ -1621,7 +1621,27 @@
              items: [...cart],
              status: 'waiting'
           };
-          activeOrders.unshift(newActiveOrder);
+          let wasReadyFromTable = false;
+          const isFromQueueIdx = activeOrders.findIndex(o => o.client === clName && o.payment === 'unpaid');
+          if(isFromQueueIdx !== -1) {
+              if (activeOrders[isFromQueueIdx].status === 'ready') {
+                  wasReadyFromTable = true;
+              }
+              activeOrders.splice(isFromQueueIdx, 1);
+          }
+
+          // Memasukkan Data ke Antrean Dapur JIKA BUKAN pesanan meja yang sudah dimasak
+          if (!wasReadyFromTable) {
+              const newActiveOrder = {
+                  id: Date.now(),
+                  trxId: res.trxId,
+                  date: new Date().getTime(),
+                  client: clName,
+                  items: [...cart],
+                  status: 'waiting'
+              };
+              activeOrders.unshift(newActiveOrder);
+          }
           saveActiveOrders();
           renderActiveOrders();
           
@@ -1650,7 +1670,6 @@
                     if (liveData && liveData.length > 0 && liveData[0].type === 'NEW_CUSTOMER_ORDER') {
                         const orderData = liveData[0];
                         
-                        // Cek apakah pesanan ini sudah masuk sebelumnya (mencegah duplikat)
                         if (!activeOrders.find(o => o.id === orderData.id)) {
                             activeOrders.unshift({
                                 id: orderData.id,
@@ -1658,7 +1677,8 @@
                                 date: new Date().getTime(),
                                 client: orderData.table,
                                 items: orderData.items,
-                                status: 'unpaid' // Status khusus belum bayar
+                                status: 'waiting', // Langsung masuk antrean dapur
+                                payment: 'unpaid' // Tanda belum dibayar
                             });
                             saveActiveOrders();
                             
@@ -1711,17 +1731,29 @@
             let blinkClass = "border border-slate-100 shadow-[0_4px_15px_-3px_rgba(0,0,0,0.03)]";
             let iconBox = `<div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 shrink-0"><i class="ph-bold ph-user"></i></div>`;
 
-            // Aturan Khusus untuk Pesanan Pelanggan Mandiri (Belum Bayar)
-            if (order.status === 'unpaid') {
-                statusColor = "bg-rose-100 text-rose-700 border-rose-200";
-                statusText = "Belum Dibayar";
-                blinkClass = "animate-pulse border-2 border-rose-300 shadow-[0_0_20px_rgba(244,63,94,0.3)] bg-rose-50/30";
+            // Deteksi jika pesanan dari meja (belum dibayar)
+            if (order.payment === 'unpaid') {
                 iconBox = `<div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 shrink-0"><i class="ph-bold ph-bell-ringing"></i></div>`;
-                btnAction = `<button onclick="payCustomerOrder(${order.id})" class="w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-md shadow-brand-500/30 transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"><i class="ph-bold ph-calculator"></i> Bayar di Kasir</button>`;
-            } 
-            else if (order.status === 'waiting' && waitTime >= 5) {
+            }
+
+            if (order.status === 'waiting' && waitTime >= 5) {
                 blinkClass = "animate-pulse border-2 border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.4)]";
                 statusColor = "bg-red-100 text-red-700 border-red-200";
+            }
+            else if (order.status === 'processing') {
+                statusColor = "bg-brand-100 text-brand-700 border-brand-200";
+                statusText = "Diproses";
+                btnAction = `<button onclick="updateOrderStatus('${order.trxId}', 'ready')" class="w-full mt-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-md shadow-emerald-500/30 transition-transform hover:scale-[1.02]">Tandai Siap</button>`;
+            } else if (order.status === 'ready') {
+                statusColor = "bg-emerald-100 text-emerald-700 border-emerald-200";
+                statusText = "Selesai";
+                
+                // JIKA DARI MEJA & SUDAH SELESAI DIMASAK, BARU MUNCUL TOMBOL BAYAR
+                if (order.payment === 'unpaid') {
+                    btnAction = `<button onclick="payCustomerOrder(${order.id})" class="w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-md shadow-brand-500/30 transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"><i class="ph-bold ph-calculator"></i> Lanjut Pembayaran</button>`;
+                } else {
+                    btnAction = `<button onclick="updateOrderStatus('${order.trxId}', 'completed')" class="w-full mt-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-sm transition-colors flex items-center justify-center gap-2"><i class="ph-bold ph-check"></i> Arsipkan</button>`;
+                }
             }
             else if (order.status === 'processing') {
                 statusColor = "bg-brand-100 text-brand-700 border-brand-200";
@@ -1950,6 +1982,24 @@
             <div id="self-toast" class="fixed top-6 right-6 px-4 py-3 rounded-xl shadow-floating z-[250] text-xs font-bold tracking-wide transform translate-x-[120%] opacity-0 transition-all duration-400 ease-out flex items-center gap-2 border card-glass text-slate-800 border-slate-200">
                 <i id="self-toast-icon" class="text-base"></i> <span id="self-toast-msg"></span>
             </div>
+
+            <!-- Modal Konfirmasi Pesanan Mandiri (Customer) -->
+            <div id="modal-self-checkout" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center z-[200] p-0 sm:p-4 transition-opacity animate-fade-in">
+              <div class="bg-white p-6 sm:p-8 rounded-t-[2rem] sm:rounded-[2rem] w-full max-w-md shadow-floating flex flex-col transform transition-transform duration-300 max-h-[90vh]">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-black text-slate-900">Rincian Pesanan</h3>
+                  <button onclick="closeModal('modal-self-checkout')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
+                </div>
+                <div id="self-checkout-items" class="flex-1 overflow-y-auto custom-scrollbar space-y-3 mb-4"></div>
+                <div class="border-t border-slate-100 pt-4 mb-6 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Total Bayar</span>
+                    <span class="text-2xl font-black text-brand-600" id="self-checkout-total">Rp 0</span>
+                </div>
+                <button onclick="submitSelfServiceOrder()" id="btn-self-submit" class="w-full btn-solid py-4 text-sm font-black flex justify-center items-center gap-2 shadow-glow">
+                    Kirim Pesanan Sekarang <i class="ph-bold ph-paper-plane-right text-lg"></i>
+                </button>
+              </div>
+            </div>
         `;
 
         try {
@@ -2066,7 +2116,7 @@
         const totalEl = document.getElementById('self-checkout-total');
         const btnSubmit = document.getElementById('btn-self-submit');
         
-        container.innerHTML = '<div class="p-4 mb-4 bg-orange-50 border border-orange-200 rounded-xl text-orange-700 text-xs sm:text-sm font-bold flex items-start sm:items-center gap-3"><div class="spinner border-orange-300 border-top-orange-600 w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5 sm:mt-0"></div> <div>Pesanan Anda sudah diterima dan sedang disiapkan. Silakan lakukan pembayaran di Kasir.</div></div>';
+        container.innerHTML = '<div class="p-4 mb-4 bg-orange-50 border border-orange-200 rounded-xl text-orange-700 text-xs sm:text-sm font-bold flex items-start sm:items-center gap-3"><div class="spinner border-orange-300 border-top-orange-600 w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5 sm:mt-0"></div> <div>Pesanan Anda sudah diterima dan masuk ke dapur. Silakan menunggu di meja Anda.</div></div>';
         
         let total = 0;
         submittedOrder.forEach(item => {
