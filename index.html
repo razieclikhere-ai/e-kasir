@@ -821,20 +821,20 @@
          <!-- Running Text (Marquee) Bawah -->
          <div class="relative z-10 bg-brand-950/90 backdrop-blur-md border-t border-white/10 flex items-center h-8 lg:h-12 overflow-hidden shrink-0">
             <div class="bg-brand-600 text-white font-black text-[9px] lg:text-xs tracking-widest uppercase px-3 lg:px-6 h-full flex items-center z-20 shadow-[10px_0_20px_rgba(0,0,0,0.5)] whitespace-nowrap"><i class="ph-fill ph-megaphone mr-1.5 lg:mr-2 text-sm lg:text-lg"></i> INFO</div>
-            <marquee class="text-slate-200 text-[10px] lg:text-sm font-bold tracking-widest uppercase flex-1 whitespace-nowrap" scrollamount="6">
-               SELAMAT DATANG DI SISTEM KASIR KAMI. KAMI MENERIMA PEMBAYARAN TUNAI, QRIS, DAN TRANSFER BANK. SILAKAN PERIKSA PESANAN ANDA DI LAYAR INI. NIKMATI MENU SPESIAL DAN PROMO MENARIK SETIAP HARINYA!
+            <marquee class="text-slate-200 text-[11px] lg:text-sm font-semibold tracking-[0.1em] flex-1 whitespace-nowrap" scrollamount="3">
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SELAMAT DATANG DI SISTEM KASIR KAMI. KAMI MENERIMA PEMBAYARAN TUNAI, QRIS, DAN TRANSFER BANK. SILAKAN PERIKSA PESANAN ANDA DI LAYAR INI. NIKMATI MENU SPESIAL DAN PROMO MENARIK SETIAP HARINYA! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </marquee>
          </div>
       </div>
       
       <!-- Area Layar Struk / Sinkronisasi Langsung (Kanan / Bawah) -->
       <div class="w-full lg:w-[420px] xl:w-[450px] bg-white flex flex-col h-[55%] lg:h-full shrink-0 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] relative z-20 order-1 lg:order-2 rounded-t-[2rem] lg:rounded-none overflow-hidden">
-         <!-- Panel Kontrol Melayang (Fullscreen & Tutup) -->
-         <div class="absolute top-4 right-4 flex items-center gap-2 z-50">
-             <button onclick="toggleFullScreen()" class="bg-white/90 backdrop-blur-md text-slate-600 hover:text-brand-600 p-2 lg:p-2.5 rounded-xl transition-all shadow-sm border border-slate-200 group" title="Layar Penuh">
+         <!-- Panel Kontrol Melayang (Fullscreen & Tutup) - ESTETIK & TRANSPARAN -->
+         <div class="absolute top-2 right-2 flex items-center gap-1 z-50 opacity-0 hover:opacity-100 transition-opacity duration-500">
+             <button onclick="toggleFullScreen()" class="bg-slate-900/40 text-white hover:bg-slate-900/80 p-2 lg:p-2.5 rounded-xl transition-all shadow-sm backdrop-blur-sm group" title="Arahkan ke sini untuk Layar Penuh">
                  <i id="icon-fullscreen" class="ph-bold ph-corners-out text-base lg:text-lg group-hover:scale-110 transition-transform"></i>
              </button>
-             <button onclick="switchView('dashboard')" class="bg-white/90 backdrop-blur-md text-slate-600 hover:text-red-600 hover:bg-red-50 p-2 lg:p-2.5 rounded-xl transition-all role-admin hidden shadow-sm border border-slate-200 group" title="Tutup Layar Klien">
+             <button onclick="switchView('dashboard')" class="bg-red-500/40 text-white hover:bg-red-500/80 p-2 lg:p-2.5 rounded-xl transition-all role-admin hidden shadow-sm backdrop-blur-sm group" title="Tutup Layar Klien">
                  <i class="ph-bold ph-x text-base lg:text-lg group-hover:rotate-90 transition-transform"></i>
              </button>
          </div>
@@ -866,30 +866,28 @@
 
   <!-- HALAMAN KATALOG DIGITAL (MARKETING & PROMO KHUSUS KLIEN) -->
   <div id="view-katalog" class="view-section hidden w-full h-screen animate-fade-in flex-col bg-slate-50 overflow-hidden fixed inset-0 z-[100]">
-     <!-- Header Katalog -->
-     <div class="bg-white px-4 md:px-8 py-4 shadow-sm flex justify-between items-center z-10 shrink-0">
-        <div class="flex items-center gap-3">
-           <div class="w-10 h-10 md:w-12 md:h-12 bg-brand-600 rounded-xl flex items-center justify-center text-xl md:text-2xl text-white shadow-glow"><i class="ph-fill ph-book-open-text"></i></div>
-           <div>
-              <h2 class="text-lg md:text-xl font-black text-slate-900 tracking-tight">Katalog Produk</h2>
-              <p class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">Eksplorasi Sajian Kami</p>
-           </div>
-        </div>
-        <button onclick="switchView('dashboard')" class="bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-500 p-2.5 md:p-3 rounded-xl transition-all font-bold text-xs md:text-sm flex items-center gap-2">
-           <i class="ph-bold ph-x text-lg"></i> <span class="hidden md:inline">Tutup Katalog</span>
-        </button>
-     </div>
      
+     <!-- Tombol Layar Penuh Melayang (Estetik / Transparan) -->
+     <div class="absolute top-4 right-4 flex items-center gap-2 z-[150] opacity-0 hover:opacity-100 transition-opacity duration-500">
+         <button onclick="toggleFullScreen()" class="bg-slate-900/40 text-white hover:bg-slate-900/80 p-2.5 rounded-xl transition-all shadow-sm backdrop-blur-sm" title="Arahkan ke sini untuk Layar Penuh">
+             <i id="katalog-icon-fullscreen" class="ph-bold ph-corners-out text-lg"></i>
+         </button>
+         <button onclick="switchView('dashboard')" class="bg-red-500/40 text-white hover:bg-red-500/80 p-2.5 rounded-xl transition-all shadow-sm backdrop-blur-sm" title="Tutup Katalog">
+             <i class="ph-bold ph-x text-lg"></i>
+         </button>
+     </div>
+
      <!-- Konten Marketing -->
-     <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8">
-        <div class="max-w-7xl mx-auto">
-           <!-- Banner Promo Besar -->
+     <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 relative">
+        <div class="max-w-7xl mx-auto mt-4">
+           <!-- Banner Promo Besar (Slideshow) -->
            <div class="w-full h-[200px] md:h-[350px] rounded-[1.5rem] md:rounded-[2rem] bg-slate-900 mb-6 md:mb-10 overflow-hidden relative shadow-floating flex items-center">
-              <div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80')"></div>
+              <div id="katalog-slider-bg" class="absolute inset-0 opacity-40 bg-cover bg-center transition-all duration-1000 transform scale-105" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80')"></div>
               <div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent"></div>
               <div class="relative z-10 p-6 md:p-12 text-white max-w-2xl">
                  <span class="px-2 py-1 md:px-3 md:py-1.5 bg-brand-500 rounded-lg text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-3 md:mb-4 inline-block shadow-glow"><i class="ph-bold ph-star"></i> Pilihan Favorit</span>
-                 <h1 class="text-3xl md:text-6xl font-black mb-2 md:mb-4 leading-tight tracking-tighter">Sajian Kualitas Premium</h1>
+                 <h1 id="katalog-slider-title" class="text-3xl md:text-6xl font-black mb-2 md:mb-4 leading-tight tracking-tighter transition-all">Sajian Kualitas Premium</h1>
+                 <p id="katalog-slider-price" class="text-brand-300 text-lg md:text-2xl font-black mb-2 shadow-sm transition-all"></p>
                  <p class="text-slate-300 text-xs md:text-lg font-medium line-clamp-2 md:line-clamp-none">Jelajahi seluruh koleksi menu kami. Mulai dari hidangan pembuka yang menggugah selera hingga penutup yang manis.</p>
               </div>
            </div>
@@ -2588,7 +2586,9 @@
       promoInterval = setInterval(updatePromo, 5000);
     }
 
-    // Mesin Pengisi Gambar di Halaman Katalog Promo
+    window.katalogIndex = 0;
+
+    // Mesin Pengisi Gambar di Halaman Katalog Promo & Animasi Banner
     function renderKatalog() {
         const grid = document.getElementById('katalog-grid');
         if(!grid) return;
@@ -2599,6 +2599,7 @@
             return;
         }
         
+        // Cetak daftar produk ke grid bawah
         products.forEach((p, index) => {
             const img = p.image || 'https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=600&q=80';
             grid.innerHTML += `
@@ -2615,6 +2616,31 @@
                </div>
             </div>`;
         });
+
+        // Fitur Slideshow (Gambar Berjalan) di Banner Katalog Atas
+        if(window.katalogInterval) clearInterval(window.katalogInterval);
+        const updateKatalogSlide = () => {
+            if(products.length === 0) return;
+            const item = products[window.katalogIndex % products.length];
+            const bg = document.getElementById('katalog-slider-bg');
+            const title = document.getElementById('katalog-slider-title');
+            const price = document.getElementById('katalog-slider-price');
+            
+            if(bg) {
+                bg.style.opacity = '0.1';
+                setTimeout(() => {
+                    bg.style.backgroundImage = `url('${item.image || 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80'}')`;
+                    bg.style.opacity = '0.4';
+                }, 300);
+            }
+            if(title) title.innerText = item.name;
+            if(price) price.innerText = formatRp(item.price);
+            
+            window.katalogIndex++;
+        };
+        
+        updateKatalogSlide();
+        window.katalogInterval = setInterval(updateKatalogSlide, 4000);
     }
 
     function renderCDS(liveCart, total) {
