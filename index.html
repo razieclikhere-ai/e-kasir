@@ -1028,6 +1028,7 @@
     let activeOrders = [];
     try { activeOrders = JSON.parse(localStorage.getItem('jabanaActiveOrders')) || []; } catch(e){}
     let selfCart = [];
+    let submittedOrder = null;
     let currentTableId = '';
 
     /**
@@ -1904,6 +1905,7 @@
     // ================= FITUR SELF SERVICE (BUKU MENU MANDIRI) =================
     async function initSelfService(tableId) {
         currentTableId = tableId.replace(/-/g, ' '); // Ganti strip dengan spasi, contoh: Meja-1 jadi Meja 1
+        submittedOrder = null; // Reset status saat pertama buka
         document.body.classList.remove('overflow-hidden');
         document.body.innerHTML = `
             <div class="min-h-screen bg-[#f4f7fb] pb-28 relative">
@@ -1937,7 +1939,7 @@
                             <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest">Total Belanja</span>
                             <span id="self-cart-total" class="text-xl sm:text-2xl font-black text-brand-600 tracking-tighter">Rp 0</span>
                         </div>
-                        <button onclick="showSelfServiceCartModal()" class="btn-solid py-3 px-6 sm:py-3.5 sm:px-8 text-xs sm:text-sm font-black flex items-center gap-2 shadow-glow">
+                        <button id="btn-show-cart-modal" onclick="showSelfServiceCartModal()" class="btn-solid py-3 px-6 sm:py-3.5 sm:px-8 text-xs sm:text-sm font-black flex items-center gap-2 shadow-glow">
                             Lihat Pesanan <span id="self-cart-badge" class="bg-white text-brand-600 px-2 py-0.5 rounded-md text-[10px] ml-1">0</span>
                         </button>
                     </div>
@@ -2001,6 +2003,10 @@
     }
 
     function addToSelfServiceCart(id) {
+      if(submittedOrder) {
+          selfShowToast("Pesanan sebelumnya sedang diproses. Harap selesaikan dulu di kasir.", true);
+          return;
+      }
       const p = products.find(x => x.id === id); 
       const ex = selfCart.find(x => x.id === id);
       if(ex) { 
@@ -2015,16 +2021,23 @@
 
     function updateSelfServiceCartBar() {
       const bar = document.getElementById('self-cart-bar');
-      const badge = document.getElementById('self-cart-badge');
       const totalEl = document.getElementById('self-cart-total');
-      
-      let total = 0; let qtyTotal = 0;
-      selfCart.forEach(i => { total += i.price * i.qty; qtyTotal += i.qty; });
+      const btn = document.getElementById('btn-show-cart-modal');
       
       if (selfCart.length > 0) {
+          let total = 0; let qtyTotal = 0;
+          selfCart.forEach(i => { total += i.price * i.qty; qtyTotal += i.qty; });
           bar.classList.remove('hidden');
-          badge.innerText = qtyTotal;
           totalEl.innerText = formatRp(total);
+          btn.innerHTML = `Lihat Pesanan <span id="self-cart-badge" class="bg-white text-brand-600 px-2 py-0.5 rounded-md text-[10px] ml-1">${qtyTotal}</span>`;
+          btn.setAttribute('onclick', 'showSelfServiceCartModal()');
+      } else if (submittedOrder && submittedOrder.length > 0) {
+          let total = 0;
+          submittedOrder.forEach(i => { total += i.price * i.qty; });
+          bar.classList.remove('hidden');
+          totalEl.innerText = formatRp(total);
+          btn.innerHTML = `Status Pesanan <i class="ph-bold ph-clock text-lg"></i>`;
+          btn.setAttribute('onclick', 'showSubmittedOrderModal()');
       } else {
           bar.classList.add('hidden');
       }
@@ -2042,7 +2055,41 @@
     }
 
     function showSelfServiceCartModal() {
+        document.querySelector('#modal-self-checkout h3').innerText = "Rincian Pesanan";
+        document.getElementById('btn-self-submit').classList.remove('hidden');
         renderSelfServiceCartModalItems();
+        openModal('modal-self-checkout');
+    }
+
+    function showSubmittedOrderModal() {
+        const container = document.getElementById('self-checkout-items');
+        const totalEl = document.getElementById('self-checkout-total');
+        const btnSubmit = document.getElementById('btn-self-submit');
+        
+        container.innerHTML = '<div class="p-4 mb-4 bg-orange-50 border border-orange-200 rounded-xl text-orange-700 text-xs sm:text-sm font-bold flex items-start sm:items-center gap-3"><div class="spinner border-orange-300 border-top-orange-600 w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5 sm:mt-0"></div> <div>Pesanan Anda sudah diterima dan sedang disiapkan. Silakan lakukan pembayaran di Kasir.</div></div>';
+        
+        let total = 0;
+        submittedOrder.forEach(item => {
+            total += item.price * item.qty;
+            const imgHtml = item.image ? `<div class="w-10 h-10 rounded-lg bg-cover bg-center shrink-0 border border-slate-100" style="background-image: url('${item.image}')"></div>` : `<div class="w-10 h-10 rounded-lg bg-[#f8fafc] border border-slate-100 flex items-center justify-center text-slate-300 shrink-0"><i class="ph-duotone ph-image text-lg"></i></div>`;
+            
+            container.innerHTML += `
+            <div class="flex items-center gap-3 p-2 border-b border-slate-50 last:border-0 opacity-80">
+                ${imgHtml}
+                <div class="flex-1 min-w-0">
+                    <div class="font-bold text-slate-800 text-[11px] sm:text-xs truncate">${item.name}</div>
+                    <div class="text-brand-600 font-black text-xs sm:text-sm">${formatRp(item.price)}</div>
+                </div>
+                <div class="flex items-center p-1 rounded-xl">
+                    <span class="w-5 text-center font-black text-xs text-slate-800">${item.qty}x</span>
+                </div>
+            </div>`;
+        });
+        
+        totalEl.innerText = formatRp(total);
+        btnSubmit.classList.add('hidden'); // Sembunyikan tombol kirim pesanan
+        
+        document.querySelector('#modal-self-checkout h3').innerText = "Status Pesanan";
         openModal('modal-self-checkout');
     }
 
@@ -2077,6 +2124,10 @@
     async function submitSelfServiceOrder() {
         if(selfCart.length === 0) return;
         const btn = document.getElementById('btn-self-submit');
+        
+        // Mencegah double-click
+        if (btn.disabled) return;
+        
         btn.innerHTML = `<div class="spinner border-slate-200 border-top-white w-4 h-4"></div> <span class="ml-2">Mengirim...</span>`;
         btn.disabled = true;
 
@@ -2100,12 +2151,13 @@
             btn.classList.replace('btn-solid', 'bg-emerald-500');
             
             setTimeout(() => {
+                submittedOrder = [...selfCart]; // Simpan status pesanan agar bisa dilihat oleh pelanggan
                 selfCart = [];
                 updateSelfServiceCartBar();
                 closeModal('modal-self-checkout');
                 selfShowToast("Pesanan Anda telah masuk ke dapur kami!");
                 
-                // Kembalikan tombol ke semula
+                // Kembalikan tombol ke semula untuk pesanan berikutnya
                 btn.innerHTML = `Kirim Pesanan Sekarang <i class="ph-bold ph-paper-plane-right text-lg"></i>`;
                 btn.classList.replace('bg-emerald-500', 'btn-solid');
                 btn.disabled = false;
@@ -2114,7 +2166,7 @@
         } catch(e) {
             btn.innerHTML = `Kirim Pesanan Sekarang <i class="ph-bold ph-paper-plane-right text-lg"></i>`;
             btn.disabled = false;
-            selfShowToast("Gagal mengirim pesanan. Coba lagi.", true);
+            selfShowToast("Gagal mengirim pesanan. Periksa koneksi internet.", true);
         }
     }
 
