@@ -483,7 +483,10 @@
               <h2 class="text-xl md:text-2xl font-black text-slate-900">Antrean Pesanan</h2>
               <p class="text-[10px] sm:text-xs font-medium text-slate-500 mt-1">Kelola persiapan pesanan pelanggan secara real-time.</p>
             </div>
-            <button onclick="renderActiveOrders()" class="w-full sm:w-auto bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-sm"></i> Segarkan</button>
+            <div class="flex gap-2 w-full sm:w-auto">
+              <button onclick="openAddOrder()" class="flex-1 sm:flex-none bg-brand-600 text-white hover:bg-brand-700 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shadow-brand-500/30"><i class="ph-bold ph-plus"></i> Tambah Manual</button>
+              <button onclick="renderActiveOrders()" class="flex-1 sm:flex-none bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-sm"></i> Segarkan</button>
+            </div>
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 shrink-0" id="orders-grid">
@@ -1036,40 +1039,6 @@
             audio.play();
         } catch(e) {}
     }
-        <!-- HALAMAN KHUSUS: ANTREAN PESANAN (DAPUR / ORDER MANAGEMENT) -->
-        <div id="view-orders" class="view-section hidden flex-col flex-1 min-h-0 overflow-y-auto custom-scrollbar max-w-7xl mx-auto w-full animate-slide-up pb-6">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 shrink-0">
-            <div>
-              <h2 class="text-xl md:text-2xl font-black text-slate-900">Antrean Pesanan</h2>
-              <p class="text-[10px] sm:text-xs font-medium text-slate-500 mt-1">Kelola persiapan pesanan pelanggan secara real-time.</p>
-            </div>
-            <div class="flex gap-2 w-full sm:w-auto">
-              <button onclick="openAddOrder()" class="flex-1 sm:flex-none bg-brand-600 text-white hover:bg-brand-700 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shadow-brand-500/30"><i class="ph-bold ph-plus"></i> Tambah Manual</button>
-              <button onclick="renderActiveOrders()" class="flex-1 sm:flex-none bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-sm"></i> Segarkan</button>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 shrink-0" id="orders-grid">
-             <!-- Cards Antrean Otomatis Masuk Sini -->
-          </div>
-        </div>
-
-        <!-- HALAMAN 3: RIWAYAT BUKU BESAR -->
-    // Manajemen Antrean Pesanan Dapur & Self-Service
-    let activeOrders = [];
-    try { activeOrders = JSON.parse(localStorage.getItem('jabanaActiveOrders')) || []; } catch(e){}
-    let selfCart = [];
-    let currentTableId = '';
-
-    /**
-     * Fitur Alarm & Peringatan Audio
-     */
-    function playAlert() {
-        try {
-            const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-            audio.play();
-        } catch(e) {}
-    }
 
     /**
      * Mesin Pembuat Desain Struk Pembayaran
@@ -1406,7 +1375,7 @@
           // Fitur Auto Full-Screen saat masuk layar kasir depan
           try {
              if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
+                 document.documentElement.requestFullscreen();
              }
           } catch(e) {}
           
@@ -1418,7 +1387,7 @@
           // Keluar dari Full-Screen jika kembali ke mode kasir biasa (Admin)
           try {
              if (document.exitFullscreen && document.fullscreenElement) {
-                document.exitFullscreen();
+                 document.exitFullscreen();
              }
           } catch(e) {}
       }
@@ -1542,7 +1511,6 @@
         
         const clickAnim = `this.classList.add('scale-95'); setTimeout(()=>this.classList.remove('scale-95'), 150);`;
         
-        // PENTING: Penggunaan truncate (terpotong ...) jika teks terlalu panjang, dan mengecilkan ukuran teks harga di layar HP
         grid.innerHTML += `
           <div class="bg-white p-2.5 sm:p-3 border border-slate-100 rounded-2xl cursor-pointer flex flex-col h-full select-none relative transition-all duration-200 ${out ? 'opacity-50 grayscale' : 'hover:border-brand-300 hover:shadow-lg hover:shadow-brand-500/10'}" onclick="${out ? '' : `${clickAnim} addToCart('${p.id}')`}">
             ${!out && lowStock ? `<div class="absolute top-1.5 right-1.5 bg-orange-500 text-white text-[8px] sm:text-[9px] font-black tracking-widest px-1.5 py-0.5 rounded-md shadow-sm animate-pulse z-10">TERBATAS</div>` : ''}
