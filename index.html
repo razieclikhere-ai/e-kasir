@@ -483,7 +483,8 @@
               <h2 class="text-xl md:text-2xl font-black text-slate-900">Antrean Pesanan</h2>
               <p class="text-[10px] sm:text-xs font-medium text-slate-500 mt-1">Kelola persiapan pesanan pelanggan secara real-time.</p>
             </div>
-            <div class="flex gap-2 w-full sm:w-auto">
+            <div class="flex gap-2 w-full sm:w-auto flex-wrap">
+              <button onclick="toggleFullScreen()" class="flex-1 sm:flex-none bg-slate-900 text-white hover:bg-slate-800 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-corners-out text-sm"></i> Layar Penuh</button>
               <button onclick="openAddOrder()" class="flex-1 sm:flex-none bg-brand-600 text-white hover:bg-brand-700 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shadow-brand-500/30"><i class="ph-bold ph-plus"></i> Tambah Manual</button>
               <button onclick="renderActiveOrders()" class="flex-1 sm:flex-none bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-sm"></i> Segarkan</button>
             </div>
@@ -947,29 +948,52 @@
     </div>
   </div>
 
-  <!-- Formulir Tambah/Edit Antrean Manual -->
+  <!-- Formulir Tambah/Edit Antrean Manual (Klik Langsung) -->
   <div id="modal-manage-order" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[150] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-6 sm:p-8 rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
-      <div class="flex justify-between items-center mb-6">
+    <div class="bg-white p-5 sm:p-8 rounded-[2rem] w-full max-w-2xl shadow-floating transform transition-transform duration-300 border border-white flex flex-col max-h-[95vh]">
+      
+      <div class="flex justify-between items-center mb-4 shrink-0">
         <h3 class="text-lg sm:text-xl font-black text-slate-900" id="mo-title">Kelola Antrean</h3>
         <button onclick="closeModal('modal-manage-order')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
-      <form id="form-manage-order" onsubmit="event.preventDefault(); saveManageOrder();" class="space-y-4">
-        <input type="hidden" id="mo-id">
-        <div>
-           <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Pelanggan / Meja</label>
-           <input type="text" id="mo-client" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold">
+
+      <div class="flex-1 overflow-y-auto custom-scrollbar min-h-0 flex flex-col md:flex-row gap-4 sm:gap-6">
+        
+        <!-- Bagian Kiri: Info & Keranjang -->
+        <div class="w-full md:w-1/2 flex flex-col gap-3">
+           <div>
+              <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Pelanggan / Meja</label>
+              <input type="text" id="mo-client" required class="w-full px-3 py-2.5 input-clean text-xs sm:text-sm font-bold" placeholder="Tulis nama / meja">
+           </div>
+           <div>
+              <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Waktu Pesanan</label>
+              <input type="datetime-local" id="mo-datetime" required class="w-full px-3 py-2.5 input-clean text-xs sm:text-sm font-semibold">
+           </div>
+           <div class="flex-1 flex flex-col min-h-[160px]">
+              <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Daftar Terpilih</label>
+              <div id="mo-cart-items" class="flex-1 overflow-y-auto custom-scrollbar bg-[#f8fafc] border border-slate-200 rounded-xl p-2 space-y-2">
+                 <!-- Keranjang akan muncul di sini otomatis -->
+              </div>
+           </div>
         </div>
-        <div>
-           <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Tanggal & Waktu Pesanan</label>
-           <input type="datetime-local" id="mo-datetime" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold">
+
+        <!-- Bagian Kanan: Daftar Menu Tinggal Klik -->
+        <div class="w-full md:w-1/2 flex flex-col gap-3 h-[250px] md:h-auto">
+           <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Tekan Menu Untuk Menambah</label>
+           <div id="mo-product-list" class="flex-1 overflow-y-auto custom-scrollbar bg-white border border-slate-200 rounded-xl p-2 grid grid-cols-2 gap-2 content-start">
+              <!-- Menu akan muncul di sini otomatis -->
+           </div>
         </div>
-        <div>
-           <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Daftar Pesanan</label>
-           <textarea id="mo-items" required rows="4" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold custom-scrollbar" placeholder="Format: [Jumlah]x [Nama Barang]&#10;Contoh:&#10;2x Nasi Goreng&#10;1x Es Teh"></textarea>
-        </div>
-        <button type="submit" class="btn-solid font-bold py-3 sm:py-3.5 w-full mt-4 text-xs sm:text-sm">Simpan Antrean</button>
-      </form>
+
+      </div>
+
+      <div class="shrink-0 mt-5 pt-4 border-t border-slate-100">
+         <input type="hidden" id="mo-id">
+         <button onclick="saveManageOrder()" class="btn-solid font-bold py-3.5 sm:py-4 w-full text-xs sm:text-sm flex items-center justify-center gap-2 shadow-glow">
+            <i class="ph-bold ph-floppy-disk text-lg"></i> Simpan Pesanan ke Dapur
+         </button>
+      </div>
+
     </div>
   </div>
 
@@ -1844,35 +1868,99 @@
         }
     }
 
+   let moCart = [];
+
+    function renderMoProducts() {
+        const grid = document.getElementById('mo-product-list');
+        grid.innerHTML = '';
+        if(!products.length) {
+            grid.innerHTML = '<div class="col-span-2 text-center text-[10px] text-slate-400 py-6">Katalog kosong, muat aset master dulu.</div>';
+            return;
+        }
+        products.forEach(p => {
+            const out = p.stock <= 0;
+            grid.innerHTML += `
+            <div onclick="${out ? '' : `addToMoCart('${p.id}')`}" class="bg-[#f8fafc] p-2 sm:p-2.5 border border-slate-100 rounded-xl flex flex-col h-full relative transition-all duration-200 ${out ? 'opacity-50' : 'cursor-pointer hover:border-brand-300 hover:bg-brand-50 active:scale-95'}">
+                <div class="font-bold text-[10px] sm:text-xs text-slate-800 leading-tight flex-1">${p.name}</div>
+                <div class="text-[9px] sm:text-[10px] font-black text-brand-600 mt-1.5">${formatRp(p.price)}</div>
+            </div>`;
+        });
+    }
+
+    function addToMoCart(id) {
+        const p = products.find(x => x.id === id);
+        const ex = moCart.find(x => x.id === id);
+        if(ex) {
+            if(ex.qty >= p.stock) return showToast("Stok tidak mencukupi", true);
+            ex.qty++;
+        } else {
+            moCart.push({...p, qty: 1});
+        }
+        renderMoCart();
+    }
+
+    function changeMoQty(id, delta) {
+        const item = moCart.find(i => i.id === id);
+        if(item) {
+            item.qty += delta;
+            if(item.qty <= 0) moCart = moCart.filter(i => i.id !== id);
+        }
+        renderMoCart();
+    }
+
+    function renderMoCart() {
+        const container = document.getElementById('mo-cart-items');
+        container.innerHTML = '';
+        if(!moCart.length) {
+            container.innerHTML = `<div class="text-center text-[10px] text-slate-400 py-10 flex flex-col items-center"><i class="ph-duotone ph-basket text-2xl mb-1 opacity-50"></i>Klik menu di samping.</div>`;
+            return;
+        }
+        moCart.forEach(item => {
+            container.innerHTML += `
+            <div class="flex justify-between items-center bg-white p-2 sm:p-2.5 rounded-lg border border-slate-100 shadow-sm animate-fade-in">
+                <div class="flex-1 min-w-0 pr-2">
+                   <div class="font-bold text-[10px] sm:text-xs text-slate-800 truncate">${item.name}</div>
+                   <div class="text-[9px] sm:text-[10px] font-black text-brand-600 mt-0.5">${formatRp(item.price)}</div>
+                </div>
+                <div class="flex items-center gap-1.5 bg-[#f8fafc] p-1 rounded-md border border-slate-200 shrink-0">
+                    <button type="button" onclick="changeMoQty('${item.id}', -1)" class="w-6 h-6 flex items-center justify-center bg-white rounded text-slate-500 shadow-sm border border-slate-100"><i class="ph-bold ph-minus text-[10px]"></i></button>
+                    <span class="w-4 text-center font-black text-[10px] sm:text-xs text-slate-800">${item.qty}</span>
+                    <button type="button" onclick="changeMoQty('${item.id}', 1)" class="w-6 h-6 flex items-center justify-center bg-white rounded text-slate-500 shadow-sm border border-slate-100"><i class="ph-bold ph-plus text-[10px]"></i></button>
+                </div>
+            </div>`;
+        });
+    }
+
     function openAddOrder() {
-        document.getElementById('form-manage-order').reset();
+        document.getElementById('mo-client').value = '';
         document.getElementById('mo-id').value = '';
         document.getElementById('mo-title').innerText = 'Tambah Antrean Manual';
-        
-        // Set waktu default ke waktu saat ini
+
         const now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
         document.getElementById('mo-datetime').value = now.toISOString().slice(0, 16);
-        
+
+        moCart = [];
+        renderMoProducts();
+        renderMoCart();
         openModal('modal-manage-order');
     }
 
     function openEditOrder(id) {
         const order = activeOrders.find(o => o.id == id);
         if(!order) return;
-        
+
         document.getElementById('mo-id').value = order.id;
         document.getElementById('mo-client').value = order.client;
-        
-        // Konversi timestamp (ms) ke format datetime-local input
+
         const orderDate = new Date(order.date);
         orderDate.setMinutes(orderDate.getMinutes() - orderDate.getTimezoneOffset());
         document.getElementById('mo-datetime').value = orderDate.toISOString().slice(0, 16);
-        
-        const itemsStr = order.items.map(i => `${i.qty}x ${i.name}`).join('\n');
-        document.getElementById('mo-items').value = itemsStr;
-        
+
+        moCart = [...order.items];
         document.getElementById('mo-title').innerText = 'Edit Antrean';
+        renderMoProducts();
+        renderMoCart();
         openModal('modal-manage-order');
     }
 
@@ -1880,33 +1968,21 @@
         const id = document.getElementById('mo-id').value;
         const clientName = document.getElementById('mo-client').value;
         const datetimeStr = document.getElementById('mo-datetime').value;
-        const itemsStr = document.getElementById('mo-items').value;
-        
-        // Konversi string datetime ke timestamp (ms)
+
+        if(!clientName) return showToast('Nama pelanggan wajib diisi', true);
+        if(moCart.length === 0) return showToast('Daftar pesanan tidak boleh kosong.', true);
+
         const newDate = new Date(datetimeStr).getTime();
-        
-        const parsedItems = itemsStr.split('\n').map(line => {
-            line = line.trim();
-            if(!line) return null;
-            const match = line.match(/^(\d+)x?\s+(.*)$/i);
-            if(match) {
-                return { qty: parseInt(match[1]), name: match[2], price: 0 };
-            }
-            return { qty: 1, name: line, price: 0 };
-        }).filter(Boolean);
-        
-        if(parsedItems.length === 0) {
-            return showToast('Daftar pesanan tidak boleh kosong.', true);
-        }
-        
+
         if(!id) {
            const newOrder = {
                id: Date.now(),
                trxId: 'MANUAL-' + Date.now().toString().slice(-4),
                date: newDate,
                client: clientName,
-               items: parsedItems,
-               status: 'waiting'
+               items: moCart,
+               status: 'waiting',
+               payment: 'unpaid'
            };
            activeOrders.unshift(newOrder);
            showToast('Antrean manual ditambahkan.');
@@ -1915,11 +1991,11 @@
            if(order) {
                order.client = clientName;
                order.date = newDate;
-               order.items = parsedItems;
+               order.items = moCart;
                showToast('Antrean diperbarui.');
            }
         }
-        
+
         saveActiveOrders();
         renderActiveOrders();
         closeModal('modal-manage-order');
@@ -2551,6 +2627,8 @@
         jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
       }).from(element).save().then(() => {
         showToast("Struk berhasil diunduh!");
+      }).catch(err => {
+        showToast("Gagal mengunduh: " + err.message, true);
       });
     }
 
@@ -2576,8 +2654,27 @@
         showToast("Memproses Dokumen PDF...");
         let items = []; try { items = JSON.parse(decodeURIComponent(t.detail)); } catch(e) {}
         let h = getReceiptHTML(t.trxId, t.date, t.total, t.cash, t.change, t.client, t.cashier, items);
-        const el = document.createElement('div'); el.innerHTML = `<div style="width: 80mm; background: white; padding: 25px;">${h}</div>`;
-        html2pdf().set({ margin: 0.1, filename: `Invoice_Premium_${tid}.pdf`, image: { type: 'jpeg', quality: 1 }, html2canvas: { scale: 3 }, jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } }).from(el).save();
+        
+        // Buat elemen kertas virtual dan tempelkan tersembunyi agar bisa di-foto oleh sistem
+        const el = document.createElement('div'); 
+        el.style.position = 'absolute';
+        el.style.left = '-9999px'; 
+        el.innerHTML = `<div style="width: 80mm; background: white; padding: 25px;">${h}</div>`;
+        document.body.appendChild(el);
+        
+        html2pdf().set({ 
+          margin: 0.1, 
+          filename: `Invoice_Premium_${tid}.pdf`, 
+          image: { type: 'jpeg', quality: 1 }, 
+          html2canvas: { scale: 3, useCORS: true }, 
+          jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
+        }).from(el).save().then(() => {
+          document.body.removeChild(el); 
+          showToast("PDF berhasil diunduh!");
+        }).catch(err => {
+          document.body.removeChild(el);
+          showToast("Gagal mengunduh: " + err.message, true);
+        });
       }
     }
 
