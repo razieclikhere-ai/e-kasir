@@ -309,6 +309,9 @@
         <button onclick="switchView('klien-dashboard')" class="nav-item role-klien w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
           <i class="ph-duotone ph-monitor-play text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Mode Klien
         </button>
+        <button onclick="switchView('katalog')" class="nav-item role-klien w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+          <i class="ph-duotone ph-book-open-text text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Katalog Promo
+        </button>
       </div>
       
       <!-- Profil Admin di Bawah Sidebar -->
@@ -859,6 +862,44 @@
             <p class="text-4xl lg:text-5xl font-black tracking-tighter text-brand-600 drop-shadow-sm" id="cds-total">Rp 0</p>
          </div>
       </div>
+  </div>
+
+  <!-- HALAMAN KATALOG DIGITAL (MARKETING & PROMO KHUSUS KLIEN) -->
+  <div id="view-katalog" class="view-section hidden w-full h-screen animate-fade-in flex-col bg-slate-50 overflow-hidden fixed inset-0 z-[100]">
+     <!-- Header Katalog -->
+     <div class="bg-white px-4 md:px-8 py-4 shadow-sm flex justify-between items-center z-10 shrink-0">
+        <div class="flex items-center gap-3">
+           <div class="w-10 h-10 md:w-12 md:h-12 bg-brand-600 rounded-xl flex items-center justify-center text-xl md:text-2xl text-white shadow-glow"><i class="ph-fill ph-book-open-text"></i></div>
+           <div>
+              <h2 class="text-lg md:text-xl font-black text-slate-900 tracking-tight">Katalog Produk</h2>
+              <p class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">Eksplorasi Sajian Kami</p>
+           </div>
+        </div>
+        <button onclick="switchView('dashboard')" class="bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-500 p-2.5 md:p-3 rounded-xl transition-all font-bold text-xs md:text-sm flex items-center gap-2">
+           <i class="ph-bold ph-x text-lg"></i> <span class="hidden md:inline">Tutup Katalog</span>
+        </button>
+     </div>
+     
+     <!-- Konten Marketing -->
+     <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8">
+        <div class="max-w-7xl mx-auto">
+           <!-- Banner Promo Besar -->
+           <div class="w-full h-[200px] md:h-[350px] rounded-[1.5rem] md:rounded-[2rem] bg-slate-900 mb-6 md:mb-10 overflow-hidden relative shadow-floating flex items-center">
+              <div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80')"></div>
+              <div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent"></div>
+              <div class="relative z-10 p-6 md:p-12 text-white max-w-2xl">
+                 <span class="px-2 py-1 md:px-3 md:py-1.5 bg-brand-500 rounded-lg text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-3 md:mb-4 inline-block shadow-glow"><i class="ph-bold ph-star"></i> Pilihan Favorit</span>
+                 <h1 class="text-3xl md:text-6xl font-black mb-2 md:mb-4 leading-tight tracking-tighter">Sajian Kualitas Premium</h1>
+                 <p class="text-slate-300 text-xs md:text-lg font-medium line-clamp-2 md:line-clamp-none">Jelajahi seluruh koleksi menu kami. Mulai dari hidangan pembuka yang menggugah selera hingga penutup yang manis.</p>
+              </div>
+           </div>
+           
+           <!-- Grid Kotak Produk -->
+           <div id="katalog-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6 pb-20">
+              <!-- Muncul otomatis dari Sistem -->
+           </div>
+        </div>
+     </div>
   </div>
 
   <!-- ================= POPUP MODAL (TERSEMBUNYI) ================= -->
@@ -1457,8 +1498,9 @@
       if(viewId === 'config') loadConfigForm(); 
       if(viewId === 'profile') loadProfileForm(); 
       if(viewId === 'activity') loadActivityData();
+      if(viewId === 'katalog') renderKatalog();
       
-      const titles = {'dashboard':'Beranda Analitik','pos':'Kasir Cerdas','orders':'Manajemen Dapur','transactions':'Riwayat Keuangan','reports':'Laporan Komprehensif','products':'Aset Master','users':'Kontrol Akses','config':'Identitas Toko','profile':'Profil Pengguna','klien-dashboard':'Layar Pelanggan','activity':'Monitor Aktivitas'};
+      const titles = {'dashboard':'Beranda Analitik','pos':'Kasir Cerdas','orders':'Manajemen Dapur','transactions':'Riwayat Keuangan','reports':'Laporan Komprehensif','products':'Aset Master','users':'Kontrol Akses','config':'Identitas Toko','profile':'Profil Pengguna','klien-dashboard':'Layar Pelanggan','katalog':'Katalog Promo','activity':'Monitor Aktivitas'};
       document.getElementById('topbar-title').innerText = titles[viewId] || 'Sistem Kasir';
       
       // Auto-hide mobile sidebar after clicking menu
@@ -2544,6 +2586,35 @@
       
       updatePromo();
       promoInterval = setInterval(updatePromo, 5000);
+    }
+
+    // Mesin Pengisi Gambar di Halaman Katalog Promo
+    function renderKatalog() {
+        const grid = document.getElementById('katalog-grid');
+        if(!grid) return;
+        grid.innerHTML = '';
+        
+        if(!products.length) {
+            grid.innerHTML = `<div class="col-span-full text-center text-slate-500 py-20 font-bold text-sm md:text-lg">Katalog belum tersedia.</div>`;
+            return;
+        }
+        
+        products.forEach((p, index) => {
+            const img = p.image || 'https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=600&q=80';
+            grid.innerHTML += `
+            <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col group hover:-translate-y-2 transition-transform duration-300 animate-fade-in" style="animation-delay: ${index * 0.05}s; opacity: 0; animation-fill-mode: forwards;">
+               <div class="w-full aspect-square md:aspect-[4/3] bg-cover bg-center relative" style="background-image: url('${img}')">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+               </div>
+               <div class="p-3 md:p-5 flex-1 flex flex-col">
+                  <span class="text-[8px] sm:text-[10px] font-black text-brand-500 uppercase tracking-widest mb-1.5">${p.category}</span>
+                  <h3 class="text-xs sm:text-base font-black text-slate-800 leading-tight mb-2 line-clamp-2">${p.name}</h3>
+                  <div class="mt-auto pt-2 md:pt-3 border-t border-slate-50 flex items-center justify-between">
+                      <span class="text-sm md:text-lg font-black text-slate-900">${formatRp(p.price)}</span>
+                  </div>
+               </div>
+            </div>`;
+        });
     }
 
     function renderCDS(liveCart, total) {
