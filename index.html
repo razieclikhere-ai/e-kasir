@@ -249,7 +249,7 @@
           <i class="ph-duotone ph-calculator text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Kasir Cerdas
         </button>
         
-        <button onclick="switchView('orders')" class="nav-item role-admin role-user w-full flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
+        <button onclick="switchView('orders')" class="nav-item role-admin role-user role-dapur w-full flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:bg-brand-50 hover:text-brand-700 transition-all text-left hidden group">
           <div class="flex items-center gap-3">
              <i class="ph-duotone ph-cooking-pot text-lg sm:text-xl text-slate-400 group-hover:text-brand-600 nav-icon transition-colors"></i> Antrean Pesanan
           </div>
@@ -436,7 +436,7 @@
             </div>
             <div class="flex gap-2 w-full sm:w-auto flex-wrap">
               <button onclick="switchView('dapur-fs')" class="flex-1 sm:flex-none bg-slate-900 text-white hover:bg-slate-800 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-monitor-play text-sm"></i> Mode Layar Dapur</button>
-              <button onclick="openAddOrder()" class="flex-1 sm:flex-none bg-brand-600 text-white hover:bg-brand-700 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shadow-brand-500/30"><i class="ph-bold ph-plus"></i> Tambah Manual</button>
+              <button onclick="openAddOrder()" class="role-admin role-user hidden flex-1 sm:flex-none bg-brand-600 text-white hover:bg-brand-700 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shadow-brand-500/30"><i class="ph-bold ph-plus"></i> Tambah Manual</button>
               <button onclick="renderActiveOrders()" class="flex-1 sm:flex-none bg-white border border-slate-200 text-slate-600 hover:text-brand-600 hover:border-brand-200 text-xs font-bold py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"><i class="ph-bold ph-arrows-clockwise text-sm"></i> Segarkan</button>
             </div>
           </div>
@@ -832,134 +832,7 @@
                </div>
        </div>
   </div>
-  <div id="modal-product" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[120] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-6 sm:p-8 rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg sm:text-xl font-black text-slate-900">Formulir Aset</h3>
-        <button onclick="closeModal('modal-product')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
-      </div>
-      <form id="form-product" onsubmit="event.preventDefault(); saveProduct();" class="space-y-4">
-        <input type="hidden" id="prod-id">
-        <input type="hidden" id="prod-img-b64">
-        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama / Merek</label><input type="text" id="prod-name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"></div>
-        <div class="flex gap-3 sm:gap-4">
-          <div class="w-1/2"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Kategori</label><input type="text" id="prod-cat" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold"></div>
-          <div class="w-1/2"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Stok Fisik</label><input type="number" id="prod-stock" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold text-right"></div>
-        </div>
-        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Harga Jual (Rp)</label><input type="number" id="prod-price" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold text-brand-600"></div>
-        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Unggah Visual (Maks 2MB)</label><input type="file" accept="image/*" onchange="encodeImage(this)" class="w-full px-3 sm:px-4 py-2 sm:py-2.5 input-clean text-xs sm:text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-[10px] sm:file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"></div>
-        <button type="submit" class="btn-solid font-bold py-3 sm:py-3.5 w-full mt-4 text-xs sm:text-sm">Simpan Aset Master</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="modal-user" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[120] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-6 sm:p-8 rounded-[2rem] w-full max-w-md shadow-floating transform transition-transform duration-300 border border-white">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg sm:text-xl font-black text-slate-900">Formulir Pengguna</h3>
-        <button onclick="closeModal('modal-user')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
-      </div>
-      <form id="form-user" onsubmit="event.preventDefault(); saveUser();" class="space-y-4">
-        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">ID Akses Login</label><input type="text" id="u-username" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"></div>
-        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Sandi Keamanan</label><input type="password" id="u-pass" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm" placeholder="Isi untuk ubah sandi"></div>
-        <div class="flex gap-3 sm:gap-4">
-          <div class="w-2/3"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Nama Personel</label><input type="text" id="u-name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-semibold"></div>
-          <div class="w-1/3"><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Otoritas</label><select id="u-role" class="w-full px-2 sm:px-3 py-2.5 sm:py-3 input-clean text-xs sm:text-sm font-bold"><option value="admin">Admin</option><option value="user">Kasir</option><option value="klien">Layar</option></select></div>
-        </div>
-        <div><label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Alamat Email</label><input type="email" id="u-email" class="w-full px-3 sm:px-4 py-2.5 sm:py-3 input-clean text-xs sm:text-sm"></div>
-        <button type="submit" class="btn-dark font-bold py-3 sm:py-3.5 w-full mt-4 text-xs sm:text-sm">Terbitkan Akses</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="modal-receipt" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center z-[150] p-4">
-    <div class="bg-slate-100 p-4 sm:p-6 rounded-[2rem] w-full max-w-sm shadow-floating flex flex-col transform transition-transform duration-300 max-h-[90vh]">
-      <div class="flex justify-between items-center mb-4 px-2">
-        <h3 class="text-xs sm:text-sm font-black text-slate-800 uppercase tracking-widest">Preview Struk</h3>
-        <button onclick="closeModal('modal-receipt')" class="text-slate-400 hover:text-red-500 bg-white p-1.5 rounded-lg shadow-sm"><i class="ph-bold ph-x text-lg"></i></button>
-      </div>
-      <div id="receipt-visual-content" class="bg-white rounded-xl shadow-inner mx-auto overflow-y-auto max-h-[60vh] custom-scrollbar border border-slate-200"></div>
-      <div class="flex gap-3 mt-6">
-        <button onclick="document.getElementById('receipt-print-area').classList.remove('hidden'); window.print(); setTimeout(() => { document.getElementById('receipt-print-area').classList.add('hidden'); }, 1000);" class="flex-1 btn-solid py-3 text-xs font-bold flex justify-center gap-2"><i class="ph-bold ph-printer text-base"></i> Cetak ke Printer</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="modal-qrcode" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center z-[150] p-4">
-    <div class="bg-white p-6 sm:p-8 rounded-[2rem] w-full max-w-[280px] sm:max-w-[320px] text-center shadow-floating transform transition-transform duration-300 border border-slate-100">
-       <div class="flex justify-end mb-2 -mt-2 -mr-2 sm:-mt-4 sm:-mr-4">
-          <button onclick="closeModal('modal-qrcode')" class="text-slate-400 hover:text-slate-800 bg-slate-50 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
-       </div>
-       <h3 class="text-sm sm:text-base font-black text-slate-900 mb-1" id="qr-title-text">e-Receipt Digital</h3>
-       <p class="text-[9px] sm:text-[10px] text-slate-500 font-bold mb-4 sm:mb-5 font-mono" id="qr-trx-id"></p>
-       <div id="qrcode-container" class="inline-flex flex-col justify-center items-center p-3 sm:p-4 bg-white border border-slate-100 rounded-xl shadow-sm mb-5 sm:mb-6 min-h-[220px] min-w-[220px]"></div>
-       <button onclick="downloadQR()" class="w-full btn-dark py-3 text-xs sm:text-sm font-bold">Simpan Gambar QR</button>
-    </div>
-  </div>
-
-  <div id="modal-self-checkout" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center z-[200] p-0 sm:p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-6 sm:p-8 rounded-t-[2rem] sm:rounded-[2rem] w-full max-w-md shadow-floating flex flex-col transform transition-transform duration-300 max-h-[90vh]">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-black text-slate-900">Rincian Pesanan</h3>
-        <button onclick="closeModal('modal-self-checkout')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
-      </div>
-      <div id="self-checkout-items" class="flex-1 overflow-y-auto custom-scrollbar space-y-3 mb-4"></div>
-      <div class="border-t border-slate-100 pt-4 mb-6 flex justify-between items-center">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Total Bayar</span>
-          <span class="text-2xl font-black text-brand-600" id="self-checkout-total">Rp 0</span>
-      </div>
-      <button onclick="submitSelfServiceOrder()" id="btn-self-submit" class="w-full btn-solid py-4 text-sm font-black flex justify-center items-center gap-2 shadow-glow">
-          Kirim Pesanan Sekarang <i class="ph-bold ph-paper-plane-right text-lg"></i>
-      </button>
-    </div>
-  </div>
-
-  <div id="modal-manage-order" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center z-[150] p-4 transition-opacity animate-fade-in">
-    <div class="bg-white p-5 sm:p-8 rounded-[2rem] w-full max-w-2xl shadow-floating transform transition-transform duration-300 border border-white flex flex-col max-h-[95vh]">
-      
-      <div class="flex justify-between items-center mb-4 shrink-0">
-        <h3 class="text-lg sm:text-xl font-black text-slate-900" id="mo-title">Kelola Antrean</h3>
-        <button onclick="closeModal('modal-manage-order')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
-      </div>
-
-      <div class="flex-1 overflow-y-auto custom-scrollbar min-h-0 flex flex-col md:flex-row gap-4 sm:gap-6">
-        
-        <div class="w-full md:w-1/2 flex flex-col gap-3">
-           <div>
-              <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Pelanggan / Meja</label>
-              <input type="text" id="mo-client" required class="w-full px-3 py-2.5 input-clean text-xs sm:text-sm font-bold" placeholder="Tulis nama / meja">
-           </div>
-           <div>
-              <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Waktu Pesanan</label>
-              <input type="datetime-local" id="mo-datetime" required class="w-full px-3 py-2.5 input-clean text-xs sm:text-sm font-semibold">
-           </div>
-           <div class="flex-1 flex flex-col min-h-[160px]">
-              <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Daftar Terpilih</label>
-              <div id="mo-cart-items" class="flex-1 overflow-y-auto custom-scrollbar bg-[#f8fafc] border border-slate-200 rounded-xl p-2 space-y-2">
-                 </div>
-           </div>
-        </div>
-
-        <div class="w-full md:w-1/2 flex flex-col gap-3 h-[250px] md:h-auto">
-           <label class="block text-[10px] sm:text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Tekan Menu Untuk Menambah</label>
-           <div id="mo-product-list" class="flex-1 overflow-y-auto custom-scrollbar bg-white border border-slate-200 rounded-xl p-2 grid grid-cols-2 gap-2 content-start">
-              </div>
-        </div>
-
-      </div>
-
-      <div class="shrink-0 mt-5 pt-4 border-t border-slate-100">
-         <input type="hidden" id="mo-id">
-         <button onclick="saveManageOrder()" class="btn-solid font-bold py-3.5 sm:py-4 w-full text-xs sm:text-sm flex items-center justify-center gap-2 shadow-glow">
-            <i class="ph-bold ph-floppy-disk text-lg"></i> Simpan Pesanan ke Dapur
-         </button>
-      </div>
-
-    </div>
-  </div>
-
   <div id="receipt-print-area" class="hidden absolute top-0 left-0 bg-white w-full z-[200]"></div>
-
 
   <script>
     // =========================================================================
@@ -1006,6 +879,7 @@
     let promoInterval;
     let promoIndex = 0;
     let currentQRTrx = '';
+    window.katalogIndex = 0;
 
     // Manajemen Antrean Pesanan Dapur & Self-Service
     let activeOrders = [];
@@ -1013,6 +887,7 @@
     let selfCart = [];
     let submittedOrder = null;
     let currentTableId = '';
+    let moCart = [];
 
     /**
      * Fitur Alarm & Peringatan Audio
@@ -1107,13 +982,11 @@
       const receiptId = urlParams.get('receipt');
       const tableParam = urlParams.get('table');
 
-      // MODE 1: BUKA BUKU MENU / SELF SERVICE ORDER VIA QR MEJA
       if (tableParam) {
           initSelfService(tableParam);
           return;
       }
 
-      // MODE 2: BUKA E-RECEIPT DIGITAL
       if (receiptId) {
         document.getElementById('auth-wrapper').classList.add('hidden');
         document.body.classList.remove('overflow-hidden'); 
@@ -1168,7 +1041,6 @@
         return; 
       }
 
-      // MODE 3: LAYAR NORMAL (KASIR / ADMIN)
       try {
         if(localStorage.getItem('jabanaRememberUser')) {
           document.getElementById('username').value = localStorage.getItem('jabanaRememberUser');
@@ -1176,32 +1048,27 @@
         }
       } catch(e) {}
 
-      // Menggerakkan Jam Real-time Header & Layar Pelanggan (CDS)
       setInterval(() => {
         const now = new Date();
         const timeStr = now.toLocaleTimeString('id-ID');
         const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         
-        // Jam di Layar Admin / Kasir
         const clk = document.getElementById('clock-display');
         if (clk) clk.innerText = timeStr;
         
-        // Jam & Tanggal di Layar Pelanggan (CDS)
         const cdsClk = document.getElementById('cds-clock');
         const cdsDate = document.getElementById('cds-date');
         if (cdsClk) cdsClk.innerText = timeStr;
         if (cdsDate) cdsDate.innerText = dateStr;
         
-        // Jam untuk Layar Dapur Full Screen
         const dapurClk = document.getElementById('dapur-fs-clock');
         if (dapurClk) dapurClk.innerText = timeStr;
       }, 1000);
       
-      // Sinkronisasi status alarm antrean secara real-time
       setInterval(() => {
          const hasDelayed = activeOrders.some(o => o.status === 'waiting' && Math.floor((new Date().getTime() - o.date)/60000) >= 5);
          if (hasDelayed && document.getElementById('view-orders').classList.contains('hidden') === false) {
-             renderActiveOrders(); // Update UI otomatis untuk memunculkan kelap-kelip merah
+             renderActiveOrders(); 
          }
       }, 60000);
 
@@ -1264,6 +1131,7 @@
       } catch(e) {}
       
       document.body.classList.remove('cds-mode');
+      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover'); // Reset Viewport
       document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('flex'); });
       history.pushState(null, null, ' '); 
       
@@ -1275,18 +1143,15 @@
       document.getElementById('auth-wrapper').classList.add('hidden'); 
       document.getElementById('app-wrapper').classList.remove('hidden');
       
-      // Mengubah Teks Sesuai Akun
       document.getElementById('user-name').innerText = user.name; 
       document.getElementById('user-avatar').innerText = user.name.charAt(0).toUpperCase();
       document.getElementById('prof-header-name').innerText = user.name;
       document.getElementById('prof-header-role').innerText = user.role;
       document.getElementById('prof-avatar-preview').innerText = user.name.charAt(0).toUpperCase();
 
-      // Filter hak akses Menu Kiri sesuai Jabatan (Role)
-      const allRoles = document.querySelectorAll('.role-admin, .role-user, .role-klien'); allRoles.forEach(el => el.classList.add('hidden'));
+      const allRoles = document.querySelectorAll('.role-admin, .role-user, .role-dapur, .role-klien'); allRoles.forEach(el => el.classList.add('hidden'));
       const allowedRoles = document.querySelectorAll(`.role-${user.role}`); allowedRoles.forEach(el => el.classList.remove('hidden'));
 
-      // Tembak Server untuk tarik Info Profil Toko
       try {
           const cfg = await fetchAPI('getStoreConfig');
           storeConfig = cfg; 
@@ -1294,18 +1159,15 @@
           if(document.getElementById('cds-store-name-promo')) document.getElementById('cds-store-name-promo').innerText = cfg.StoreName || "Jabana Savory";
       } catch(e) {}
       
-      // Jika pengguna adalah "layar khusus", langsung jalankan program radar layar
       if(user.role === 'klien') {
-        loadProducts(); // Download katalog untuk memutar slide gambar produk 
+        loadProducts(); 
       } else {
-        // Kalau dia kasir/admin biasa, download barang dan riwayat utuh
         loadProducts(); loadTransactions(); updateOrdersBadge();
-        startGlobalOrderPolling(); // Aktifkan radar penerima pesanan dari pelanggan
+        startGlobalOrderPolling();
       }
       
       handleHashChange();
 
-      // Interval Pengirim Detak Jantung (Ping) bahwa akun masih aktif / Online
       if(window.pingInterval) clearInterval(window.pingInterval);
       window.pingInterval = setInterval(async () => { 
           if(currentUser) {
@@ -1335,7 +1197,9 @@
 
     function handleHashChange() {
       if(!currentUser) return; 
-      const defaultView = currentUser.role === 'klien' ? 'klien-dashboard' : 'dashboard';
+      let defaultView = 'dashboard';
+      if(currentUser.role === 'klien') defaultView = 'klien-dashboard';
+      if(currentUser.role === 'dapur') defaultView = 'orders';
       let hash = window.location.hash.replace('#', '') || defaultView;
       const viewEl = document.getElementById(`view-${hash}`);
       if(!viewEl) hash = defaultView;
@@ -1348,52 +1212,42 @@
     }
 
     function renderViewUI(viewId) {
-      // Sembunyikan Dulu Semua Ruangan (Hapus juga class flex agar benar-benar tertutup)
       document.querySelectorAll('.view-section').forEach(el => { 
           el.classList.add('hidden'); 
           el.classList.remove('flex'); 
       }); 
 
-      // Nyalakan aturan khusus jika pindah ke mode layar pelanggan
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+
       if (viewId === 'klien-dashboard') {
           document.body.classList.add('cds-mode');
+          viewportMeta.setAttribute('content', 'width=1280'); // Paksa layar virtual PC
           startPromoSlider();
-          startCDSPolling(); // Otomatis menyalakan radar sinkronisasi pesanan
-          
-          // Fitur Auto Full-Screen saat masuk layar kasir depan
-          try {
-             if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-                 document.documentElement.requestFullscreen();
-             }
-          } catch(e) {}
-          
+          startCDSPolling();
+          try { if (document.documentElement.requestFullscreen && !document.fullscreenElement) document.documentElement.requestFullscreen(); } catch(e) {}
       } else if (viewId === 'katalog' || viewId === 'dapur-fs') {
           document.body.classList.add('cds-mode');
           if(viewId === 'katalog') {
+              viewportMeta.setAttribute('content', 'width=1280');
               if(window.cdsPoller) clearInterval(window.cdsPoller);
               startPromoSlider(); 
+          } else {
+              viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
           }
       } else {
           document.body.classList.remove('cds-mode');
+          viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
           if(promoInterval) clearInterval(promoInterval);
-          if(window.cdsPoller) clearInterval(window.cdsPoller); // Mematikan radar jika keluar dari layar
-          
-          // Keluar dari Full-Screen jika kembali ke mode kasir biasa (Admin)
-          try {
-             if (document.exitFullscreen && document.fullscreenElement) {
-                 document.exitFullscreen();
-             }
-          } catch(e) {}
+          if(window.cdsPoller) clearInterval(window.cdsPoller);
+          try { if (document.exitFullscreen && document.fullscreenElement) document.exitFullscreen(); } catch(e) {}
       }
 
-      // Tampilkan Ruangan yang Baru Di-klik dan beri sifat container fleksibel
       const activeView = document.getElementById(`view-${viewId}`);
       if (activeView) {
         activeView.classList.remove('hidden');
         activeView.classList.add('flex');
       }
       
-      // Warnai Biru (Aktif) tombol menu yang sedang diklik
       const navs = document.querySelectorAll('.nav-item');
       navs.forEach(n => { 
         n.classList.remove('bg-brand-50', 'text-brand-700'); n.classList.add('text-slate-500'); 
@@ -1410,7 +1264,6 @@
       const activeMob = Array.from(mobNavs).find(n => n.getAttribute('onclick').includes(viewId));
       if(activeMob) { activeMob.classList.remove('text-slate-400'); activeMob.classList.add('text-brand-600'); }
 
-      // Perintah muat data baru untuk ruangan tersebut saat diklik
       if(viewId === 'dashboard') loadDashboardStats(); 
       if(viewId === 'pos') setTimeout(() => document.getElementById('pos-search').focus(), 100); 
       if(viewId === 'orders') renderActiveOrders();
@@ -1427,13 +1280,12 @@
       const titles = {'dashboard':'Beranda Analitik','pos':'Kasir Cerdas','orders':'Manajemen Dapur','transactions':'Riwayat Keuangan','reports':'Laporan Komprehensif','products':'Aset Master','users':'Kontrol Akses','config':'Identitas Toko','profile':'Profil Pengguna','klien-dashboard':'Layar Pelanggan','katalog':'Katalog Promo','activity':'Monitor Aktivitas','dapur-fs':'Display Dapur'};
       document.getElementById('topbar-title').innerText = titles[viewId] || 'Sistem Kasir';
       
-      // Auto-hide mobile sidebar after clicking menu
       if(window.innerWidth < 1024 && viewId !== 'klien-dashboard') { document.getElementById('sidebar').classList.add('-translate-x-full'); const bd = document.getElementById('sidebar-backdrop'); if(bd) { bd.classList.remove('opacity-100'); setTimeout(() => bd.classList.add('hidden'), 300); } }
     }
 
     // ================= FITUR DASBOR ANALITIK =================
     async function loadDashboardStats() {
-      if(!currentUser || currentUser.role === 'klien') return;
+      if(!currentUser || currentUser.role === 'klien' || currentUser.role === 'dapur') return;
       try {
           const s = await fetchAPI('getDashboardStats');
           document.getElementById('dash-revenue-today').innerText = formatRp(s.todayRevenue); 
@@ -1469,7 +1321,6 @@
             }
           });
 
-          // Fetch Active Users
           const resActs = await fetchAPI('getActivityData');
           if(document.getElementById('dash-active-users-count')) {
              document.getElementById('dash-active-users-count').innerText = `${resActs.online.length} Aktif`;
@@ -1535,7 +1386,6 @@
       cart = []; document.getElementById('pos-cash').value = ''; document.getElementById('pos-client-name').value = ''; renderCart(false); 
     }
 
-    // Fungsi Pelempar Sinyal Keranjang Kasir Ke Layar Klien Secara Otomatis
     let liveCartTimer;
     function broadcastLiveCart(total) {
       clearTimeout(liveCartTimer);
@@ -1569,7 +1419,6 @@
       }
       document.getElementById('cart-total').innerText = formatRp(total); document.getElementById('cart-item-count').innerText = qtyTotal; calculateChange();
       
-      // Lempar Sinyal ke Internet Agar Layar Klien Update
       if (!skipBroadcast) { broadcastLiveCart(total); }
     }
 
@@ -1597,11 +1446,8 @@
           generateReceipt(res.trxId, res.date, t, csh, chg, clName, currentUser.name, cart); 
           
           clearTimeout(liveCartTimer);
-          // Beri sinyal ke klien bahwa QR Code sudah bisa muncul
           try { await fetchAPI('updateLiveCart', {cartStr: JSON.stringify([{ type: 'SUCCESS_QR', trxId: res.trxId }]), total: 0}); } catch(e){}
           
-          // Memeriksa apakah ini pesanan yang berasal dari self-service (unpaid)
-          // Jika ya, kita harus menghapusnya dari activeOrders karena sudah dibayar
           let wasReadyFromTable = false;
           const isFromQueueIdx = activeOrders.findIndex(o => o.client === clName && o.payment === 'unpaid');
           if(isFromQueueIdx !== -1) {
@@ -1611,7 +1457,6 @@
               activeOrders.splice(isFromQueueIdx, 1);
           }
 
-          // Memasukkan Data ke Antrean Dapur JIKA BUKAN pesanan meja yang sudah dimasak
           if (!wasReadyFromTable) {
               const newActiveOrder = {
                   id: Date.now(),
@@ -1626,7 +1471,7 @@
           saveActiveOrders();
           renderActiveOrders();
           
-          playAlert(); // Bunyi ting peringatan pesanan masuk
+          playAlert(); 
           showToast("Transaksi Berhasil! Diteruskan ke Dapur."); 
           
           cart = []; document.getElementById('pos-cash').value = ''; document.getElementById('pos-client-name').value = ''; renderCart(true); 
@@ -1638,12 +1483,11 @@
     }
 
     // ================= FITUR ANTREAN PESANAN (KITCHEN DISPLAY & KASIR) =================
-    // Fungsi radar pencari pesanan dari pelanggan secara global untuk Admin/Kasir
     window.globalOrderPoller = null;
     function startGlobalOrderPolling() {
         if(window.globalOrderPoller) clearInterval(window.globalOrderPoller);
         window.globalOrderPoller = setInterval(async () => {
-            if(currentUser && (currentUser.role === 'admin' || currentUser.role === 'user')) {
+            if(currentUser && (currentUser.role === 'admin' || currentUser.role === 'user' || currentUser.role === 'dapur')) {
                 try {
                     const res = await fetchAPI('getLiveCart');
                     if (!res || !res.cart) return;
@@ -1654,16 +1498,15 @@
                         if (!activeOrders.find(o => o.id === orderData.id)) {
                             activeOrders.unshift({
                                 id: orderData.id,
-                                trxId: 'CUST-' + orderData.id.toString().slice(-4), // ID Sementara
+                                trxId: 'CUST-' + orderData.id.toString().slice(-4), 
                                 date: new Date().getTime(),
                                 client: orderData.table,
                                 items: orderData.items,
-                                status: 'waiting', // Langsung masuk antrean dapur
-                                payment: 'unpaid' // Tanda belum dibayar
+                                status: 'waiting',
+                                payment: 'unpaid' 
                             });
                             saveActiveOrders();
                             
-                            // Jika sedang buka halaman antrean, langsung perbarui
                             const ordersView = document.getElementById('view-orders');
                             if(ordersView && !ordersView.classList.contains('hidden')) {
                                 renderActiveOrders();
@@ -1673,7 +1516,6 @@
                             showToast(`Ada Pesanan Baru dari ${orderData.table}!`);
                         }
                         
-                        // Bersihkan payload di server agar tidak dipanggil berulang
                         await fetchAPI('updateLiveCart', {cartStr: "[]", total: 0});
                     }
                 } catch(e) {}
@@ -1688,7 +1530,7 @@
 
     function renderActiveOrders() {
         const grid = document.getElementById('orders-grid');
-        const fsGrid = document.getElementById('dapur-fs-grid'); // Menangkap layar dapur full screen
+        const fsGrid = document.getElementById('dapur-fs-grid'); 
         
         if(grid) grid.innerHTML = '';
         if(fsGrid) fsGrid.innerHTML = '';
@@ -1703,7 +1545,7 @@
             const now = new Date().getTime();
             const orderDateObj = new Date(order.date);
             const timeFormatted = orderDateObj.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
-            let waitTime = Math.floor((now - order.date) / 60000); // menit
+            let waitTime = Math.floor((now - order.date) / 60000); 
             let waitTimeText = `${waitTime} mnt berlalu`;
             if (waitTime < 0) {
                 waitTimeText = `Dalam ${Math.abs(waitTime)} mnt`;
@@ -1715,7 +1557,6 @@
             let blinkClass = "border border-slate-100 shadow-[0_4px_15px_-3px_rgba(0,0,0,0.03)]";
             let iconBox = `<div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 shrink-0"><i class="ph-bold ph-user"></i></div>`;
 
-            // Deteksi jika pesanan dari meja (belum dibayar)
             if (order.payment === 'unpaid') {
                 iconBox = `<div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 shrink-0"><i class="ph-bold ph-bell-ringing"></i></div>`;
             }
@@ -1732,15 +1573,30 @@
                 statusColor = "bg-emerald-100 text-emerald-700 border-emerald-200";
                 statusText = "Selesai";
                 
-                // JIKA DARI MEJA & SUDAH SELESAI DIMASAK, BARU MUNCUL TOMBOL BAYAR
                 if (order.payment === 'unpaid') {
-                    btnAction = `<button onclick="payCustomerOrder(${order.id})" class="w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-md shadow-brand-500/30 transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"><i class="ph-bold ph-calculator"></i> Lanjut Pembayaran</button>`;
+                    if (currentUser && currentUser.role === 'dapur') {
+                        btnAction = `<div class="w-full mt-3 bg-amber-50 text-amber-600 rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-center border border-amber-200">Menunggu Kasir</div>`;
+                    } else {
+                        btnAction = `<button onclick="payCustomerOrder(${order.id})" class="w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-md shadow-brand-500/30 transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"><i class="ph-bold ph-calculator"></i> Lanjut Pembayaran</button>`;
+                    }
                 } else {
-                    btnAction = `<button onclick="updateOrderStatus('${order.trxId}', 'completed')" class="w-full mt-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-sm transition-colors flex items-center justify-center gap-2"><i class="ph-bold ph-check"></i> Arsipkan</button>`;
+                    if (currentUser && currentUser.role === 'dapur') {
+                        btnAction = `<div class="w-full mt-3 bg-slate-50 text-slate-500 rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-center border border-slate-200">Pesanan Siap (Ambil)</div>`;
+                    } else {
+                        btnAction = `<button onclick="updateOrderStatus('${order.trxId}', 'completed')" class="w-full mt-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-sm transition-colors flex items-center justify-center gap-2"><i class="ph-bold ph-check"></i> Arsipkan</button>`;
+                    }
                 }
             }
 
             let itemsHtml = order.items.map(i => `<div class="flex justify-between items-center text-xs sm:text-sm font-semibold text-slate-700 mb-1.5"><div class="flex gap-2 items-center"><span class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded text-[10px] sm:text-xs font-black">${i.qty}x</span> <span>${i.name}</span></div></div>`).join('');
+            
+            let actionButtonsTop = '';
+            if (currentUser && currentUser.role !== 'dapur') {
+                actionButtonsTop = `
+                    <button onclick="openEditOrder('${order.id}')" class="text-slate-400 hover:text-brand-600 transition-colors ml-1 p-1 bg-slate-50 rounded hover:bg-brand-50" title="Edit Antrean"><i class="ph-bold ph-pencil-simple"></i></button>
+                    <button onclick="deleteActiveOrder('${order.id}')" class="text-slate-400 hover:text-red-600 transition-colors p-1 bg-slate-50 rounded hover:bg-red-50" title="Hapus Antrean"><i class="ph-bold ph-trash"></i></button>
+                `;
+            }
 
             let cardHtml = `
             <div class="bg-white p-4 sm:p-5 flex flex-col rounded-2xl ${blinkClass} transition-all duration-300 h-full relative group">
@@ -1749,8 +1605,7 @@
                         <div class="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5 flex-wrap">
                             ${iconBox} 
                             <span class="truncate max-w-[120px] sm:max-w-[150px]">${order.client}</span>
-                            <button onclick="openEditOrder('${order.id}')" class="text-slate-400 hover:text-brand-600 transition-colors ml-1 p-1 bg-slate-50 rounded hover:bg-brand-50" title="Edit Antrean"><i class="ph-bold ph-pencil-simple"></i></button>
-                            <button onclick="deleteActiveOrder('${order.id}')" class="text-slate-400 hover:text-red-600 transition-colors p-1 bg-slate-50 rounded hover:bg-red-50" title="Hapus Antrean"><i class="ph-bold ph-trash"></i></button>
+                            ${actionButtonsTop}
                         </div>
                         <div class="text-[9px] sm:text-[10px] font-bold text-slate-400 font-mono mt-1.5 ml-7 sm:ml-8">${order.trxId}</div>
                     </div>
@@ -1773,20 +1628,13 @@
         });
     }
 
-    // Fungsi Khusus Untuk Memasukkan Pesanan Pelanggan Langsung Ke Terminal Kasir
     function payCustomerOrder(orderId) {
         const order = activeOrders.find(o => o.id === orderId);
         if(!order) return;
         
-        // Pindahkan item ke keranjang kasir
         cart = [...order.items]; 
-        
-        // Buka Menu POS (Kasir Cerdas)
         switchView('pos');
-        
-        // Isi otomatis nama klien sesuai meja
         document.getElementById('pos-client-name').value = order.client;
-        
         renderCart();
         showToast("Pesanan dimuat ke Terminal Kasir.");
     }
@@ -1808,7 +1656,6 @@
         const mobileBadge = document.getElementById('mobile-badge-orders');
         if(!badge) return;
         
-        // Hitung yang status waiting ATAU unpaid
         const waitingCount = activeOrders.filter(o => o.status === 'waiting' || o.status === 'unpaid').length;
         if (waitingCount > 0) {
             badge.innerText = waitingCount;
@@ -1821,8 +1668,6 @@
             if(mobileBadge) mobileBadge.classList.add('hidden');
         }
     }
-
-   let moCart = [];
 
     function renderMoProducts() {
         const grid = document.getElementById('mo-product-list');
@@ -1966,8 +1811,8 @@
 
     // ================= FITUR SELF SERVICE (BUKU MENU MANDIRI) =================
     async function initSelfService(tableId) {
-        currentTableId = tableId.replace(/-/g, ' '); // Ganti strip dengan spasi, contoh: Meja-1 jadi Meja 1
-        submittedOrder = null; // Reset status saat pertama buka
+        currentTableId = tableId.replace(/-/g, ' '); 
+        submittedOrder = null; 
         document.body.classList.remove('overflow-hidden');
         document.body.innerHTML = `
             <div class="min-h-screen bg-[#f4f7fb] pb-28 relative">
@@ -2032,7 +1877,6 @@
             storeConfig = cfg; 
             document.getElementById('self-store-name').innerText = cfg.StoreName || "Sistem Menu";
             
-            // Re-fetch products specifically for self service
             const prods = await fetchAPI('getProducts');
             products = prods;
             renderSelfServiceMenu();
@@ -2200,7 +2044,6 @@
         if(selfCart.length === 0) return;
         const btn = document.getElementById('btn-self-submit');
         
-        // Mencegah double-click
         if (btn.disabled) return;
         
         btn.innerHTML = `<div class="spinner border-slate-200 border-top-white w-4 h-4"></div> <span class="ml-2">Mengirim...</span>`;
@@ -2209,7 +2052,6 @@
         let total = 0;
         selfCart.forEach(i => { total += i.price * i.qty; });
 
-        // Format data pesanan khusus yang akan dicegat oleh radar kasir
         const payload = [{
             type: 'NEW_CUSTOMER_ORDER',
             id: Date.now(),
@@ -2219,20 +2061,18 @@
         }];
 
         try {
-            // Kita menggunakan infrastruktur liveCart sebagai jembatan komunikasi tanpa perlu merubah backend Apps Script
             await fetchAPI('updateLiveCart', { cartStr: JSON.stringify(payload), total: 0 });
             
             btn.innerHTML = `Pesanan Terkirim! <i class="ph-bold ph-check-circle text-lg"></i>`;
             btn.classList.replace('btn-solid', 'bg-emerald-500');
             
             setTimeout(() => {
-                submittedOrder = [...selfCart]; // Simpan status pesanan agar bisa dilihat oleh pelanggan
+                submittedOrder = [...selfCart]; 
                 selfCart = [];
                 updateSelfServiceCartBar();
                 closeModal('modal-self-checkout');
                 selfShowToast("Pesanan Anda telah masuk ke dapur kami!");
                 
-                // Kembalikan tombol ke semula untuk pesanan berikutnya
                 btn.innerHTML = `Kirim Pesanan Sekarang <i class="ph-bold ph-paper-plane-right text-lg"></i>`;
                 btn.classList.replace('bg-emerald-500', 'btn-solid');
                 btn.disabled = false;
@@ -2245,7 +2085,6 @@
         }
     }
 
-    // Fungsi Cetak QR Meja di Pengaturan Toko
     function printTableQR() {
        const tableName = prompt("Masukkan Nama Meja (Contoh: Meja-1):", "Meja-1");
        if (!tableName) return;
@@ -2418,8 +2257,6 @@
       }, 2000); 
     }
 
-    window.katalogIndex = 0;
-
     function startPromoSlider() {
       if(promoInterval) clearInterval(promoInterval);
       
@@ -2430,7 +2267,6 @@
           'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80'
       ];
 
-      // Tampilkan Katalog Etalase Bawah di Layar Klien
       const showcaseGrid = document.getElementById('cds-showcase-grid');
       if(showcaseGrid) {
           showcaseGrid.innerHTML = '';
@@ -2492,7 +2328,6 @@
       promoInterval = setInterval(updatePromo, 5000);
     }
 
-    // Mesin Pengisi Gambar di Halaman Katalog Promo & Animasi Banner
     function renderKatalog() {
         const grid = document.getElementById('katalog-grid');
         if(!grid) return;
@@ -2503,7 +2338,6 @@
             return;
         }
         
-        // Cetak daftar produk ke grid bawah
         products.forEach((p, index) => {
             const img = p.image || 'https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=600&q=80';
             grid.innerHTML += `
@@ -2521,7 +2355,6 @@
             </div>`;
         });
 
-        // Fitur Slideshow (Gambar Berjalan) di Banner Katalog Atas
         if(window.katalogInterval) clearInterval(window.katalogInterval);
         const updateKatalogSlide = () => {
             if(products.length === 0) return;
@@ -2551,7 +2384,6 @@
       document.getElementById('cds-total').innerText = formatRp(total);
       const container = document.getElementById('cds-cart-items');
       
-      // JIKA TRANSAKSI SUKSES (MUNCULKAN QR CODE)
       if (liveCart && liveCart.length === 1 && liveCart[0].type === 'SUCCESS_QR') {
           const trxId = liveCart[0].trxId;
           document.getElementById('cds-total').innerText = "LUNAS";
@@ -2576,21 +2408,14 @@
               
           setTimeout(() => { 
             document.getElementById('cds-qrcode-display').innerHTML = ''; 
-            // Ukuran responsif: di HP sedikit lebih kecil agar muat, di PC besar
             const qrSize = window.innerWidth < 640 ? 150 : 180;
             new QRCode(document.getElementById('cds-qrcode-display'), { 
-              text: qrUrl, 
-              width: qrSize, 
-              height: qrSize, 
-              colorDark : "#000000", 
-              colorLight: "#ffffff", 
-              correctLevel : QRCode.CorrectLevel.L 
+              text: qrUrl, width: qrSize, height: qrSize, colorDark : "#000000", colorLight: "#ffffff", correctLevel : QRCode.CorrectLevel.L 
             }); 
           }, 150);
           return;
       }
       
-      // JIKA KERANJANG KOSONG
       if(!liveCart || !liveCart.length || liveCart[0].type === 'NEW_CUSTOMER_ORDER') {
         container.innerHTML = `
             <div class="flex flex-col items-center justify-center h-full text-slate-300 opacity-70 py-10">
@@ -2601,7 +2426,6 @@
                <span class="text-[10px] sm:text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 bg-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-full shadow-sm border border-slate-100">Keranjang Kosong</span>
             </div>`;
       } else {
-        // JIKA ADA BARANG MASUK
         container.innerHTML = '';
         liveCart.forEach((item, index) => {
           container.innerHTML += `
@@ -2620,51 +2444,35 @@
       }
     }
 
-    // ================= FUNGSI BANTUAN LAINNYA (CETAK PDF, QR, DLL) =================
-    // Fungsi untuk memperbesar/memperkecil layar pelanggan
     function toggleFullScreen() {
       if (!document.fullscreenElement) {
           document.documentElement.requestFullscreen().catch(err => {
               showToast(`Layar Penuh Gagal: ${err.message}`, true);
           });
       } else {
-          if (document.exitFullscreen) {
-              document.exitFullscreen();
-          }
+          if (document.exitFullscreen) document.exitFullscreen();
       }
     }
 
     document.addEventListener('fullscreenchange', () => {
         const icon = document.getElementById('icon-fullscreen');
         const katalogIcon = document.getElementById('katalog-icon-fullscreen');
-        
         if(icon) {
-            if (document.fullscreenElement) {
-                icon.classList.replace('ph-corners-out', 'ph-corners-in');
-            } else {
-                icon.classList.replace('ph-corners-in', 'ph-corners-out');
-            }
+            if (document.fullscreenElement) icon.classList.replace('ph-corners-out', 'ph-corners-in');
+            else icon.classList.replace('ph-corners-in', 'ph-corners-out');
         }
-        
         if(katalogIcon) {
-            if (document.fullscreenElement) {
-                katalogIcon.classList.replace('ph-corners-out', 'ph-corners-in');
-            } else {
-                katalogIcon.classList.replace('ph-corners-in', 'ph-corners-out');
-            }
+            if (document.fullscreenElement) katalogIcon.classList.replace('ph-corners-out', 'ph-corners-in');
+            else katalogIcon.classList.replace('ph-corners-in', 'ph-corners-out');
         }
     });
 
-    // Fungsi khusus untuk HP/Mobile agar struk bisa diunduh langsung menjadi PDF
     function downloadMobilePDF(tid) {
       showToast("Memproses Struk PDF...");
       const element = document.getElementById('area-struk-mobile');
       html2pdf().set({ 
-        margin: 0.1, 
-        filename: `Struk_${tid}.pdf`, 
-        image: { type: 'jpeg', quality: 1 }, 
-        html2canvas: { scale: 3, useCORS: true }, 
-        jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
+        margin: 0.1, filename: `Struk_${tid}.pdf`, image: { type: 'jpeg', quality: 1 }, 
+        html2canvas: { scale: 3, useCORS: true }, jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
       }).from(element).save().then(() => {
         showToast("Struk berhasil diunduh!");
       }).catch(err => {
@@ -2695,7 +2503,6 @@
         let items = []; try { items = JSON.parse(decodeURIComponent(t.detail)); } catch(e) {}
         let h = getReceiptHTML(t.trxId, t.date, t.total, t.cash, t.change, t.client, t.cashier, items);
         
-        // Buat elemen kertas virtual dan tempelkan tersembunyi agar bisa di-foto oleh sistem
         const el = document.createElement('div'); 
         el.style.position = 'absolute';
         el.style.left = '-9999px'; 
@@ -2703,11 +2510,8 @@
         document.body.appendChild(el);
         
         html2pdf().set({ 
-          margin: 0.1, 
-          filename: `Invoice_Premium_${tid}.pdf`, 
-          image: { type: 'jpeg', quality: 1 }, 
-          html2canvas: { scale: 3, useCORS: true }, 
-          jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
+          margin: 0.1, filename: `Invoice_Premium_${tid}.pdf`, image: { type: 'jpeg', quality: 1 }, 
+          html2canvas: { scale: 3, useCORS: true }, jsPDF: { unit: 'in', format: [3.15, 6], orientation: 'portrait' } 
         }).from(el).save().then(() => {
           document.body.removeChild(el); 
           showToast("PDF berhasil diunduh!");
@@ -2837,7 +2641,12 @@
           const d = await fetchAPI('getUsers');
           const tb = document.getElementById('user-list'); tb.innerHTML = '';
           d.forEach(u => {
-            const roleBadge = u.role === 'admin' ? '<span class="bg-slate-900 text-white px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest shadow-sm">Eksekutif</span>' : (u.role === 'klien' ? '<span class="bg-emerald-100 text-emerald-700 px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-emerald-200">Layar</span>' : '<span class="bg-slate-100 text-slate-600 px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-slate-200">Staf Kasir</span>');
+            let roleBadge = '';
+            if(u.role === 'admin') roleBadge = '<span class="bg-slate-900 text-white px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest shadow-sm">Eksekutif</span>';
+            else if(u.role === 'klien') roleBadge = '<span class="bg-emerald-100 text-emerald-700 px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-emerald-200">Layar</span>';
+            else if(u.role === 'dapur') roleBadge = '<span class="bg-orange-100 text-orange-700 px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-orange-200">Ahli Dapur</span>';
+            else roleBadge = '<span class="bg-slate-100 text-slate-600 px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border border-slate-200">Staf Kasir</span>';
+            
             tb.innerHTML += `
               <tr class="hover:bg-brand-50/50 transition-colors">
                 <td class="py-3 px-4 sm:py-4 sm:px-6 font-black text-slate-800 text-xs sm:text-sm"><div class="flex items-center gap-2 sm:gap-3"><div class="w-6 h-6 sm:w-8 sm:h-8 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-black">${u.username.charAt(0).toUpperCase()}</div>${u.username}</div></td>
