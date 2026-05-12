@@ -736,9 +736,15 @@
 
          <div class="relative z-10 bg-brand-950/90 backdrop-blur-md border-t border-white/10 flex items-center h-8 lg:h-12 overflow-hidden shrink-0">
             <div class="bg-brand-600 text-white font-black text-[9px] lg:text-xs tracking-widest uppercase px-3 lg:px-6 h-full flex items-center z-20 shadow-[10px_0_20px_rgba(0,0,0,0.5)] whitespace-nowrap"><i class="ph-fill ph-megaphone mr-1.5 lg:mr-2 text-sm lg:text-lg"></i> INFO</div>
-            <marquee class="text-slate-200 text-[11px] lg:text-sm font-semibold tracking-[0.1em] flex-1 whitespace-nowrap" scrollamount="3">
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SELAMAT DATANG DI SISTEM KASIR KAMI. KAMI MENERIMA PEMBAYARAN TUNAI, QRIS, DAN TRANSFER BANK. SILAKAN PERIKSA PESANAN ANDA DI LAYAR INI. NIKMATI MENU SPESIAL DAN PROMO MENARIK SETIAP HARINYA! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </marquee>
+            <style>
+              @keyframes geser-kiri { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+              .animasi-teks { display: inline-block; white-space: nowrap; animation: geser-kiri 20s linear infinite; padding-left: 100%; }
+            </style>
+            <div class="flex-1 overflow-hidden h-full flex items-center">
+               <div class="animasi-teks text-slate-200 text-[11px] lg:text-sm font-semibold tracking-[0.1em]">
+                  SELAMAT DATANG DI SISTEM KASIR KAMI. KAMI MENERIMA PEMBAYARAN TUNAI, QRIS, DAN TRANSFER BANK. SILAKAN PERIKSA PESANAN ANDA DI LAYAR INI. NIKMATI MENU SPESIAL DAN PROMO MENARIK SETIAP HARINYA!
+               </div>
+            </div>
          </div>
       </div>
       
@@ -834,7 +840,37 @@
   </div>
   <div id="receipt-print-area" class="hidden absolute top-0 left-0 bg-white w-full z-[200]"></div>
 
-  <script>
+  <!-- Layar Pop-up Pratinjau Struk Kasir -->
+  <div id="modal-receipt" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[150] p-4 transition-opacity animate-fade-in">
+    <div class="bg-white p-6 rounded-[2rem] w-full max-w-sm shadow-floating flex flex-col transform transition-transform duration-300 max-h-[90vh]">
+      <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+        <h3 class="text-lg font-black text-slate-900">Pratinjau Struk</h3>
+        <button onclick="closeModal('modal-receipt')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <div id="receipt-visual-content" class="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 rounded-xl flex justify-center py-4 border border-slate-200">
+        <!-- Tampilan fisik struk akan disuntikkan ke sini -->
+      </div>
+      <div class="flex gap-3 mt-4 pt-4 border-t border-slate-100">
+        <button onclick="window.print()" class="flex-1 btn-solid py-3 text-sm font-bold shadow-glow flex justify-center items-center gap-2"><i class="ph-bold ph-printer text-lg"></i> Cetak Kertas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layar Pop-up QR Code (Untuk Pelanggan) -->
+  <div id="modal-qrcode" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[150] p-4 transition-opacity animate-fade-in">
+    <div class="bg-white p-6 rounded-[2rem] w-full max-w-sm shadow-floating flex flex-col items-center transform transition-transform duration-300">
+      <div class="flex justify-between items-center mb-4 w-full border-b border-slate-100 pb-3">
+        <h3 class="text-lg font-black text-slate-900">QR Code Struk Digital</h3>
+        <button onclick="closeModal('modal-qrcode')" class="text-slate-400 hover:text-slate-900 bg-slate-100 p-1.5 rounded-lg"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-2">
+        <div id="qrcode-container" class="bg-white p-2 rounded-xl shadow-sm"></div>
+      </div>
+      <p class="text-xs font-bold text-slate-500 font-mono tracking-widest mb-4 uppercase">REF: <span id="qr-trx-id"></span></p>
+      <button onclick="downloadQR()" class="w-full btn-solid py-3 text-sm font-bold flex justify-center items-center gap-2 shadow-glow"><i class="ph-bold ph-download-simple text-lg"></i> Simpan Gambar QR</button>
+    </div>
+  </div>
+<script>
     // =========================================================================
     // API GATEWAY CONFIGURATION
     // GANTI URL DI BAWAH INI DENGAN LINK DEPLOYMENT APPS SCRIPT ANDA
@@ -1009,6 +1045,10 @@
                 try { items = JSON.parse(decodeURIComponent(trx.detail)); } catch(e) {}
                 const h = getReceiptHTML(trx.trxId, trx.date, trx.total, trx.cash, trx.change, trx.client, trx.cashier, items);
                 document.body.innerHTML = `
+                  <div id="toast" class="fixed top-6 right-6 px-5 py-4 rounded-2xl shadow-floating z-[150] text-sm font-semibold tracking-wide transform translate-x-[120%] opacity-0 transition-all duration-400 ease-out flex items-center gap-3 border card-glass text-slate-800 border-slate-200">
+                    <i id="toast-icon" class="text-xl"></i>
+                    <span id="toast-msg"></span>
+                  </div>
                   <div class="min-h-screen bg-[#f4f7fb] flex flex-col items-center py-10 px-4 bg-pattern">
                     <div id="area-struk-mobile" class="w-full max-w-[340px] bg-white p-6 rounded-[2rem] shadow-floating border border-slate-100 mb-6 animate-slide-up relative overflow-hidden">
                       <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-500 to-purple-500"></div>
@@ -1418,6 +1458,9 @@
         });
       }
       document.getElementById('cart-total').innerText = formatRp(total); document.getElementById('cart-item-count').innerText = qtyTotal; calculateChange();
+      
+      const btnCheck = document.getElementById('btn-checkout');
+      if (btnCheck) btnCheck.disabled = (cart.length === 0);
       
       if (!skipBroadcast) { broadcastLiveCart(total); }
     }
