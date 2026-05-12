@@ -1431,7 +1431,7 @@
       clearTimeout(liveCartTimer);
       liveCartTimer = setTimeout(async () => {
          try { await fetchAPI('updateLiveCart', {cartStr: JSON.stringify(cart), total: total}); } catch(e){}
-      }, 800);
+      }, 300);
     }
 
     function renderCart(skipBroadcast = false) {
